@@ -4,6 +4,7 @@
 import type { ContestantResult } from "./results";
 import { resultsData } from "./results";
 import type { MedalBands } from "@/domain/medal";
+import type { Official } from "@/domain/edition";
 
 export interface TaskConfig {
   rawKey: keyof ContestantResult;
@@ -24,9 +25,11 @@ export interface EditionConfig {
   country: string;
   format: string;
   dates: string;
+  website?: string;
   bands: MedalBands;
   tasks: TaskConfig[];
   results: ContestantResult[];
+  officials?: Official[];
 }
 
 const paio2025Tasks: TaskConfig[] = [

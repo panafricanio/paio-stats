@@ -62,8 +62,10 @@ export function mapEdition(config: EditionConfig): Edition {
     country: config.country,
     format: config.format,
     dates: config.dates,
+    website: config.website,
     bands: config.bands,
     tasks: config.tasks.map(mapTask),
     contestants: config.results.map((r) => mapContestant(r, config.tasks, config.bands)),
+    officials: config.officials ?? [],
   };
 }

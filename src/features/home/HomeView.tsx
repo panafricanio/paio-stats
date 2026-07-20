@@ -27,7 +27,7 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild>
               <Link href={`/olympiads/${latest.slug}`}>
-                {latest.name} results <ArrowRight className="h-4 w-4" />
+                Explore {latest.name} <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
             <Button asChild variant="outline">
@@ -63,7 +63,7 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
             desc="Every problem with its average score, full-solve rate and score distribution."
           />
           <GuideCard
-            href={`/olympiads/${latest.slug}`}
+            href={`/olympiads/${latest.slug}/contestants`}
             icon={<Users className="h-5 w-5" />}
             title="Contestants"
             desc="Individual pages — reachable from any table — with each contestant's scores and medals."

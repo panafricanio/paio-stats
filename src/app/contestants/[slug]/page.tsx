@@ -57,10 +57,10 @@ export default async function ContestantPage({
         }
       >
         <Link
-          href={`/olympiads/${edition.slug}`}
+          href={`/olympiads/${edition.slug}/results`}
           className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
         >
-          <ArrowLeft className="h-4 w-4" /> {edition.name} scoreboard
+          <ArrowLeft className="h-4 w-4" /> {edition.name} results
         </Link>
       </PageHeader>
 

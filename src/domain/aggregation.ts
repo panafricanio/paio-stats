@@ -3,8 +3,35 @@
 import type { Edition } from "./edition";
 import type { Country, CountryAggregate } from "./country";
 import type { TaskStat } from "./task";
-import type { MedalTally } from "./medal";
-import type { ContestantStatus } from "./contestant";
+import type { MedalTally, MedalType } from "./medal";
+import type { Contestant, ContestantStatus } from "./contestant";
+
+const MEDAL_ORDER: MedalType[] = ["GOLD", "SILVER", "BRONZE", "HM"];
+
+export interface MedalThreshold {
+  medal: MedalType;
+  cutoff: number; // lowest total score that still earned this medal
+  count: number; // number awarded
+}
+
+/** Score cut-off and count for each medal (IOI-style thresholds). */
+export function medalThresholds(edition: Edition): MedalThreshold[] {
+  const thresholds: MedalThreshold[] = [];
+  for (const medal of MEDAL_ORDER) {
+    // Official awards only, to stay consistent with the medal summary tiles.
+    // Guest medals are recognised individually but reported separately.
+    const holders = edition.contestants.filter(
+      (c) => c.status === "official" && c.medal === medal,
+    );
+    if (holders.length === 0) continue;
+    thresholds.push({
+      medal,
+      cutoff: Math.min(...holders.map((c) => c.total)),
+      count: holders.length,
+    });
+  }
+  return thresholds;
+}
 
 export function tallyMedals(
   edition: Edition,
@@ -19,6 +46,71 @@ export function tallyMedals(
     else tally.hm++;
   }
   return tally;
+}
+
+export interface Delegation {
+  country: Country;
+  guest: boolean;
+  participants: number;
+  gold: number;
+  silver: number;
+  bronze: number;
+  hm: number;
+  bestRank: number;
+  contestants: Contestant[];
+}
+
+/**
+ * Country delegations at one edition — every team present (official + guest),
+ * each with its contestants and medal count. Unofficial entries are excluded.
+ */
+export function editionDelegations(
+  edition: Edition,
+  countriesByName: Map<string, Country>,
+): Delegation[] {
+  const map = new Map<string, Delegation>();
+
+  for (const c of edition.contestants) {
+    if (c.status === "unofficial") continue;
+    const country = countriesByName.get(c.countryName);
+    if (!country) continue;
+
+    let d = map.get(country.code);
+    if (!d) {
+      d = {
+        country,
+        guest: c.status === "guest" || !!country.guest,
+        participants: 0,
+        gold: 0,
+        silver: 0,
+        bronze: 0,
+        hm: 0,
+        bestRank: Infinity,
+        contestants: [],
+      };
+      map.set(country.code, d);
+    }
+    d.participants++;
+    d.bestRank = Math.min(d.bestRank, c.rank);
+    d.contestants.push(c);
+    if (c.medal === "GOLD") d.gold++;
+    else if (c.medal === "SILVER") d.silver++;
+    else if (c.medal === "BRONZE") d.bronze++;
+    else if (c.medal === "HM") d.hm++;
+  }
+
+  for (const d of map.values()) d.contestants.sort((a, b) => a.rank - b.rank);
+
+  return [...map.values()].sort(
+    (a, b) =>
+      Number(a.guest) - Number(b.guest) ||
+      b.gold - a.gold ||
+      b.silver - a.silver ||
+      b.bronze - a.bronze ||
+      b.hm - a.hm ||
+      a.bestRank - b.bestRank ||
+      a.country.name.localeCompare(b.country.name),
+  );
 }
 
 /** Aggregate official contestants by country and rank the medal table. */
