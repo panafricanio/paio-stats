@@ -9,19 +9,16 @@ export const metadata: Metadata = {
 };
 
 export default async function CountriesPage() {
-  const aggregates = await statsService.getCountryAggregates();
+  const rows = await statsService.listCountryRows();
 
   return (
     <div>
       <PageHeader
         title="Countries"
-        subtitle="National teams ranked by medals — first by gold, then silver, then bronze, then best individual rank."
+        subtitle="National teams ranked by medals — first by gold, then silver, then bronze, then best individual rank. Guest teams are shown but ranked below official teams."
       />
       <div className="container py-10">
-        <CountriesTable aggregates={aggregates} />
-        <p className="mt-4 text-sm text-muted-foreground">
-          Medal totals count gold, silver and bronze. Guest teams are excluded from country rankings.
-        </p>
+        <CountriesTable rows={rows} />
       </div>
     </div>
   );

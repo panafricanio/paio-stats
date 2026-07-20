@@ -79,7 +79,7 @@ export function editionDelegations(
     if (!d) {
       d = {
         country,
-        guest: c.status === "guest" || !!country.guest,
+        guest: c.status === "guest",
         participants: 0,
         gold: 0,
         silver: 0,

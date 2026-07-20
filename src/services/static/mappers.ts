@@ -10,9 +10,20 @@ import { medalForRank } from "@/domain/medal";
 import { slugify } from "@/lib/utils";
 
 function deriveStatus(raw: ContestantResult): ContestantStatus {
-  if (raw.country === "Pakistan (Guest)") return "guest";
+  if (/\(Guest\)/i.test(raw.country)) return "guest";
   if (raw.isUnofficial || raw.country === "Unofficial") return "unofficial";
   return "official";
+}
+
+/**
+ * The country a contestant represents, as a clean identity. Guest status is
+ * captured separately (see deriveStatus), so it is stripped from the name here
+ * — "Pakistan (Guest)" and a future official "Pakistan" resolve to one country.
+ * Unofficial/blank entries carry no country.
+ */
+function deriveCountryName(raw: ContestantResult): string {
+  if (raw.country === "Unofficial") return "";
+  return raw.country.replace(/\s*\(Guest\)\s*$/i, "").trim();
 }
 
 function mapTask(config: TaskConfig): Task {
@@ -53,7 +64,7 @@ function mapContestant(
     lastName: raw.lastName,
     fullName: `${raw.firstName} ${raw.lastName}`.trim(),
     rank: raw.rank,
-    countryName: raw.country,
+    countryName: deriveCountryName(raw),
     status,
     scores,
     dayTotals,

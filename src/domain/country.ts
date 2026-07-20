@@ -4,7 +4,6 @@ export interface Country {
   name: string;
   code: string; // URL slug, e.g. "egypt"
   flag: string;
-  guest?: boolean;
 }
 
 export interface CountryAggregate {

@@ -16,5 +16,13 @@ export const countryRecords: Country[] = [
   { name: "South Africa", code: "south-africa", flag: "🇿🇦" },
   { name: "Tunisia", code: "tunisia", flag: "🇹🇳" },
   { name: "Zimbabwe", code: "zimbabwe", flag: "🇿🇼" },
-  { name: "Pakistan (Guest)", code: "pakistan", flag: "🇵🇰", guest: true },
+  // Guest teams are ordinary countries; "guest" is a per-contestant status,
+  // not part of the country's identity.
+  { name: "Pakistan", code: "pakistan", flag: "🇵🇰" },
 ];
+
+const byCode = new Map(countryRecords.map((c) => [c.code, c]));
+
+export function getCountryByCode(code: string): Country | undefined {
+  return byCode.get(code);
+}
