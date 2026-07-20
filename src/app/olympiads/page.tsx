@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { statsService } from "@/services";
 import PageHeader from "@/components/ui/PageHeader";
-import EditionsList from "@/features/editions/EditionsList";
+import EditionsTable from "@/features/editions/EditionsTable";
 
 export const metadata: Metadata = {
   title: "Editions",
@@ -9,16 +9,16 @@ export const metadata: Metadata = {
 };
 
 export default async function OlympiadsPage() {
-  const items = await statsService.listEditionItems();
+  const rows = await statsService.listEditionRows();
 
   return (
     <div>
       <PageHeader
         title="Editions"
-        subtitle="Every edition of the Pan-African Informatics Olympiad. Select one for the full scoreboard, medals and per-task scores."
+        subtitle="Every edition of the Pan-African Informatics Olympiad. Select a year for its full scoreboard, medals and per-task scores."
       />
       <div className="container py-10">
-        <EditionsList items={items} />
+        <EditionsTable rows={rows} />
       </div>
     </div>
   );

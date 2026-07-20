@@ -26,9 +26,19 @@ export interface EditionSummary {
   totalMedals: number;
 }
 
-export interface EditionListItem {
-  edition: Edition;
-  summary: EditionSummary;
+/** One row of the editions listing table (mirrors the IOI olympiads table). */
+export interface EditionRow {
+  number: number; // olympiad number (chronological, oldest = 1)
+  year: number;
+  slug: string;
+  name: string;
+  dates: string;
+  host: string;
+  hostCode: string | null; // country slug for linking, if known
+  hostFlag: string;
+  city: string;
+  contestants: number;
+  countries: number;
 }
 
 export interface ScoreRow {
@@ -104,15 +114,30 @@ export class StatsService {
     return editions[0];
   }
 
-  async listEditionItems(): Promise<EditionListItem[]> {
+  async listEditionRows(): Promise<EditionRow[]> {
     const [editions, byName] = await Promise.all([
       this.source.getEditions(),
       this.countriesByName(),
     ]);
-    return editions.map((edition) => ({
-      edition,
-      summary: this.summarize(edition, byName),
-    }));
+    const total = editions.length;
+    // `editions` is sorted newest-first, so the oldest gets olympiad number 1.
+    return editions.map((edition, i) => {
+      const host = byName.get(edition.host);
+      const summary = this.summarize(edition, byName);
+      return {
+        number: total - i,
+        year: edition.year,
+        slug: edition.slug,
+        name: edition.name,
+        dates: edition.dates,
+        host: edition.host,
+        hostCode: host?.code ?? null,
+        hostFlag: host?.flag ?? "",
+        city: edition.city,
+        contestants: summary.participants,
+        countries: summary.countriesCount,
+      };
+    });
   }
 
   async getEditionView(slug: string): Promise<EditionView | null> {
