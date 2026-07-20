@@ -123,6 +123,25 @@ export interface ContestantAppearance {
   contestant: Contestant;
 }
 
+export interface ContestantParticipation {
+  edition: Edition;
+  contestant: Contestant;
+  fieldSize: number; // ranked contestants in that edition (for "rank / N")
+  countryFlag: string;
+}
+
+/** Everything the contestant profile page needs. */
+export interface ContestantProfile {
+  slug: string;
+  fullName: string;
+  country: Country | null;
+  status: Contestant["status"];
+  medalTally: MedalTally;
+  bestRank: number;
+  totalScore: number;
+  participations: ContestantParticipation[]; // newest first
+}
+
 export interface EditionTaskStats {
   edition: Edition;
   stats: TaskStat[];
@@ -400,6 +419,51 @@ export class StatsService {
     const slugs = new Set<string>();
     for (const e of editions) for (const c of e.contestants) slugs.add(c.slug);
     return [...slugs];
+  }
+
+  async getContestantProfile(slug: string): Promise<ContestantProfile | null> {
+    const [editions, byName] = await Promise.all([
+      this.source.getEditions(),
+      this.countriesByName(),
+    ]);
+
+    const participations: ContestantParticipation[] = [];
+    const medalTally: MedalTally = { gold: 0, silver: 0, bronze: 0, hm: 0 };
+    let bestRank = Infinity;
+    let totalScore = 0;
+
+    for (const edition of editions) {
+      for (const contestant of edition.contestants) {
+        if (contestant.slug !== slug) continue;
+        participations.push({
+          edition,
+          contestant,
+          fieldSize: edition.contestants.filter((c) => c.status !== "unofficial").length,
+          countryFlag: byName.get(contestant.countryName)?.flag ?? "",
+        });
+        bestRank = Math.min(bestRank, contestant.rank);
+        totalScore += contestant.total;
+        if (contestant.medal === "GOLD") medalTally.gold++;
+        else if (contestant.medal === "SILVER") medalTally.silver++;
+        else if (contestant.medal === "BRONZE") medalTally.bronze++;
+        else if (contestant.medal === "HM") medalTally.hm++;
+      }
+    }
+
+    if (participations.length === 0) return null;
+    participations.sort((a, b) => b.edition.year - a.edition.year);
+    const latest = participations[0].contestant;
+
+    return {
+      slug,
+      fullName: latest.fullName,
+      country: byName.get(latest.countryName) ?? null,
+      status: latest.status,
+      medalTally,
+      bestRank,
+      totalScore,
+      participations,
+    };
   }
 
   /* ---- Tasks ---- */
