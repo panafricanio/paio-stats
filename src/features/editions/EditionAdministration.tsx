@@ -1,13 +1,7 @@
 import { Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import Avatar from "@/components/ui/Avatar";
 import type { AdministrationGroup, Official } from "@/domain/edition";
-
-function initials(name: string): string {
-  const parts = name.replace(/\(.*?\)/g, "").trim().split(/\s+/);
-  const first = parts[0]?.[0] ?? "";
-  const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
-  return (first + last).toUpperCase();
-}
 
 export default function EditionAdministration({
   groups,
@@ -54,9 +48,7 @@ function MemberCard({ member }: { member: Official }) {
   return (
     <Card>
       <CardContent className="flex items-start gap-3 p-4">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-secondary-foreground">
-          {initials(member.name)}
-        </span>
+        <Avatar src={member.image} name={member.name} />
         <div className="min-w-0">
           <div className="font-medium leading-tight">{member.name}</div>
           <ul className="mt-1 space-y-0.5">
