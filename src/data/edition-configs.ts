@@ -4,7 +4,8 @@
 import type { ContestantResult } from "./results";
 import { resultsData } from "./results";
 import type { MedalBands } from "@/domain/medal";
-import type { Official } from "@/domain/edition";
+import type { AdministrationGroup } from "@/domain/edition";
+import { paio2025Administration } from "./administration/paio2025";
 
 export interface TaskConfig {
   rawKey: keyof ContestantResult;
@@ -29,7 +30,7 @@ export interface EditionConfig {
   bands: MedalBands;
   tasks: TaskConfig[];
   results: ContestantResult[];
-  officials?: Official[];
+  administration?: AdministrationGroup[];
 }
 
 const paio2025Tasks: TaskConfig[] = [
@@ -61,5 +62,6 @@ export const editionConfigs: EditionConfig[] = [
     },
     tasks: paio2025Tasks,
     results: resultsData,
+    administration: paio2025Administration,
   },
 ];

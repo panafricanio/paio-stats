@@ -3,11 +3,17 @@ import type { MedalBands } from "./medal";
 import type { Task } from "./task";
 import type { Contestant } from "./contestant";
 
-/** An organiser/official of an edition (for the Administration tab). */
+/** A person on an edition's organising side (Administration tab). */
 export interface Official {
-  role: string;
   name: string;
-  country?: string;
+  roles: string[];
+  image?: string;
+}
+
+/** A titled group of officials (e.g. "Team Leaders", "Coaches"). */
+export interface AdministrationGroup {
+  title: string;
+  members: Official[];
 }
 
 export interface Edition {
@@ -25,5 +31,5 @@ export interface Edition {
   days: number[];
   tasks: Task[];
   contestants: Contestant[];
-  officials: Official[];
+  administration: AdministrationGroup[];
 }
