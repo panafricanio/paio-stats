@@ -30,10 +30,22 @@ function mapContestant(
   raw: ContestantResult,
   tasks: TaskConfig[],
   bands: MedalBands,
+  days: number[],
 ): Contestant {
   const status = deriveStatus(raw);
+
+  // Per-task scores are the single source of truth; every total is derived.
   const scores: Record<string, number> = {};
   for (const t of tasks) scores[t.slug] = Number(raw[t.rawKey]) || 0;
+
+  const dayTotals = days.map((day) => ({
+    day,
+    total: tasks
+      .filter((t) => t.day === day)
+      .reduce((sum, t) => sum + (scores[t.slug] ?? 0), 0),
+  }));
+
+  const total = Object.values(scores).reduce((sum, v) => sum + v, 0);
 
   return {
     slug: slugify(`${raw.firstName} ${raw.lastName}`),
@@ -44,15 +56,17 @@ function mapContestant(
     countryName: raw.country,
     status,
     scores,
-    day1Total: raw.day1Total,
-    day2Total: raw.day2Total,
-    total: raw.globalTotal,
+    dayTotals,
+    total,
     medal: medalForRank(raw.rank, bands, status),
     specialAward: raw.specialAward,
   };
 }
 
 export function mapEdition(config: EditionConfig): Edition {
+  // Derive the contest days from the task configuration — no fixed day count.
+  const days = [...new Set(config.tasks.map((t) => t.day))].sort((a, b) => a - b);
+
   return {
     year: config.year,
     slug: config.slug,
@@ -64,8 +78,9 @@ export function mapEdition(config: EditionConfig): Edition {
     dates: config.dates,
     website: config.website,
     bands: config.bands,
+    days,
     tasks: config.tasks.map(mapTask),
-    contestants: config.results.map((r) => mapContestant(r, config.tasks, config.bands)),
+    contestants: config.results.map((r) => mapContestant(r, config.tasks, config.bands, days)),
     officials: config.officials ?? [],
   };
 }

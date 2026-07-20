@@ -59,8 +59,7 @@ export interface ScoreRow {
   medal: Contestant["medal"];
   specialAward?: string;
   scores: Record<string, number>;
-  day1Total: number;
-  day2Total: number;
+  dayTotals: Contestant["dayTotals"];
   total: number;
 }
 
@@ -292,8 +291,7 @@ export class StatsService {
       medal: c.medal,
       specialAward: c.specialAward,
       scores: c.scores,
-      day1Total: c.day1Total,
-      day2Total: c.day2Total,
+      dayTotals: c.dayTotals,
       total: c.total,
     };
   }

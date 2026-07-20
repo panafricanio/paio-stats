@@ -21,6 +21,8 @@ export interface Edition {
   dates: string;
   website?: string;
   bands: MedalBands;
+  /** Distinct contest days present in this edition, ascending (derived from tasks). */
+  days: number[];
   tasks: Task[];
   contestants: Contestant[];
   officials: Official[];
