@@ -27,7 +27,7 @@ export default async function EditionAdministrationPage({
   if (!detail) notFound();
   return (
     <EditionAdministration
-      officials={detail.edition.officials}
+      groups={detail.edition.administration}
       editionName={detail.edition.name}
     />
   );

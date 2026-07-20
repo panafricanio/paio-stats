@@ -81,6 +81,6 @@ export function mapEdition(config: EditionConfig): Edition {
     days,
     tasks: config.tasks.map(mapTask),
     contestants: config.results.map((r) => mapContestant(r, config.tasks, config.bands, days)),
-    officials: config.officials ?? [],
+    administration: config.administration ?? [],
   };
 }
