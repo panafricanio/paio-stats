@@ -47,7 +47,7 @@ export const paio2025Administration: AdministrationGroup[] = [
     title: "Host Committee",
     members: [
       { name: "Dr. Papias Niyigena", roles: ["Principal, Rwanda Coding Academy"] },
-      { name: "Hirwa Arnold", roles: ["Rwanda Informatics Olympiad"], image: "/images/hirwa.jpeg" },
+      { name: "Hirwa Arnold", roles: ["Rwanda Computing Olympiad"], image: "/images/hirwa.jpeg" },
       {
         name: "Arun Shanmuganathan",
         roles: ["Founder, African Olympiad Academy"],
@@ -60,12 +60,12 @@ export const paio2025Administration: AdministrationGroup[] = [
       },
       {
         name: "Norbert Ndayisenga",
-        roles: ["Software Engineer, Rwanda Informatics Olympiad Coach"],
+        roles: ["Software Engineer, Rwanda Computing Olympiad Coach"],
         image: "/images/norbert.webp",
       },
       {
         name: "Jean Paul Elisa NIYOKWIZERWA",
-        roles: ["Software Engineer, Technical Expert"],
+        roles: ["Software Engineer, Rwanda Computing Olympiad Coach"],
         image: "/images/administration/jean-paul.jpg",
       },
     ],
@@ -78,8 +78,8 @@ export const paio2025Administration: AdministrationGroup[] = [
         roles: ["Nigeria Olympiad Program"],
         image: "/images/administration/jennie-oluchi.png",
       },
-      { name: "Hirwa Arnold", roles: ["Rwanda Olympiad Program"], image: "/images/hirwa.jpeg" },
-      { name: "Obed Nsanzimfura", roles: ["Rwanda Olympiad Program"], image: "/images/obed.webp" },
+      { name: "Hirwa Arnold", roles: ["Rwanda Olympiad Foundation"], image: "/images/hirwa.jpeg" },
+      { name: "Obed Nsanzimfura", roles: ["Rwanda Olympiad Foundation"], image: "/images/obed.webp" },
       { name: "Sihine Negede", roles: ["African Olympiad Academy"] },
       {
         name: "Maya Chouikrat",
