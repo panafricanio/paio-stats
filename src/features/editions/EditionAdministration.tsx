@@ -46,19 +46,21 @@ export default function EditionAdministration({
 
 function MemberCard({ member }: { member: Official }) {
   return (
-    <Card>
-      <CardContent className="flex items-start gap-3 p-4">
-        <Avatar src={member.image} name={member.name} />
-        <div className="min-w-0">
-          <div className="font-medium leading-tight">{member.name}</div>
-          <ul className="mt-1 space-y-0.5">
-            {member.roles.map((role, i) => (
-              <li key={i} className="text-sm text-muted-foreground">
-                {role}
-              </li>
-            ))}
-          </ul>
-        </div>
+    <Card className="overflow-hidden">
+      <CardContent className="flex flex-col items-center p-6 text-center">
+        <Avatar
+          src={member.image}
+          name={member.name}
+          className="h-32 w-32 text-3xl ring-1 ring-border sm:h-36 sm:w-36"
+        />
+        <div className="mt-4 font-display text-lg font-semibold leading-tight">{member.name}</div>
+        <ul className="mt-1.5 space-y-0.5">
+          {member.roles.map((role, i) => (
+            <li key={i} className="text-sm text-muted-foreground">
+              {role}
+            </li>
+          ))}
+        </ul>
       </CardContent>
     </Card>
   );
