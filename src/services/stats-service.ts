@@ -7,11 +7,18 @@ import type { Country, CountryAggregate } from "@/domain/country";
 import type { Contestant } from "@/domain/contestant";
 import type { Task, TaskStat } from "@/domain/task";
 import type { MedalTally } from "@/domain/medal";
-import type { DistributionBar, ScoreBucket } from "@/domain/aggregation";
+import type {
+  DistributionBar,
+  ScoreBucket,
+  MedalThreshold,
+  Delegation,
+} from "@/domain/aggregation";
 import {
   aggregateCountries,
   computeTaskStats,
   distributeTaskScores,
+  editionDelegations,
+  medalThresholds,
   tallyMedals,
 } from "@/domain/aggregation";
 
@@ -26,9 +33,19 @@ export interface EditionSummary {
   totalMedals: number;
 }
 
-export interface EditionListItem {
-  edition: Edition;
-  summary: EditionSummary;
+/** One row of the editions listing table (mirrors the IOI olympiads table). */
+export interface EditionRow {
+  number: number; // olympiad number (chronological, oldest = 1)
+  year: number;
+  slug: string;
+  name: string;
+  dates: string;
+  host: string;
+  hostCode: string | null; // country slug for linking, if known
+  hostFlag: string;
+  city: string;
+  contestants: number;
+  countries: number;
 }
 
 export interface ScoreRow {
@@ -37,19 +54,25 @@ export interface ScoreRow {
   fullName: string;
   countryName: string;
   countryFlag: string;
+  countryCode: string | null;
   status: Contestant["status"];
   medal: Contestant["medal"];
   specialAward?: string;
   scores: Record<string, number>;
-  day1Total: number;
-  day2Total: number;
+  dayTotals: Contestant["dayTotals"];
   total: number;
 }
 
-export interface EditionView {
+/** Everything the tabbed olympiad detail needs, in one bundle. */
+export interface EditionDetail {
   edition: Edition;
   summary: EditionSummary;
+  thresholds: MedalThreshold[];
+  maxScore: number;
+  hostCountry: Country | null;
   rows: ScoreRow[];
+  delegations: Delegation[];
+  taskStats: TaskStat[];
 }
 
 export interface CountryDetail {
@@ -104,25 +127,50 @@ export class StatsService {
     return editions[0];
   }
 
-  async listEditionItems(): Promise<EditionListItem[]> {
+  async listEditionRows(): Promise<EditionRow[]> {
     const [editions, byName] = await Promise.all([
       this.source.getEditions(),
       this.countriesByName(),
     ]);
-    return editions.map((edition) => ({
-      edition,
-      summary: this.summarize(edition, byName),
-    }));
+    const total = editions.length;
+    // `editions` is sorted newest-first, so the oldest gets olympiad number 1.
+    return editions.map((edition, i) => {
+      const host = byName.get(edition.host);
+      const summary = this.summarize(edition, byName);
+      return {
+        number: total - i,
+        year: edition.year,
+        slug: edition.slug,
+        name: edition.name,
+        dates: edition.dates,
+        host: edition.host,
+        hostCode: host?.code ?? null,
+        hostFlag: host?.flag ?? "",
+        city: edition.city,
+        contestants: summary.participants,
+        countries: summary.countriesCount,
+      };
+    });
   }
 
-  async getEditionView(slug: string): Promise<EditionView | null> {
+  async getEditionSlugs(): Promise<string[]> {
+    const editions = await this.source.getEditions();
+    return editions.map((e) => e.slug);
+  }
+
+  async getEditionDetail(slug: string): Promise<EditionDetail | null> {
     const edition = await this.getEdition(slug);
     if (!edition) return null;
     const byName = await this.countriesByName();
     return {
       edition,
       summary: this.summarize(edition, byName),
+      thresholds: medalThresholds(edition),
+      maxScore: edition.tasks.reduce((sum, t) => sum + t.maxScore, 0),
+      hostCountry: byName.get(edition.host) ?? null,
       rows: edition.contestants.map((c) => this.toRow(c, byName)),
+      delegations: editionDelegations(edition, byName),
+      taskStats: computeTaskStats(edition),
     };
   }
 
@@ -238,12 +286,12 @@ export class StatsService {
       fullName: c.fullName,
       countryName: c.countryName,
       countryFlag: byName.get(c.countryName)?.flag ?? "",
+      countryCode: byName.get(c.countryName)?.code ?? null,
       status: c.status,
       medal: c.medal,
       specialAward: c.specialAward,
       scores: c.scores,
-      day1Total: c.day1Total,
-      day2Total: c.day2Total,
+      dayTotals: c.dayTotals,
       total: c.total,
     };
   }

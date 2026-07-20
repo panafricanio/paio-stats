@@ -8,8 +8,8 @@ export const statsService = new StatsService(new StaticDataSource());
 
 export type {
   EditionSummary,
-  EditionListItem,
-  EditionView,
+  EditionRow,
+  EditionDetail,
   ScoreRow,
   CountryDetail,
   ContestantAppearance,

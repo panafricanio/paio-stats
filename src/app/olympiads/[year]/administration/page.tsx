@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { statsService } from "@/services";
-import EditionOverview from "@/features/editions/EditionOverview";
+import EditionAdministration from "@/features/editions/EditionAdministration";
 
 export async function generateStaticParams() {
   return (await statsService.getEditionSlugs()).map((year) => ({ year }));
@@ -14,10 +14,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { year } = await params;
   const edition = await statsService.getEdition(year);
-  return { title: edition ? edition.name : "Edition" };
+  return { title: edition ? `${edition.name} · Administration` : "Administration" };
 }
 
-export default async function EditionOverviewPage({
+export default async function EditionAdministrationPage({
   params,
 }: {
   params: Promise<{ year: string }>;
@@ -25,5 +25,10 @@ export default async function EditionOverviewPage({
   const { year } = await params;
   const detail = await statsService.getEditionDetail(year);
   if (!detail) notFound();
-  return <EditionOverview detail={detail} />;
+  return (
+    <EditionAdministration
+      groups={detail.edition.administration}
+      editionName={detail.edition.name}
+    />
+  );
 }

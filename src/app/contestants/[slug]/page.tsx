@@ -57,10 +57,10 @@ export default async function ContestantPage({
         }
       >
         <Link
-          href={`/olympiads/${edition.slug}`}
+          href={`/olympiads/${edition.slug}/results`}
           className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
         >
-          <ArrowLeft className="h-4 w-4" /> {edition.name} scoreboard
+          <ArrowLeft className="h-4 w-4" /> {edition.name} results
         </Link>
       </PageHeader>
 
@@ -74,7 +74,13 @@ export default async function ContestantPage({
               label: "Medal",
               accent: contestant.medal ? medalAccent[contestant.medal] : undefined,
             },
-            { value: `${contestant.day1Total} / ${contestant.day2Total}`, label: "Day 1 / Day 2" },
+            {
+              value: contestant.dayTotals.map((d) => d.total).join(" / "),
+              label:
+                contestant.dayTotals.length > 1
+                  ? `Per day (${contestant.dayTotals.map((d) => `D${d.day}`).join(" / ")})`
+                  : "Day total",
+            },
           ]}
         />
 

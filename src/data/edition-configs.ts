@@ -4,13 +4,15 @@
 import type { ContestantResult } from "./results";
 import { resultsData } from "./results";
 import type { MedalBands } from "@/domain/medal";
+import type { AdministrationGroup } from "@/domain/edition";
+import { paio2025Administration } from "./administration/paio2025";
 
 export interface TaskConfig {
   rawKey: keyof ContestantResult;
   slug: string;
   name: string;
   short: string;
-  day: 1 | 2;
+  day: number; // 1-based contest day; any number of days is supported
   maxScore: number;
   pdf?: string;
 }
@@ -24,9 +26,11 @@ export interface EditionConfig {
   country: string;
   format: string;
   dates: string;
+  website?: string;
   bands: MedalBands;
   tasks: TaskConfig[];
   results: ContestantResult[];
+  administration?: AdministrationGroup[];
 }
 
 const paio2025Tasks: TaskConfig[] = [
@@ -58,5 +62,6 @@ export const editionConfigs: EditionConfig[] = [
     },
     tasks: paio2025Tasks,
     results: resultsData,
+    administration: paio2025Administration,
   },
 ];

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { statsService } from "@/services";
-import EditionOverview from "@/features/editions/EditionOverview";
+import TaskStatsTable from "@/features/tasks/TaskStatsTable";
 
 export async function generateStaticParams() {
   return (await statsService.getEditionSlugs()).map((year) => ({ year }));
@@ -14,10 +14,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { year } = await params;
   const edition = await statsService.getEdition(year);
-  return { title: edition ? edition.name : "Edition" };
+  return { title: edition ? `${edition.name} · Tasks` : "Tasks" };
 }
 
-export default async function EditionOverviewPage({
+export default async function EditionTasksPage({
   params,
 }: {
   params: Promise<{ year: string }>;
@@ -25,5 +25,15 @@ export default async function EditionOverviewPage({
   const { year } = await params;
   const detail = await statsService.getEditionDetail(year);
   if (!detail) notFound();
-  return <EditionOverview detail={detail} />;
+
+  return (
+    <div className="space-y-4">
+      <p className="text-sm text-muted-foreground">
+        {detail.taskStats.length} task{detail.taskStats.length === 1 ? "" : "s"} over{" "}
+        {detail.edition.days.length} day{detail.edition.days.length === 1 ? "" : "s"}. Select a task
+        for its score distribution.
+      </p>
+      <TaskStatsTable editionSlug={detail.edition.slug} stats={detail.taskStats} />
+    </div>
+  );
 }
