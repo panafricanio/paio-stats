@@ -8,9 +8,12 @@
 # testing
 /coverage
 
-# next.js
+# next.js & Builds
 /.next/
 /out/
+.yarn/
+.pnp.*
+package-lock.json
 
 # production
 /build
@@ -34,3 +37,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# sandbox-specific yarn config (not for the repo)
+.yarnrc.yml
