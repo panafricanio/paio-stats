@@ -7,11 +7,18 @@ import type { Country, CountryAggregate } from "@/domain/country";
 import type { Contestant } from "@/domain/contestant";
 import type { Task, TaskStat } from "@/domain/task";
 import type { MedalTally } from "@/domain/medal";
-import type { DistributionBar, ScoreBucket } from "@/domain/aggregation";
+import type {
+  DistributionBar,
+  ScoreBucket,
+  MedalThreshold,
+  Delegation,
+} from "@/domain/aggregation";
 import {
   aggregateCountries,
   computeTaskStats,
   distributeTaskScores,
+  editionDelegations,
+  medalThresholds,
   tallyMedals,
 } from "@/domain/aggregation";
 
@@ -47,6 +54,7 @@ export interface ScoreRow {
   fullName: string;
   countryName: string;
   countryFlag: string;
+  countryCode: string | null;
   status: Contestant["status"];
   medal: Contestant["medal"];
   specialAward?: string;
@@ -56,10 +64,16 @@ export interface ScoreRow {
   total: number;
 }
 
-export interface EditionView {
+/** Everything the tabbed olympiad detail needs, in one bundle. */
+export interface EditionDetail {
   edition: Edition;
   summary: EditionSummary;
+  thresholds: MedalThreshold[];
+  maxScore: number;
+  hostCountry: Country | null;
   rows: ScoreRow[];
+  delegations: Delegation[];
+  taskStats: TaskStat[];
 }
 
 export interface CountryDetail {
@@ -140,14 +154,24 @@ export class StatsService {
     });
   }
 
-  async getEditionView(slug: string): Promise<EditionView | null> {
+  async getEditionSlugs(): Promise<string[]> {
+    const editions = await this.source.getEditions();
+    return editions.map((e) => e.slug);
+  }
+
+  async getEditionDetail(slug: string): Promise<EditionDetail | null> {
     const edition = await this.getEdition(slug);
     if (!edition) return null;
     const byName = await this.countriesByName();
     return {
       edition,
       summary: this.summarize(edition, byName),
+      thresholds: medalThresholds(edition),
+      maxScore: edition.tasks.reduce((sum, t) => sum + t.maxScore, 0),
+      hostCountry: byName.get(edition.host) ?? null,
       rows: edition.contestants.map((c) => this.toRow(c, byName)),
+      delegations: editionDelegations(edition, byName),
+      taskStats: computeTaskStats(edition),
     };
   }
 
@@ -263,6 +287,7 @@ export class StatsService {
       fullName: c.fullName,
       countryName: c.countryName,
       countryFlag: byName.get(c.countryName)?.flag ?? "",
+      countryCode: byName.get(c.countryName)?.code ?? null,
       status: c.status,
       medal: c.medal,
       specialAward: c.specialAward,

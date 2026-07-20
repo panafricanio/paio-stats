@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import DataTable, { type Column } from "@/components/ui/DataTable";
 import MedalBadge from "@/components/ui/MedalBadge";
@@ -32,6 +33,23 @@ const medalRowClass: Record<MedalType, string> = {
 };
 
 type DayFilter = "all" | "1" | "2";
+// Sort keys: "rank" | "total" | "day1" | "day2" | <task slug>
+type SortState = { key: string; dir: "asc" | "desc" };
+
+function valueOf(r: ScoreRow, key: string): number {
+  switch (key) {
+    case "rank":
+      return r.rank;
+    case "total":
+      return r.total;
+    case "day1":
+      return r.day1Total;
+    case "day2":
+      return r.day2Total;
+    default:
+      return r.scores[key] ?? 0;
+  }
+}
 
 export default function EditionScoreboard({
   rows,
@@ -42,15 +60,37 @@ export default function EditionScoreboard({
 }) {
   const [country, setCountry] = useState("all");
   const [day, setDay] = useState<DayFilter>("all");
+  const [sort, setSort] = useState<SortState>({ key: "rank", dir: "asc" });
 
   const countries = useMemo(
     () => Array.from(new Set(rows.map((r) => r.countryName).filter(Boolean))).sort(),
     [rows],
   );
 
-  const filteredRows = useMemo(
-    () => rows.filter((r) => country === "all" || r.countryName === country),
-    [rows, country],
+  const rowsForView = useMemo(() => {
+    const filtered = rows.filter((r) => country === "all" || r.countryName === country);
+    const factor = sort.dir === "asc" ? 1 : -1;
+    return [...filtered].sort(
+      (a, b) => (valueOf(a, sort.key) - valueOf(b, sort.key)) * factor || a.rank - b.rank,
+    );
+  }, [rows, country, sort]);
+
+  function toggleSort(key: string) {
+    setSort((prev) =>
+      prev.key === key
+        ? { key, dir: prev.dir === "asc" ? "desc" : "asc" }
+        : { key, dir: key === "rank" ? "asc" : "desc" },
+    );
+  }
+
+  const sortHeader = (label: string, key: string, align: "left" | "center" = "left") => (
+    <SortHeader
+      label={label}
+      active={sort.key === key}
+      dir={sort.dir}
+      align={align}
+      onClick={() => toggleSort(key)}
+    />
   );
 
   const columns = useMemo<Column<ScoreRow>[]>(() => {
@@ -59,7 +99,7 @@ export default function EditionScoreboard({
     const showDay2 = day !== "1";
 
     const cols: Column<ScoreRow>[] = [
-      { id: "rank", header: "Rank", numeric: true, cellClassName: "font-medium", cell: (r) => r.rank },
+      { id: "rank", header: sortHeader("Rank", "rank"), numeric: true, cellClassName: "font-medium", cell: (r) => r.rank },
       {
         id: "name",
         header: "Contestant",
@@ -90,7 +130,13 @@ export default function EditionScoreboard({
           r.countryName ? (
             <span>
               <span className="mr-1">{r.countryFlag}</span>
-              {r.countryName.replace(" (Guest)", "")}
+              {r.countryCode ? (
+                <Link href={`/countries/${r.countryCode}`} className="hover:underline">
+                  {r.countryName.replace(" (Guest)", "")}
+                </Link>
+              ) : (
+                r.countryName.replace(" (Guest)", "")
+              )}
             </span>
           ) : (
             <span className="text-muted-foreground/50">—</span>
@@ -98,10 +144,9 @@ export default function EditionScoreboard({
       },
       ...visibleTasks.map<Column<ScoreRow>>((t) => ({
         id: t.slug,
-        header: t.short,
+        header: sortHeader(t.short, t.slug, "center"),
         align: "center",
         numeric: true,
-        headerClassName: "font-semibold",
         cell: (r) => r.scores[t.slug] ?? 0,
       })),
     ];
@@ -109,7 +154,7 @@ export default function EditionScoreboard({
     if (showDay1)
       cols.push({
         id: "day1",
-        header: "Day 1",
+        header: sortHeader("Day 1", "day1", "center"),
         align: "center",
         numeric: true,
         cellClassName: "bg-muted/40 font-semibold",
@@ -118,7 +163,7 @@ export default function EditionScoreboard({
     if (showDay2)
       cols.push({
         id: "day2",
-        header: "Day 2",
+        header: sortHeader("Day 2", "day2", "center"),
         align: "center",
         numeric: true,
         cellClassName: "bg-muted/40 font-semibold",
@@ -128,7 +173,7 @@ export default function EditionScoreboard({
     cols.push(
       {
         id: "total",
-        header: "Total",
+        header: sortHeader("Total", "total", "center"),
         align: "center",
         numeric: true,
         cellClassName: "bg-muted/60 font-bold",
@@ -152,7 +197,8 @@ export default function EditionScoreboard({
     );
 
     return cols;
-  }, [tasks, day]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tasks, day, sort]);
 
   return (
     <div className="space-y-4">
@@ -187,7 +233,7 @@ export default function EditionScoreboard({
 
       <DataTable
         columns={columns}
-        rows={filteredRows}
+        rows={rowsForView}
         getRowKey={(r) => `${r.slug}-${r.rank}`}
         minWidth="960px"
         rowClassName={(r) =>
@@ -200,8 +246,38 @@ export default function EditionScoreboard({
       />
 
       <p className="text-right text-xs text-muted-foreground">
-        {filteredRows.length} contestant{filteredRows.length === 1 ? "" : "s"} shown
+        {rowsForView.length} contestant{rowsForView.length === 1 ? "" : "s"} shown
       </p>
     </div>
+  );
+}
+
+function SortHeader({
+  label,
+  active,
+  dir,
+  onClick,
+  align,
+}: {
+  label: string;
+  active: boolean;
+  dir: "asc" | "desc";
+  onClick: () => void;
+  align: "left" | "center";
+}) {
+  const Icon = !active ? ChevronsUpDown : dir === "asc" ? ChevronUp : ChevronDown;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-sort={active ? (dir === "asc" ? "ascending" : "descending") : "none"}
+      className={cn(
+        "inline-flex items-center gap-1 font-semibold transition-opacity hover:opacity-80",
+        align === "center" && "mx-auto",
+      )}
+    >
+      {label}
+      <Icon className={cn("h-3.5 w-3.5", !active && "opacity-50")} />
+    </button>
   );
 }
