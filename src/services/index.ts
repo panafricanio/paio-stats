@@ -16,6 +16,8 @@ export type {
   CountryEditionResults,
   CountryDelegationEntry,
   ContestantAppearance,
+  ContestantParticipation,
+  ContestantProfile,
   EditionTaskStats,
   TaskDetail,
 } from "./stats-service";
