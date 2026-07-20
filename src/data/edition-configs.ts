@@ -34,14 +34,14 @@ export interface EditionConfig {
 }
 
 const paio2025Tasks: TaskConfig[] = [
-  { rawKey: "cards", slug: "cards", name: "Cards", short: "Cards", day: 1, maxScore: 100 },
-  { rawKey: "gcd", slug: "gcd", name: "GCD", short: "GCD", day: 1, maxScore: 100 },
-  { rawKey: "rooks", slug: "rooks", name: "Rooks", short: "Rooks", day: 1, maxScore: 100 },
-  { rawKey: "xor", slug: "xor", name: "XOR", short: "XOR", day: 1, maxScore: 100 },
-  { rawKey: "adventure", slug: "adventure", name: "Adventure", short: "Adv", day: 2, maxScore: 100 },
-  { rawKey: "cake", slug: "cake", name: "Cake", short: "Cake", day: 2, maxScore: 100 },
-  { rawKey: "exhibition", slug: "exhibition", name: "Exhibition", short: "Exh", day: 2, maxScore: 100 },
-  { rawKey: "towers", slug: "towers", name: "Towers", short: "Towers", day: 2, maxScore: 100 },
+  { rawKey: "cards", slug: "cards", name: "Cards", short: "Cards", day: 1, maxScore: 100, pdf: "/tasks/2025/cards.pdf" },
+  { rawKey: "gcd", slug: "gcd", name: "GCD", short: "GCD", day: 1, maxScore: 100, pdf: "/tasks/2025/gcd.pdf" },
+  { rawKey: "rooks", slug: "rooks", name: "Rooks", short: "Rooks", day: 1, maxScore: 100, pdf: "/tasks/2025/rooks.pdf" },
+  { rawKey: "xor", slug: "xor", name: "XOR", short: "XOR", day: 1, maxScore: 100, pdf: "/tasks/2025/xor.pdf" },
+  { rawKey: "adventure", slug: "adventure", name: "Adventure", short: "Adv", day: 2, maxScore: 100, pdf: "/tasks/2025/adventure.pdf" },
+  { rawKey: "cake", slug: "cake", name: "Cake", short: "Cake", day: 2, maxScore: 100, pdf: "/tasks/2025/cake.pdf" },
+  { rawKey: "exhibition", slug: "exhibition", name: "Exhibition", short: "Exh", day: 2, maxScore: 100, pdf: "/tasks/2025/exhibition.pdf" },
+  { rawKey: "towers", slug: "towers", name: "Towers", short: "Towers", day: 2, maxScore: 100, pdf: "/tasks/2025/towers.pdf" },
 ];
 
 export const editionConfigs: EditionConfig[] = [
