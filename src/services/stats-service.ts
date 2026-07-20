@@ -2,7 +2,7 @@
 // data-access port + pure domain functions into ready-to-render view models,
 // so pages stay thin and business logic stays out of React.
 import type { StatsDataSource } from "./ports";
-import type { Edition } from "@/domain/edition";
+import type { Edition, Official } from "@/domain/edition";
 import type { Country, CountryAggregate } from "@/domain/country";
 import type { Contestant } from "@/domain/contestant";
 import type { Task, TaskStat } from "@/domain/task";
@@ -75,10 +75,47 @@ export interface EditionDetail {
   taskStats: TaskStat[];
 }
 
+/** One row of the countries ranking table. */
+export interface CountryRow {
+  country: Country;
+  guest: boolean; // guest teams are shown but ranked below official teams
+  hosted: number[]; // years this country hosted
+  participants: number;
+  gold: number;
+  silver: number;
+  bronze: number;
+  hm: number;
+  totalMedals: number;
+  bestRank: number;
+}
+
+export interface CountryEditionResults {
+  edition: Edition;
+  rows: ScoreRow[];
+}
+
+export interface CountryDelegationEntry {
+  edition: Edition;
+  contestants: Contestant[];
+  gold: number;
+  silver: number;
+  bronze: number;
+  hm: number;
+  bestRank: number;
+}
+
+/** Everything the tabbed country detail needs, in one bundle. */
 export interface CountryDetail {
   country: Country;
-  aggregate: CountryAggregate | null;
-  contestants: Contestant[];
+  firstYear: number | null;
+  editionsParticipated: number;
+  contestantsCount: number;
+  performance: MedalTally;
+  bestRank: number | null;
+  hosted: number[];
+  results: CountryEditionResults[];
+  delegations: CountryDelegationEntry[];
+  people: Official[];
 }
 
 export interface ContestantAppearance {
@@ -188,23 +225,161 @@ export class StatsService {
     return aggregateCountries(edition, await this.countriesByName());
   }
 
-  async getCountryDetail(code: string, editionSlug?: string): Promise<CountryDetail | null> {
-    const [countries, edition] = await Promise.all([
+  /** Rows for the countries ranking table, aggregated across all editions. */
+  async listCountryRows(): Promise<CountryRow[]> {
+    const [editions, byName] = await Promise.all([
+      this.source.getEditions(),
+      this.countriesByName(),
+    ]);
+
+    const map = new Map<string, CountryRow>();
+    for (const edition of editions) {
+      for (const c of edition.contestants) {
+        if (c.status === "unofficial") continue; // only unofficial entries are dropped
+        const country = byName.get(c.countryName);
+        if (!country) continue;
+        let row = map.get(country.code);
+        if (!row) {
+          row = {
+            country,
+            guest: c.status === "guest",
+            hosted: [],
+            participants: 0,
+            gold: 0,
+            silver: 0,
+            bronze: 0,
+            hm: 0,
+            totalMedals: 0,
+            bestRank: Infinity,
+          };
+          map.set(country.code, row);
+        }
+        row.participants++;
+        row.bestRank = Math.min(row.bestRank, c.rank);
+        if (c.medal === "GOLD") row.gold++;
+        else if (c.medal === "SILVER") row.silver++;
+        else if (c.medal === "BRONZE") row.bronze++;
+        else if (c.medal === "HM") row.hm++;
+      }
+    }
+    for (const edition of editions) {
+      const host = byName.get(edition.host);
+      if (host && map.has(host.code)) map.get(host.code)!.hosted.push(edition.year);
+    }
+    for (const row of map.values()) {
+      row.totalMedals = row.gold + row.silver + row.bronze;
+      row.hosted.sort((a, b) => a - b);
+    }
+
+    return [...map.values()].sort(
+      (a, b) =>
+        Number(a.guest) - Number(b.guest) || // official teams first, guests below
+        b.gold - a.gold ||
+        b.silver - a.silver ||
+        b.bronze - a.bronze ||
+        b.hm - a.hm ||
+        a.bestRank - b.bestRank ||
+        a.country.name.localeCompare(b.country.name),
+    );
+  }
+
+  async getCountryDetail(code: string): Promise<CountryDetail | null> {
+    const [countries, editions, byName] = await Promise.all([
       this.source.getCountries(),
-      editionSlug ? this.getEdition(editionSlug) : this.getLatestEdition(),
+      this.source.getEditions(),
+      this.countriesByName(),
     ]);
     const country = countries.find((c) => c.code === code);
-    if (!country || !edition) return null;
+    if (!country) return null;
 
-    const aggregate =
-      aggregateCountries(edition, await this.countriesByName()).find(
-        (a) => a.country.code === code,
-      ) ?? null;
-    const contestants = edition.contestants
-      .filter((c) => c.countryName === country.name)
-      .sort((a, b) => a.rank - b.rank);
+    const participated = editions
+      .filter((e) => e.contestants.some((c) => c.countryName === country.name))
+      .sort((a, b) => a.year - b.year);
 
-    return { country, aggregate, contestants };
+    const performance: MedalTally = { gold: 0, silver: 0, bronze: 0, hm: 0 };
+    let contestantsCount = 0;
+    let bestRank = Infinity;
+    const results: CountryEditionResults[] = [];
+    const delegations: CountryDelegationEntry[] = [];
+
+    for (const edition of participated) {
+      const members = edition.contestants
+        .filter((c) => c.countryName === country.name)
+        .sort((a, b) => a.rank - b.rank);
+      contestantsCount += members.length;
+
+      const del: CountryDelegationEntry = {
+        edition,
+        contestants: members,
+        gold: 0,
+        silver: 0,
+        bronze: 0,
+        hm: 0,
+        bestRank: Infinity,
+      };
+      for (const c of members) {
+        bestRank = Math.min(bestRank, c.rank);
+        del.bestRank = Math.min(del.bestRank, c.rank);
+        if (c.medal === "GOLD") (performance.gold++, del.gold++);
+        else if (c.medal === "SILVER") (performance.silver++, del.silver++);
+        else if (c.medal === "BRONZE") (performance.bronze++, del.bronze++);
+        else if (c.medal === "HM") (performance.hm++, del.hm++);
+      }
+      results.push({ edition, rows: members.map((c) => this.toRow(c, byName)) });
+      delegations.push(del);
+    }
+
+    return {
+      country,
+      firstYear: participated.length ? participated[0].year : null,
+      editionsParticipated: participated.length,
+      contestantsCount,
+      performance,
+      bestRank: bestRank === Infinity ? null : bestRank,
+      hosted: editions.filter((e) => e.host === country.name).map((e) => e.year).sort((a, b) => a - b),
+      results: results.slice().sort((a, b) => b.edition.year - a.edition.year),
+      delegations: delegations.slice().sort((a, b) => b.edition.year - a.edition.year),
+      people: this.peopleForCountry(participated, country),
+    };
+  }
+
+  /**
+   * People tied to a country. Matching is EXACT (never substring, which would
+   * make "Niger" match "Nigeria" or "Mali" match "Somalia"):
+   *  - a Team Leader whose role names exactly this country, and
+   *  - for the host country, its Host Committee and Coaches.
+   * Deduped by name, merging roles.
+   */
+  private peopleForCountry(editions: Edition[], country: Country): Official[] {
+    const cleanRole = (r: string) => r.replace(/\s*\(Guest\)\s*$/i, "").trim();
+    const byName = new Map<string, Official>();
+
+    for (const edition of editions) {
+      const isHost = edition.host === country.name;
+      for (const group of edition.administration) {
+        for (const member of group.members) {
+          const isLeader =
+            group.title === "Team Leaders" &&
+            member.roles.some((r) => cleanRole(r) === country.name);
+          const isHostStaff =
+            isHost && (group.title === "Host Committee" || group.title === "Coaches");
+          if (!isLeader && !isHostStaff) continue;
+
+          const existing = byName.get(member.name);
+          if (existing) {
+            for (const r of member.roles) if (!existing.roles.includes(r)) existing.roles.push(r);
+            if (!existing.image && member.image) existing.image = member.image;
+          } else {
+            byName.set(member.name, {
+              name: member.name,
+              roles: [...member.roles],
+              image: member.image,
+            });
+          }
+        }
+      }
+    }
+    return [...byName.values()];
   }
 
   /* ---- Contestants ---- */

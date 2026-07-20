@@ -50,10 +50,12 @@ export default function EditionScoreboard({
   rows,
   tasks,
   days,
+  showCountryFilter = true,
 }: {
   rows: ScoreRow[];
   tasks: ScoreboardTask[];
   days: number[];
+  showCountryFilter?: boolean;
 }) {
   const multiDay = days.length > 1;
   const [country, setCountry] = useState("all");
@@ -218,19 +220,21 @@ export default function EditionScoreboard({
             ))}
           </div>
         )}
-        <Select value={country} onValueChange={setCountry}>
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="All countries" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All countries</SelectItem>
-            {countries.map((c) => (
-              <SelectItem key={c} value={c}>
-                {c.replace(" (Guest)", "")}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        {showCountryFilter && (
+          <Select value={country} onValueChange={setCountry}>
+            <SelectTrigger className="w-[200px]">
+              <SelectValue placeholder="All countries" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All countries</SelectItem>
+              {countries.map((c) => (
+                <SelectItem key={c} value={c}>
+                  {c}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
       </div>
 
       <DataTable
