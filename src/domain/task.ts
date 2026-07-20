@@ -4,7 +4,7 @@ export interface Task {
   slug: string;
   name: string;
   short: string;
-  day: 1 | 2;
+  day: number; // which contest day this task belongs to (1-based)
   maxScore: number;
   pdf?: string;
 }

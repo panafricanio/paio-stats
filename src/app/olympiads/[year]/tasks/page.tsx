@@ -29,7 +29,9 @@ export default async function EditionTasksPage({
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        {detail.taskStats.length} tasks over 2 days. Select a task for its score distribution.
+        {detail.taskStats.length} task{detail.taskStats.length === 1 ? "" : "s"} over{" "}
+        {detail.edition.days.length} day{detail.edition.days.length === 1 ? "" : "s"}. Select a task
+        for its score distribution.
       </p>
       <TaskStatsTable editionSlug={detail.edition.slug} stats={detail.taskStats} />
     </div>

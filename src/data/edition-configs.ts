@@ -11,7 +11,7 @@ export interface TaskConfig {
   slug: string;
   name: string;
   short: string;
-  day: 1 | 2;
+  day: number; // 1-based contest day; any number of days is supported
   maxScore: number;
   pdf?: string;
 }

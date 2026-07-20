@@ -15,8 +15,6 @@ export default function CountryContestantsTable({ contestants }: { contestants: 
         </Link>
       ),
     },
-    { id: "day1", header: "Day 1", align: "center", numeric: true, cell: (c) => c.day1Total },
-    { id: "day2", header: "Day 2", align: "center", numeric: true, cell: (c) => c.day2Total },
     { id: "total", header: "Total", align: "center", numeric: true, cellClassName: "font-bold", cell: (c) => c.total },
     {
       id: "medal",

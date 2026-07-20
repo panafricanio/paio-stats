@@ -74,7 +74,13 @@ export default async function ContestantPage({
               label: "Medal",
               accent: contestant.medal ? medalAccent[contestant.medal] : undefined,
             },
-            { value: `${contestant.day1Total} / ${contestant.day2Total}`, label: "Day 1 / Day 2" },
+            {
+              value: contestant.dayTotals.map((d) => d.total).join(" / "),
+              label:
+                contestant.dayTotals.length > 1
+                  ? `Per day (${contestant.dayTotals.map((d) => `D${d.day}`).join(" / ")})`
+                  : "Day total",
+            },
           ]}
         />
 

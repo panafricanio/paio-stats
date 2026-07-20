@@ -33,5 +33,7 @@ export default async function EditionResultsPage({
     day: t.day,
   }));
 
-  return <EditionScoreboard rows={detail.rows} tasks={scoreboardTasks} />;
+  return (
+    <EditionScoreboard rows={detail.rows} tasks={scoreboardTasks} days={detail.edition.days} />
+  );
 }

@@ -43,7 +43,10 @@ export default function EditionOverview({ detail }: { detail: EditionDetail }) {
       ),
     },
     { label: "Countries", value: summary.countriesCount },
-    { label: "Tasks", value: `${summary.tasksCount} over 2 days` },
+    {
+      label: "Tasks",
+      value: `${summary.tasksCount} over ${edition.days.length} day${edition.days.length === 1 ? "" : "s"}`,
+    },
   ];
 
   if (edition.website) {

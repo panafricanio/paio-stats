@@ -22,7 +22,7 @@ export interface ScoreboardTask {
   slug: string;
   short: string;
   name: string;
-  day: 1 | 2;
+  day: number;
 }
 
 const medalRowClass: Record<MedalType, string> = {
@@ -32,34 +32,32 @@ const medalRowClass: Record<MedalType, string> = {
   HM: "bg-green-50 dark:bg-green-500/10",
 };
 
-type DayFilter = "all" | "1" | "2";
-// Sort keys: "rank" | "total" | "day1" | "day2" | <task slug>
+// Sort keys: "rank" | "total" | "day-<n>" | <task slug>
 type SortState = { key: string; dir: "asc" | "desc" };
 
+function dayTotalOf(r: ScoreRow, day: number): number {
+  return r.dayTotals.find((d) => d.day === day)?.total ?? 0;
+}
+
 function valueOf(r: ScoreRow, key: string): number {
-  switch (key) {
-    case "rank":
-      return r.rank;
-    case "total":
-      return r.total;
-    case "day1":
-      return r.day1Total;
-    case "day2":
-      return r.day2Total;
-    default:
-      return r.scores[key] ?? 0;
-  }
+  if (key === "rank") return r.rank;
+  if (key === "total") return r.total;
+  if (key.startsWith("day-")) return dayTotalOf(r, Number(key.slice(4)));
+  return r.scores[key] ?? 0;
 }
 
 export default function EditionScoreboard({
   rows,
   tasks,
+  days,
 }: {
   rows: ScoreRow[];
   tasks: ScoreboardTask[];
+  days: number[];
 }) {
+  const multiDay = days.length > 1;
   const [country, setCountry] = useState("all");
-  const [day, setDay] = useState<DayFilter>("all");
+  const [day, setDay] = useState<string>("all"); // "all" | String(day)
   const [sort, setSort] = useState<SortState>({ key: "rank", dir: "asc" });
 
   const countries = useMemo(
@@ -94,9 +92,8 @@ export default function EditionScoreboard({
   );
 
   const columns = useMemo<Column<ScoreRow>[]>(() => {
-    const visibleTasks = day === "all" ? tasks : tasks.filter((t) => String(t.day) === day);
-    const showDay1 = day !== "2";
-    const showDay2 = day !== "1";
+    const selectedDays = day === "all" ? days : [Number(day)];
+    const visibleTasks = tasks.filter((t) => selectedDays.includes(t.day));
 
     const cols: Column<ScoreRow>[] = [
       { id: "rank", header: sortHeader("Rank", "rank"), numeric: true, cellClassName: "font-medium", cell: (r) => r.rank },
@@ -151,24 +148,19 @@ export default function EditionScoreboard({
       })),
     ];
 
-    if (showDay1)
-      cols.push({
-        id: "day1",
-        header: sortHeader("Day 1", "day1", "center"),
-        align: "center",
-        numeric: true,
-        cellClassName: "bg-muted/40 font-semibold",
-        cell: (r) => r.day1Total,
-      });
-    if (showDay2)
-      cols.push({
-        id: "day2",
-        header: sortHeader("Day 2", "day2", "center"),
-        align: "center",
-        numeric: true,
-        cellClassName: "bg-muted/40 font-semibold",
-        cell: (r) => r.day2Total,
-      });
+    // Per-day total columns only make sense when the edition spans multiple days.
+    if (multiDay) {
+      for (const d of selectedDays) {
+        cols.push({
+          id: `day-${d}`,
+          header: sortHeader(`Day ${d}`, `day-${d}`, "center"),
+          align: "center",
+          numeric: true,
+          cellClassName: "bg-muted/40 font-semibold",
+          cell: (r) => dayTotalOf(r, d),
+        });
+      }
+    }
 
     cols.push(
       {
@@ -198,24 +190,34 @@ export default function EditionScoreboard({
 
     return cols;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tasks, day, sort]);
+  }, [tasks, days, day, sort, multiDay]);
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-end gap-3">
-        <div className="inline-flex rounded-md border border-border p-0.5">
-          {(["all", "1", "2"] as const).map((d) => (
+        {multiDay && (
+          <div className="inline-flex rounded-md border border-border p-0.5">
             <Button
-              key={d}
               size="sm"
-              variant={day === d ? "default" : "ghost"}
-              onClick={() => setDay(d)}
-              className={cn("h-8", day !== d && "text-muted-foreground")}
+              variant={day === "all" ? "default" : "ghost"}
+              onClick={() => setDay("all")}
+              className={cn("h-8", day !== "all" && "text-muted-foreground")}
             >
-              {d === "all" ? "Both days" : `Day ${d}`}
+              All days
             </Button>
-          ))}
-        </div>
+            {days.map((d) => (
+              <Button
+                key={d}
+                size="sm"
+                variant={day === String(d) ? "default" : "ghost"}
+                onClick={() => setDay(String(d))}
+                className={cn("h-8", day !== String(d) && "text-muted-foreground")}
+              >
+                Day {d}
+              </Button>
+            ))}
+          </div>
+        )}
         <Select value={country} onValueChange={setCountry}>
           <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="All countries" />
