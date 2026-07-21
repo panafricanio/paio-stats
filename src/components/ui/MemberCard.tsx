@@ -10,6 +10,7 @@ export default function MemberCard({ member }: { member: Official }) {
         <Avatar
           src={member.image}
           name={member.name}
+          sizes="(max-width: 639px) 128px, 144px"
           className="h-32 w-32 text-3xl ring-1 ring-border sm:h-36 sm:w-36"
         />
         <div className="mt-4 font-display text-lg font-semibold leading-tight">{member.name}</div>

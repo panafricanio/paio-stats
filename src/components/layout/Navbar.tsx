@@ -7,12 +7,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ThemeToggle from "./ThemeToggle";
-
-const links = [
-  { href: "/olympiads", label: "Editions" },
-  { href: "/countries", label: "Countries" },
-  { href: "/tasks", label: "Tasks" },
-];
+import { primaryNavigation } from "./navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -24,7 +19,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
       <nav className="container flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex min-h-11 items-center gap-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <Image
             src="/paio-logo.png"
             alt="PAIO"
@@ -37,13 +32,14 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">
-          {links.map((l) => (
+          {primaryNavigation.map((l) => (
             <Link
               key={l.href}
               href={l.href}
+              aria-current={isActive(l.href) ? "page" : undefined}
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent",
-                isActive(l.href) ? "text-foreground" : "text-muted-foreground",
+                "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium outline-none transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring",
+                isActive(l.href) ? "bg-accent text-foreground" : "text-muted-foreground",
               )}
             >
               {l.label}
@@ -58,9 +54,11 @@ export default function Navbar() {
           <ThemeToggle />
           <button
             type="button"
-            aria-label="Toggle menu"
+            aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={open}
+            aria-controls="primary-mobile-navigation"
             onClick={() => setOpen((o) => !o)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border outline-none transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
@@ -68,15 +66,16 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="border-t border-border md:hidden">
+        <div id="primary-mobile-navigation" className="border-t border-border md:hidden">
           <div className="container flex flex-col py-2">
-            {links.map((l) => (
+            {primaryNavigation.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
+                aria-current={isActive(l.href) ? "page" : undefined}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm font-medium",
+                  "flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring",
                   isActive(l.href) ? "bg-accent text-foreground" : "text-muted-foreground",
                 )}
               >

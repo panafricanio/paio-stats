@@ -58,5 +58,12 @@ export default function ContestantScoreTable({
     },
   ];
 
-  return <DataTable columns={columns} rows={rows} getRowKey={(r) => r.task.slug} />;
+  return (
+    <DataTable
+      columns={columns}
+      rows={rows}
+      getRowKey={(r) => r.task.slug}
+      caption={`${contestant.fullName}'s task scores at ${edition.name}.`}
+    />
+  );
 }

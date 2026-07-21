@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { statsService } from "@/services";
 import { getCountryByCode } from "@/data/countries";
 import PageHeader from "@/components/ui/PageHeader";
 import CountryTabs from "@/features/countries/CountryTabs";

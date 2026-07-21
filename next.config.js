@@ -1,9 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  eslint: {
-    // Lint is run separately; don't block production builds on it.
-    ignoreDuringBuilds: true,
-  },
-};
+const nextConfig = {};
 
 module.exports = nextConfig;

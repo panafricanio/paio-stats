@@ -18,15 +18,17 @@ export default function ThemeToggle() {
     document.documentElement.classList.toggle("dark", next);
     try {
       localStorage.setItem("theme", next ? "dark" : "light");
-    } catch (_) {}
+    } catch {}
   }
 
   return (
     <button
       type="button"
       onClick={toggle}
-      aria-label="Toggle theme"
-      className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border text-foreground transition-colors hover:bg-accent"
+      aria-label="Dark theme"
+      aria-pressed={dark}
+      title={dark ? "Switch to light theme" : "Switch to dark theme"}
+      className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border text-foreground outline-none transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
     >
       {mounted && dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </button>

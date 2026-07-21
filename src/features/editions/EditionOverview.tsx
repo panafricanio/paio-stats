@@ -96,10 +96,10 @@ export default function EditionOverview({ detail }: { detail: EditionDetail }) {
         </div>
         <StatGrid
           stats={[
-            { value: summary.official.gold, label: "Gold", accent: "text-gold" },
-            { value: summary.official.silver, label: "Silver", accent: "text-silver" },
-            { value: summary.official.bronze, label: "Bronze", accent: "text-bronze" },
-            { value: summary.official.hm, label: "Honorable mentions", accent: "text-hm" },
+            { value: summary.official.gold, label: "Gold", accent: "text-gold-foreground" },
+            { value: summary.official.silver, label: "Silver", accent: "text-silver-foreground" },
+            { value: summary.official.bronze, label: "Bronze", accent: "text-bronze-foreground" },
+            { value: summary.official.hm, label: "Honorable mentions", accent: "text-hm-foreground" },
           ]}
         />
         <MedalThresholds thresholds={thresholds} maxScore={maxScore} />
@@ -116,13 +116,13 @@ export default function EditionOverview({ detail }: { detail: EditionDetail }) {
       <div className="flex flex-wrap gap-3">
         <Link
           href={`/olympiads/${edition.slug}/results`}
-          className="inline-flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90"
+          className="inline-flex min-h-11 items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground outline-none hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring"
         >
           View full results <ArrowRight className="h-4 w-4" />
         </Link>
         <Link
           href={`/olympiads/${edition.slug}/tasks`}
-          className="inline-flex items-center gap-1 rounded-md border border-border px-4 py-2 text-sm font-medium hover:bg-accent"
+          className="inline-flex min-h-11 items-center gap-1 rounded-md border border-border px-4 py-2 text-sm font-medium outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
         >
           Tasks
         </Link>

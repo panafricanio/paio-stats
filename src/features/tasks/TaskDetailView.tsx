@@ -95,7 +95,7 @@ export default function TaskDetailView({ detail }: { detail: TaskDetail }) {
               <div className="w-16 shrink-0 text-right text-sm tnum text-muted-foreground">{b.label}</div>
               <div className="flex-1">
                 <div
-                  className="h-6 rounded bg-chart-1 transition-all"
+                  className="h-6 rounded bg-chart-1"
                   style={{ width: `${(b.count / maxBar) * 100}%`, minWidth: b.count ? "1.5rem" : 0 }}
                 />
               </div>
@@ -111,6 +111,7 @@ export default function TaskDetailView({ detail }: { detail: TaskDetail }) {
           columns={scorerColumns}
           rows={topScorers}
           getRowKey={(s) => s.contestant.slug}
+          caption={`Top scorers for ${task.name} at ${edition.name}.`}
           emptyMessage="No scores recorded."
         />
       </section>

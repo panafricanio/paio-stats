@@ -9,10 +9,10 @@ import type { ContestantProfile, ContestantParticipation } from "@/services";
 import type { MedalType } from "@/domain/medal";
 
 const chipClass: Record<MedalType, string> = {
-  GOLD: "border-gold/40 text-gold",
-  SILVER: "border-silver/40 text-silver",
-  BRONZE: "border-bronze/40 text-bronze",
-  HM: "border-hm/40 text-hm",
+  GOLD: "border-gold/40 bg-gold-surface text-gold-foreground",
+  SILVER: "border-silver/40 bg-silver-surface text-silver-foreground",
+  BRONZE: "border-bronze/40 bg-bronze-surface text-bronze-foreground",
+  HM: "border-hm/40 bg-hm-surface text-hm-foreground",
 };
 
 export default function ContestantProfileView({ profile }: { profile: ContestantProfile }) {
@@ -131,6 +131,7 @@ export default function ContestantProfileView({ profile }: { profile: Contestant
             columns={columns}
             rows={participations}
             getRowKey={(p) => p.edition.slug}
+            caption={`Participation history for ${fullName}.`}
           />
         </section>
 

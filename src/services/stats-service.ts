@@ -142,6 +142,22 @@ export interface ContestantProfile {
   participations: ContestantParticipation[]; // newest first
 }
 
+/** One contestant's all-time medal record for the Hall of Fame. */
+export interface HallOfFameRow {
+  rank: number;
+  slug: string;
+  fullName: string;
+  countryName: string;
+  countryFlag: string;
+  countryCode: string | null;
+  status: Contestant["status"];
+  participations: number;
+  gold: number;
+  silver: number;
+  bronze: number;
+  totalMedals: number;
+}
+
 export interface EditionTaskStats {
   edition: Edition;
   stats: TaskStat[];
@@ -339,10 +355,19 @@ export class StatsService {
       for (const c of members) {
         bestRank = Math.min(bestRank, c.rank);
         del.bestRank = Math.min(del.bestRank, c.rank);
-        if (c.medal === "GOLD") (performance.gold++, del.gold++);
-        else if (c.medal === "SILVER") (performance.silver++, del.silver++);
-        else if (c.medal === "BRONZE") (performance.bronze++, del.bronze++);
-        else if (c.medal === "HM") (performance.hm++, del.hm++);
+        if (c.medal === "GOLD") {
+          performance.gold += 1;
+          del.gold += 1;
+        } else if (c.medal === "SILVER") {
+          performance.silver += 1;
+          del.silver += 1;
+        } else if (c.medal === "BRONZE") {
+          performance.bronze += 1;
+          del.bronze += 1;
+        } else if (c.medal === "HM") {
+          performance.hm += 1;
+          del.hm += 1;
+        }
       }
       results.push({ edition, rows: members.map((c) => this.toRow(c, byName)) });
       delegations.push(del);
@@ -464,6 +489,74 @@ export class StatsService {
       totalScore,
       participations,
     };
+  }
+
+  /**
+   * All-time contestant ranking, modelled after the IOI Hall of Fame.
+   * Medals are compared lexicographically (gold, then silver, then bronze),
+   * and equal medal records share a competition rank.
+   */
+  async listHallOfFameRows(): Promise<HallOfFameRow[]> {
+    const [editions, byName] = await Promise.all([
+      this.source.getEditions(),
+      this.countriesByName(),
+    ]);
+
+    const bySlug = new Map<string, Omit<HallOfFameRow, "rank">>();
+
+    for (const edition of editions) {
+      for (const contestant of edition.contestants) {
+        const existing = bySlug.get(contestant.slug);
+        const country = byName.get(contestant.countryName);
+        const row = existing ?? {
+          slug: contestant.slug,
+          fullName: contestant.fullName,
+          countryName: contestant.countryName,
+          countryFlag: country?.flag ?? "",
+          countryCode: country?.code ?? null,
+          status: contestant.status,
+          participations: 0,
+          gold: 0,
+          silver: 0,
+          bronze: 0,
+          totalMedals: 0,
+        };
+
+        row.participations++;
+        if (contestant.medal === "GOLD") row.gold++;
+        else if (contestant.medal === "SILVER") row.silver++;
+        else if (contestant.medal === "BRONZE") row.bronze++;
+
+        // Editions are newest-first, so the first appearance supplies the
+        // current profile context when a contestant changes team or status.
+        if (!existing) bySlug.set(contestant.slug, row);
+      }
+    }
+
+    const sorted = [...bySlug.values()]
+      .map((row) => ({
+        ...row,
+        totalMedals: row.gold + row.silver + row.bronze,
+      }))
+      .sort(
+        (a, b) =>
+          b.gold - a.gold ||
+          b.silver - a.silver ||
+          b.bronze - a.bronze ||
+          a.fullName.localeCompare(b.fullName),
+      );
+
+    let rank = 0;
+    let previousMedals = "";
+
+    return sorted.map((row, index) => {
+      const medals = `${row.gold}:${row.silver}:${row.bronze}`;
+      if (medals !== previousMedals) {
+        rank = index + 1;
+        previousMedals = medals;
+      }
+      return { rank, ...row };
+    });
   }
 
   /* ---- Tasks ---- */

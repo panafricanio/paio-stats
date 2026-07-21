@@ -18,6 +18,7 @@ export type {
   ContestantAppearance,
   ContestantParticipation,
   ContestantProfile,
+  HallOfFameRow,
   EditionTaskStats,
   TaskDetail,
 } from "./stats-service";

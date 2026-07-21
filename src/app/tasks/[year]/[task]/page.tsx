@@ -37,7 +37,7 @@ export default async function TaskPage({
       >
         <Link
           href="/tasks"
-          className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
+          className="inline-flex min-h-11 items-center gap-1 rounded-sm text-sm font-medium text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
         >
           <ArrowLeft className="h-4 w-4" /> All tasks
         </Link>

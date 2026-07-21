@@ -7,6 +7,7 @@ import {
   TableRow,
   TableHead,
   TableCell,
+  TableCaption,
 } from "@/components/ui/table";
 
 export interface Column<T> {
@@ -14,6 +15,7 @@ export interface Column<T> {
   header: ReactNode;
   align?: "left" | "center" | "right";
   numeric?: boolean;
+  sortDirection?: "none" | "ascending" | "descending" | "other";
   headerClassName?: string;
   cellClassName?: string | ((row: T) => string);
   cell: (row: T, index: number) => ReactNode;
@@ -35,6 +37,7 @@ export default function DataTable<T>({
   getRowKey,
   rowClassName,
   minWidth,
+  caption,
   emptyMessage = "No data.",
   className,
 }: {
@@ -43,18 +46,27 @@ export default function DataTable<T>({
   getRowKey: (row: T, index: number) => string;
   rowClassName?: (row: T) => string | undefined;
   minWidth?: string;
+  caption: ReactNode;
   emptyMessage?: string;
   className?: string;
 }) {
   return (
     <div className={cn("overflow-hidden rounded-lg border border-border", className)}>
       <Table minWidth={minWidth}>
+        <TableCaption className="sr-only">{caption}</TableCaption>
         <TableHeader>
           <TableRow className="bg-primary text-primary-foreground hover:bg-primary">
             {columns.map((col) => (
               <TableHead
                 key={col.id}
-                className={cn("text-primary-foreground", alignClass[col.align ?? "left"], col.headerClassName)}
+                scope="col"
+                aria-sort={col.sortDirection}
+                className={cn(
+                  "text-primary-foreground",
+                  col.sortDirection && "py-0",
+                  alignClass[col.align ?? "left"],
+                  col.headerClassName,
+                )}
               >
                 {col.header}
               </TableHead>

@@ -3,10 +3,10 @@ import { MEDAL_LABELS, type MedalType } from "@/domain/medal";
 import type { MedalThreshold } from "@/domain";
 
 const accent: Record<MedalType, string> = {
-  GOLD: "text-gold",
-  SILVER: "text-silver",
-  BRONZE: "text-bronze",
-  HM: "text-hm",
+  GOLD: "text-gold-foreground",
+  SILVER: "text-silver-foreground",
+  BRONZE: "text-bronze-foreground",
+  HM: "text-hm-foreground",
 };
 
 export default function MedalThresholds({

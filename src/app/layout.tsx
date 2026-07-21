@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s · PAIO Stats",
   },
   description:
-    "Statistics for the Pan-African Informatics Olympiad — editions, countries, tasks and contestants.",
+    "Statistics for the Pan-African Informatics Olympiad: editions, countries, tasks, contestants, and all-time medal records.",
 };
 
 // Set the theme class before paint to avoid a flash of the wrong theme.
@@ -46,9 +46,17 @@ export default function RootLayout({
         className={`${poppins.variable} ${inter.variable} font-sans bg-background text-foreground antialiased`}
         suppressHydrationWarning
       >
+        <a
+          href="#main-content"
+          className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-md bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-md outline-none transition-transform focus:translate-y-0 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background motion-reduce:transition-none"
+        >
+          Skip to main content
+        </a>
         <div className="flex min-h-screen flex-col">
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
+            {children}
+          </main>
           <Footer />
         </div>
       </body>

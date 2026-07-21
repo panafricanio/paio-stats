@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { primaryNavigation } from "./navigation";
 
 export default function Footer() {
   return (
@@ -7,16 +8,16 @@ export default function Footer() {
         <p>
           PAIO Stats — Pan-African Informatics Olympiad statistics.
         </p>
-        <div className="flex items-center gap-4">
-          <Link href="/olympiads" className="hover:text-foreground">
-            Editions
-          </Link>
-          <Link href="/countries" className="hover:text-foreground">
-            Countries
-          </Link>
-          <Link href="/tasks" className="hover:text-foreground">
-            Tasks
-          </Link>
+        <div className="flex flex-wrap items-center justify-center gap-x-4">
+          {primaryNavigation.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="inline-flex min-h-11 items-center rounded-sm outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       </div>
     </footer>

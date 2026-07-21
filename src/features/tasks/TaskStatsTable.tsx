@@ -2,9 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
 import DataTable, { type Column } from "@/components/ui/DataTable";
+import SortableTableButton from "@/components/ui/SortableTableButton";
 import type { TaskStat } from "@/domain/task";
 
 interface Row extends TaskStat {
@@ -54,8 +53,11 @@ export default function TaskStatsTable({
     );
   }
 
+  const ariaSort = (key: SortKey): "none" | "ascending" | "descending" =>
+    sort.key === key ? (sort.dir === "asc" ? "ascending" : "descending") : "none";
+
   const sh = (label: string, key: SortKey, align: "left" | "center" = "center") => (
-    <SortHeader
+    <SortableTableButton
       label={label}
       active={sort.key === key}
       dir={sort.dir}
@@ -65,7 +67,15 @@ export default function TaskStatsTable({
   );
 
   const columns: Column<Row>[] = [
-    { id: "number", header: sh("#", "number"), align: "center", numeric: true, cellClassName: "text-muted-foreground", cell: (r) => r.number },
+    {
+      id: "number",
+      header: sh("Number", "number"),
+      sortDirection: ariaSort("number"),
+      align: "center",
+      numeric: true,
+      cellClassName: "text-muted-foreground",
+      cell: (r) => r.number,
+    },
     {
       id: "task",
       header: "Task",
@@ -76,42 +86,63 @@ export default function TaskStatsTable({
         </Link>
       ),
     },
-    { id: "day", header: sh("Day", "day"), align: "center", cellClassName: "text-muted-foreground", cell: (r) => r.task.day },
-    { id: "max", header: "Max", align: "center", numeric: true, cellClassName: "text-muted-foreground", cell: (r) => r.task.maxScore },
-    { id: "avg", header: sh("Avg", "avg"), align: "center", numeric: true, cell: (r) => r.avg.toFixed(1) },
-    { id: "avgPct", header: sh("Avg %", "avgPct"), align: "center", numeric: true, cell: (r) => `${r.avgPct.toFixed(1)}%` },
-    { id: "full", header: sh("Full solves", "full"), align: "center", numeric: true, cell: (r) => r.fullSolves },
-    { id: "fullPct", header: sh("Full %", "fullPct"), align: "center", numeric: true, cell: (r) => `${r.fullPct.toFixed(1)}%` },
+    {
+      id: "day",
+      header: sh("Day", "day"),
+      sortDirection: ariaSort("day"),
+      align: "center",
+      cellClassName: "text-muted-foreground",
+      cell: (r) => r.task.day,
+    },
+    {
+      id: "max",
+      header: "Max",
+      align: "center",
+      numeric: true,
+      cellClassName: "text-muted-foreground",
+      cell: (r) => r.task.maxScore,
+    },
+    {
+      id: "avg",
+      header: sh("Average score", "avg"),
+      sortDirection: ariaSort("avg"),
+      align: "center",
+      numeric: true,
+      cell: (r) => r.avg.toFixed(1),
+    },
+    {
+      id: "avgPct",
+      header: sh("Average percentage", "avgPct"),
+      sortDirection: ariaSort("avgPct"),
+      align: "center",
+      numeric: true,
+      cell: (r) => `${r.avgPct.toFixed(1)}%`,
+    },
+    {
+      id: "full",
+      header: sh("Full solves", "full"),
+      sortDirection: ariaSort("full"),
+      align: "center",
+      numeric: true,
+      cell: (r) => r.fullSolves,
+    },
+    {
+      id: "fullPct",
+      header: sh("Full-solve percentage", "fullPct"),
+      sortDirection: ariaSort("fullPct"),
+      align: "center",
+      numeric: true,
+      cell: (r) => `${r.fullPct.toFixed(1)}%`,
+    },
   ];
 
-  return <DataTable columns={columns} rows={rows} getRowKey={(r) => r.task.slug} minWidth="720px" />;
-}
-
-function SortHeader({
-  label,
-  active,
-  dir,
-  onClick,
-  align,
-}: {
-  label: string;
-  active: boolean;
-  dir: SortDir;
-  onClick: () => void;
-  align: "left" | "center";
-}) {
-  const Icon = !active ? ChevronsUpDown : dir === "asc" ? ChevronUp : ChevronDown;
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "inline-flex items-center gap-1 font-semibold transition-opacity hover:opacity-80",
-        align === "center" && "mx-auto",
-      )}
-    >
-      {label}
-      <Icon className={cn("h-3.5 w-3.5", !active && "opacity-50")} />
-    </button>
+    <DataTable
+      columns={columns}
+      rows={rows}
+      getRowKey={(r) => r.task.slug}
+      minWidth="720px"
+      caption="Task statistics for this PAIO edition."
+    />
   );
 }

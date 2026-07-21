@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export function initials(name: string): string {
@@ -15,10 +16,12 @@ export default function Avatar({
   src,
   name,
   className,
+  sizes = "144px",
 }: {
   src?: string;
   name: string;
   className?: string;
+  sizes?: string;
 }) {
   const [failed, setFailed] = useState(false);
   const showImage = src && !failed;
@@ -31,10 +34,12 @@ export default function Avatar({
       )}
     >
       {showImage ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        <Image
           src={src}
           alt={name}
+          fill
+          sizes={sizes}
+          quality={80}
           loading="lazy"
           className="h-full w-full object-cover"
           onError={() => setFailed(true)}

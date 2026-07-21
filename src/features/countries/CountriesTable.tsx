@@ -2,9 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
 import DataTable, { type Column } from "@/components/ui/DataTable";
+import SortableTableButton from "@/components/ui/SortableTableButton";
 import { Badge } from "@/components/ui/badge";
 import type { CountryRow } from "@/services";
 
@@ -54,13 +53,15 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
     );
   }
 
-  const sh = (label: string, key: SortKey, align: "left" | "center" = "left", className?: string) => (
-    <SortHeader
+  const ariaSort = (key: SortKey): "none" | "ascending" | "descending" =>
+    sort?.key === key ? (sort.dir === "asc" ? "ascending" : "descending") : "none";
+
+  const sh = (label: string, key: SortKey, align: "left" | "center" = "left") => (
+    <SortableTableButton
       label={label}
       active={sort?.key === key}
       dir={sort?.dir ?? "asc"}
       align={align}
-      className={className}
       onClick={() => toggleSort(key)}
     />
   );
@@ -69,6 +70,7 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
     {
       id: "country",
       header: sh("Country", "country"),
+      sortDirection: ariaSort("country"),
       cell: (r) => (
         <span className="flex items-center gap-2">
           <Link
@@ -92,46 +94,22 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
       cellClassName: "text-muted-foreground",
       cell: (r) => (r.hosted.length ? r.hosted.join(", ") : "—"),
     },
-    { id: "participants", header: sh("Contestants", "participants", "center"), align: "center", numeric: true, cell: (r) => r.participants },
-    { id: "gold", header: sh("Gold", "gold", "center", "text-gold"), align: "center", numeric: true, cellClassName: "font-semibold", cell: (r) => dash(r.gold) },
-    { id: "silver", header: sh("Silver", "silver", "center", "text-silver"), align: "center", numeric: true, cellClassName: "font-semibold", cell: (r) => dash(r.silver) },
-    { id: "bronze", header: sh("Bronze", "bronze", "center", "text-bronze"), align: "center", numeric: true, cellClassName: "font-semibold", cell: (r) => dash(r.bronze) },
-    { id: "hm", header: sh("HM", "hm", "center"), align: "center", numeric: true, cellClassName: "text-muted-foreground", cell: (r) => dash(r.hm) },
-    { id: "total", header: sh("Medals", "total", "center"), align: "center", numeric: true, cellClassName: "font-bold", cell: (r) => dash(r.totalMedals) },
-    { id: "best", header: sh("Best rank", "best", "center"), align: "center", numeric: true, cellClassName: "text-muted-foreground", cell: (r) => r.bestRank },
+    { id: "participants", header: sh("Contestants", "participants", "center"), sortDirection: ariaSort("participants"), align: "center", numeric: true, cell: (r) => r.participants },
+    { id: "gold", header: sh("Gold", "gold", "center"), sortDirection: ariaSort("gold"), align: "center", numeric: true, cellClassName: "font-semibold", cell: (r) => dash(r.gold) },
+    { id: "silver", header: sh("Silver", "silver", "center"), sortDirection: ariaSort("silver"), align: "center", numeric: true, cellClassName: "font-semibold", cell: (r) => dash(r.silver) },
+    { id: "bronze", header: sh("Bronze", "bronze", "center"), sortDirection: ariaSort("bronze"), align: "center", numeric: true, cellClassName: "font-semibold", cell: (r) => dash(r.bronze) },
+    { id: "hm", header: sh("HM", "hm", "center"), sortDirection: ariaSort("hm"), align: "center", numeric: true, cellClassName: "text-muted-foreground", cell: (r) => dash(r.hm) },
+    { id: "total", header: sh("Medals", "total", "center"), sortDirection: ariaSort("total"), align: "center", numeric: true, cellClassName: "font-bold", cell: (r) => dash(r.totalMedals) },
+    { id: "best", header: sh("Best rank", "best", "center"), sortDirection: ariaSort("best"), align: "center", numeric: true, cellClassName: "text-muted-foreground", cell: (r) => r.bestRank },
   ];
 
-  return <DataTable columns={columns} rows={sorted} getRowKey={(r) => r.country.code} minWidth="820px" />;
-}
-
-function SortHeader({
-  label,
-  active,
-  dir,
-  onClick,
-  align,
-  className,
-}: {
-  label: string;
-  active: boolean;
-  dir: SortDir;
-  onClick: () => void;
-  align: "left" | "center";
-  className?: string;
-}) {
-  const Icon = !active ? ChevronsUpDown : dir === "asc" ? ChevronUp : ChevronDown;
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "inline-flex items-center gap-1 font-semibold transition-opacity hover:opacity-80",
-        align === "center" && "mx-auto",
-        className,
-      )}
-    >
-      {label}
-      <Icon className={cn("h-3.5 w-3.5", !active && "opacity-50")} />
-    </button>
+    <DataTable
+      columns={columns}
+      rows={sorted}
+      getRowKey={(r) => r.country.code}
+      minWidth="820px"
+      caption="PAIO country ranking by official medals and best individual rank."
+    />
   );
 }

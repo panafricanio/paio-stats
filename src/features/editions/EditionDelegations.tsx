@@ -40,10 +40,10 @@ export default function EditionDelegations({
 
               <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
                 <span>{d.participants} contestants</span>
-                {d.gold > 0 && <span className="text-gold">{d.gold} gold</span>}
-                {d.silver > 0 && <span className="text-silver">{d.silver} silver</span>}
-                {d.bronze > 0 && <span className="text-bronze">{d.bronze} bronze</span>}
-                {d.hm > 0 && <span className="text-hm">{d.hm} HM</span>}
+                {d.gold > 0 && <span className="text-gold-foreground">{d.gold} gold</span>}
+                {d.silver > 0 && <span className="text-silver-foreground">{d.silver} silver</span>}
+                {d.bronze > 0 && <span className="text-bronze-foreground">{d.bronze} bronze</span>}
+                {d.hm > 0 && <span className="text-hm-foreground">{d.hm} HM</span>}
               </div>
 
               <ul className="mt-4 space-y-1.5">

@@ -25,6 +25,11 @@ export default function CountryContestantsTable({ contestants }: { contestants: 
   ];
 
   return (
-    <DataTable columns={columns} rows={contestants} getRowKey={(c) => `${c.slug}-${c.rank}`} />
+    <DataTable
+      columns={columns}
+      rows={contestants}
+      getRowKey={(c) => `${c.slug}-${c.rank}`}
+      caption="Contestants representing this country, with final ranks, scores, and awards."
+    />
   );
 }

@@ -10,11 +10,10 @@ const badgeVariants = cva(
         default: "border-transparent bg-primary text-primary-foreground",
         secondary: "border-transparent bg-secondary text-secondary-foreground",
         outline: "text-foreground",
-        // Medal variants (PAIO stats)
-        gold: "border-yellow-500 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white",
-        silver: "border-gray-400 bg-gradient-to-r from-gray-300 to-gray-500 text-white",
-        bronze: "border-amber-600 bg-gradient-to-r from-amber-600 to-orange-700 text-white",
-        hm: "border-green-500 bg-gradient-to-r from-green-400 to-green-600 text-white",
+        gold: "border-gold/40 bg-gold-surface text-gold-foreground",
+        silver: "border-silver/40 bg-silver-surface text-silver-foreground",
+        bronze: "border-bronze/40 bg-bronze-surface text-bronze-foreground",
+        hm: "border-hm/40 bg-hm-surface text-hm-foreground",
       },
     },
     defaultVariants: {

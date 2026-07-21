@@ -65,7 +65,12 @@ export default function EditionContestants({ rows }: { rows: ScoreRow[] }) {
       <p className="text-sm text-muted-foreground">
         {sorted.length} contestants, listed alphabetically.
       </p>
-      <DataTable columns={columns} rows={sorted} getRowKey={(r) => `${r.slug}-${r.rank}`} />
+      <DataTable
+        columns={columns}
+        rows={sorted}
+        getRowKey={(r) => `${r.slug}-${r.rank}`}
+        caption="Contestants in this edition, with countries, final ranks, scores, and awards."
+      />
     </div>
   );
 }

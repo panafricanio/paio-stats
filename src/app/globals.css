@@ -40,6 +40,14 @@
     --silver: 0 0% 62%;
     --bronze: 25 75% 45%;
     --hm: 142 71% 40%;
+    --gold-foreground: 38 100% 24%;
+    --silver-foreground: 0 0% 32%;
+    --bronze-foreground: 24 78% 32%;
+    --hm-foreground: 142 75% 25%;
+    --gold-surface: 43 100% 94%;
+    --silver-surface: 0 0% 95%;
+    --bronze-surface: 25 70% 94%;
+    --hm-surface: 142 55% 94%;
   }
 
   .dark {
@@ -73,6 +81,14 @@
     --silver: 0 0% 72%;
     --bronze: 25 70% 52%;
     --hm: 142 65% 50%;
+    --gold-foreground: 43 96% 70%;
+    --silver-foreground: 0 0% 78%;
+    --bronze-foreground: 25 80% 70%;
+    --hm-foreground: 142 65% 68%;
+    --gold-surface: 43 65% 13%;
+    --silver-surface: 0 0% 16%;
+    --bronze-surface: 25 60% 14%;
+    --hm-surface: 142 55% 13%;
   }
 }
 
@@ -108,6 +124,14 @@
   --color-silver: hsl(var(--silver));
   --color-bronze: hsl(var(--bronze));
   --color-hm: hsl(var(--hm));
+  --color-gold-foreground: hsl(var(--gold-foreground));
+  --color-silver-foreground: hsl(var(--silver-foreground));
+  --color-bronze-foreground: hsl(var(--bronze-foreground));
+  --color-hm-foreground: hsl(var(--hm-foreground));
+  --color-gold-surface: hsl(var(--gold-surface));
+  --color-silver-surface: hsl(var(--silver-surface));
+  --color-bronze-surface: hsl(var(--bronze-surface));
+  --color-hm-surface: hsl(var(--hm-surface));
 
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-display: var(--font-poppins), var(--font-inter), sans-serif;

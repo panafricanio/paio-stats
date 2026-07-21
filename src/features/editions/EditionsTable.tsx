@@ -2,10 +2,11 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import SortableTableButton from "@/components/ui/SortableTableButton";
 import {
   Table,
+  TableCaption,
   TableHeader,
   TableBody,
   TableRow,
@@ -39,6 +40,9 @@ export default function EditionsTable({ rows }: { rows: EditionRow[] }) {
   return (
     <div className="overflow-hidden rounded-lg border border-border">
       <Table minWidth="720px">
+        <TableCaption className="sr-only">
+          PAIO editions with dates, hosts, contestant totals, and participating country totals.
+        </TableCaption>
         <TableHeader>
           <TableRow className="bg-primary text-primary-foreground hover:bg-primary">
             <TableHead className="w-16 text-center text-primary-foreground">No.</TableHead>
@@ -110,21 +114,19 @@ function SortableHead({
   onClick: () => void;
   align?: "left" | "center";
 }) {
-  const Icon = !active ? ChevronsUpDown : dir === "asc" ? ChevronUp : ChevronDown;
   return (
-    <TableHead className={cn("text-primary-foreground", align === "center" && "text-center")}>
-      <button
-        type="button"
+    <TableHead
+      scope="col"
+      aria-sort={active ? (dir === "asc" ? "ascending" : "descending") : "none"}
+      className={cn("py-0 text-primary-foreground", align === "center" && "text-center")}
+    >
+      <SortableTableButton
+        label={label}
+        active={active}
+        dir={dir}
+        align={align}
         onClick={onClick}
-        aria-sort={active ? (dir === "asc" ? "ascending" : "descending") : "none"}
-        className={cn(
-          "inline-flex items-center gap-1 font-semibold transition-opacity hover:opacity-80",
-          align === "center" && "mx-auto",
-        )}
-      >
-        {label}
-        <Icon className={cn("h-3.5 w-3.5", !active && "opacity-50")} />
-      </button>
+      />
     </TableHead>
   );
 }

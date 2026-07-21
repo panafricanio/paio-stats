@@ -18,10 +18,10 @@ export default function CountryDelegationsView({
             <h2 className="font-display text-2xl">{d.edition.name}</h2>
             <div className="flex flex-wrap gap-x-4 text-sm text-muted-foreground">
               <span>{d.contestants.length} contestants</span>
-              {d.gold > 0 && <span className="text-gold">{d.gold} gold</span>}
-              {d.silver > 0 && <span className="text-silver">{d.silver} silver</span>}
-              {d.bronze > 0 && <span className="text-bronze">{d.bronze} bronze</span>}
-              {d.hm > 0 && <span className="text-hm">{d.hm} HM</span>}
+              {d.gold > 0 && <span className="text-gold-foreground">{d.gold} gold</span>}
+              {d.silver > 0 && <span className="text-silver-foreground">{d.silver} silver</span>}
+              {d.bronze > 0 && <span className="text-bronze-foreground">{d.bronze} bronze</span>}
+              {d.hm > 0 && <span className="text-hm-foreground">{d.hm} HM</span>}
             </div>
           </div>
           <CountryContestantsTable contestants={d.contestants} />

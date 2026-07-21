@@ -38,17 +38,17 @@ export default function CountryOverview({ detail }: { detail: CountryDetail }) {
         <h2 className="mb-4 font-display text-2xl">Performance</h2>
         <StatGrid
           stats={[
-            { value: performance.gold, label: "Gold", accent: "text-gold" },
-            { value: performance.silver, label: "Silver", accent: "text-silver" },
-            { value: performance.bronze, label: "Bronze", accent: "text-bronze" },
-            { value: performance.hm, label: "Honorable mentions", accent: "text-hm" },
+            { value: performance.gold, label: "Gold", accent: "text-gold-foreground" },
+            { value: performance.silver, label: "Silver", accent: "text-silver-foreground" },
+            { value: performance.bronze, label: "Bronze", accent: "text-bronze-foreground" },
+            { value: performance.hm, label: "Honorable mentions", accent: "text-hm-foreground" },
           ]}
         />
       </section>
 
       <Link
         href={`/countries/${country.code}/results`}
-        className="inline-flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90"
+        className="inline-flex min-h-11 items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground outline-none hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring"
       >
         View results <ArrowRight className="h-4 w-4" />
       </Link>
