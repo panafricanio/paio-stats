@@ -15,7 +15,7 @@ export default async function CountriesPage() {
     <div>
       <PageHeader
         title="Countries"
-        subtitle="National teams ranked by medals — first by gold, then silver, then bronze, then best individual rank. Guest teams are shown but ranked below official teams."
+        subtitle="National teams ranked by medals — first by gold, then silver, then bronze. Guest teams are shown but ranked below official teams."
       />
       <div className="container py-10">
         <CountriesTable rows={rows} />

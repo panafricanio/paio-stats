@@ -17,7 +17,7 @@ export default function EditionDelegations({
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
         {delegations.length} delegation{delegations.length === 1 ? "" : "s"} took part, ordered by
-        medals won.
+        gold, then silver, then bronze.
       </p>
       <div className="grid gap-4 md:grid-cols-2">
         {delegations.map((d) => (

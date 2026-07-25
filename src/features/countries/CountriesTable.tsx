@@ -7,7 +7,7 @@ import SortableTableButton from "@/components/ui/SortableTableButton";
 import { Badge } from "@/components/ui/badge";
 import type { CountryRow } from "@/services";
 
-type SortKey = "country" | "participants" | "gold" | "silver" | "bronze" | "hm" | "total" | "best";
+type SortKey = "country" | "participants" | "gold" | "silver" | "bronze" | "hm" | "total";
 type SortDir = "asc" | "desc";
 
 const dash = (n: number) => (n ? n : "—");
@@ -26,8 +26,6 @@ function valueOf(r: CountryRow, key: SortKey): number {
       return r.hm;
     case "total":
       return r.totalMedals;
-    case "best":
-      return r.bestRank;
     default:
       return 0;
   }
@@ -49,7 +47,7 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
     setSort((prev) =>
       prev?.key === key
         ? { key, dir: prev.dir === "asc" ? "desc" : "asc" }
-        : { key, dir: key === "country" || key === "best" ? "asc" : "desc" },
+        : { key, dir: key === "country" ? "asc" : "desc" },
     );
   }
 
@@ -100,7 +98,6 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
     { id: "bronze", header: sh("Bronze", "bronze", "center"), sortDirection: ariaSort("bronze"), align: "center", numeric: true, cellClassName: "font-semibold", cell: (r) => dash(r.bronze) },
     { id: "hm", header: sh("HM", "hm", "center"), sortDirection: ariaSort("hm"), align: "center", numeric: true, cellClassName: "text-muted-foreground", cell: (r) => dash(r.hm) },
     { id: "total", header: sh("Medals", "total", "center"), sortDirection: ariaSort("total"), align: "center", numeric: true, cellClassName: "font-bold", cell: (r) => dash(r.totalMedals) },
-    { id: "best", header: sh("Best rank", "best", "center"), sortDirection: ariaSort("best"), align: "center", numeric: true, cellClassName: "text-muted-foreground", cell: (r) => r.bestRank },
   ];
 
   return (
@@ -109,7 +106,7 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
       rows={sorted}
       getRowKey={(r) => r.country.code}
       minWidth="820px"
-      caption="PAIO country ranking by official medals and best individual rank."
+      caption="PAIO country ranking by official medals — gold, then silver, then bronze."
     />
   );
 }
