@@ -36,18 +36,27 @@
     --chart-5: 262 83% 58%;
 
     /* --- Medal semantics --- */
+    /* Accent marks / badge borders (saturated). */
     --gold: 43 96% 48%;
     --silver: 0 0% 62%;
     --bronze: 25 75% 45%;
     --hm: 142 71% 40%;
-    --gold-foreground: 38 100% 24%;
-    --silver-foreground: 0 0% 32%;
-    --bronze-foreground: 24 78% 32%;
-    --hm-foreground: 142 75% 25%;
-    --gold-surface: 43 100% 94%;
-    --silver-surface: 0 0% 95%;
-    --bronze-surface: 25 70% 94%;
-    --hm-surface: 142 55% 94%;
+    /* Text on surfaces — dark enough for IOI-strength fills. */
+    --gold-foreground: 40 80% 16%;
+    --silver-foreground: 0 0% 18%;
+    --bronze-foreground: 28 55% 12%;
+    --hm-foreground: 142 60% 18%;
+    /*
+     * Column / row surface fills — matched to IOI stats design.css:
+     *   td.gold   #FFEE55
+     *   td.silver #CCCCCC
+     *   td.bronze #B87838
+     * HM is PAIO-extra (mint); quieter than G/S/B.
+     */
+    --gold-surface: 54 100% 67%;
+    --silver-surface: 0 0% 80%;
+    --bronze-surface: 30 53% 47%;
+    --hm-surface: 142 42% 88%;
   }
 
   .dark {
@@ -81,14 +90,19 @@
     --silver: 0 0% 72%;
     --bronze: 25 70% 52%;
     --hm: 142 65% 50%;
-    --gold-foreground: 43 96% 70%;
-    --silver-foreground: 0 0% 78%;
-    --bronze-foreground: 25 80% 70%;
-    --hm-foreground: 142 65% 68%;
-    --gold-surface: 43 65% 13%;
-    --silver-surface: 0 0% 16%;
-    --bronze-surface: 25 60% 14%;
-    --hm-surface: 142 55% 13%;
+    /* Light / tinted text on rich dark surfaces */
+    --gold-foreground: 45 96% 88%;
+    --silver-foreground: 210 20% 94%;
+    --bronze-foreground: 28 70% 90%;
+    --hm-foreground: 148 48% 84%;
+    /*
+     * Dark column fills: clear tinted bands (not muddy charcoal).
+     * Richer chroma + mid lightness so G/S/B read as medal colors on near-black UI.
+     */
+    --gold-surface: 43 78% 32%;
+    --silver-surface: 215 16% 38%;
+    --bronze-surface: 24 62% 34%;
+    --hm-surface: 148 40% 28%;
   }
 }
 
