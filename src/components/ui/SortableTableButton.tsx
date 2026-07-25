@@ -10,6 +10,7 @@ export default function SortableTableButton({
   dir,
   align = "left",
   onClick,
+  "aria-label": ariaLabel,
 }: {
   label: string;
   detail?: string;
@@ -17,6 +18,7 @@ export default function SortableTableButton({
   dir: SortDir;
   align?: "left" | "center";
   onClick: () => void;
+  "aria-label"?: string;
 }) {
   const Icon = !active ? ChevronsUpDown : dir === "asc" ? ChevronUp : ChevronDown;
 
@@ -24,7 +26,7 @@ export default function SortableTableButton({
     <button
       type="button"
       onClick={onClick}
-      aria-label={`Sort by ${label}`}
+      aria-label={ariaLabel ?? `Sort by ${label}`}
       className={cn(
         "inline-flex min-h-11 items-center gap-1.5 rounded-sm font-semibold outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-primary-foreground/70",
         align === "center" && "mx-auto",
