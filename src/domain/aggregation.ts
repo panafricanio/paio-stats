@@ -56,7 +56,6 @@ export interface Delegation {
   silver: number;
   bronze: number;
   hm: number;
-  bestRank: number;
   contestants: Contestant[];
 }
 
@@ -85,13 +84,11 @@ export function editionDelegations(
         silver: 0,
         bronze: 0,
         hm: 0,
-        bestRank: Infinity,
         contestants: [],
       };
       map.set(country.code, d);
     }
     d.participants++;
-    d.bestRank = Math.min(d.bestRank, c.rank);
     d.contestants.push(c);
     if (c.medal === "GOLD") d.gold++;
     else if (c.medal === "SILVER") d.silver++;
@@ -107,8 +104,6 @@ export function editionDelegations(
       b.gold - a.gold ||
       b.silver - a.silver ||
       b.bronze - a.bronze ||
-      b.hm - a.hm ||
-      a.bestRank - b.bestRank ||
       a.country.name.localeCompare(b.country.name),
   );
 }
@@ -135,12 +130,10 @@ export function aggregateCountries(
         bronze: 0,
         hm: 0,
         totalMedals: 0,
-        bestRank: Infinity,
       };
       map.set(country.code, agg);
     }
     agg.participants++;
-    agg.bestRank = Math.min(agg.bestRank, c.rank);
     if (c.medal === "GOLD") agg.gold++;
     else if (c.medal === "SILVER") agg.silver++;
     else if (c.medal === "BRONZE") agg.bronze++;
@@ -154,14 +147,12 @@ export function aggregateCountries(
   return [...map.values()].sort(compareCountryAggregate);
 }
 
-/** Medal-table ordering: gold, then silver, then bronze, then HM, then best rank. */
+/** IOI medal-table ordering: gold, then silver, then bronze, then name. */
 export function compareCountryAggregate(a: CountryAggregate, b: CountryAggregate): number {
   return (
     b.gold - a.gold ||
     b.silver - a.silver ||
     b.bronze - a.bronze ||
-    b.hm - a.hm ||
-    a.bestRank - b.bestRank ||
     a.country.name.localeCompare(b.country.name)
   );
 }

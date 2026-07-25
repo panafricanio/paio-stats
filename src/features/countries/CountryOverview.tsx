@@ -4,8 +4,7 @@ import StatGrid from "@/components/ui/StatGrid";
 import type { CountryDetail } from "@/services";
 
 export default function CountryOverview({ detail }: { detail: CountryDetail }) {
-  const { country, firstYear, editionsParticipated, contestantsCount, performance, bestRank, hosted } =
-    detail;
+  const { country, firstYear, editionsParticipated, contestantsCount, performance, hosted } = detail;
 
   if (editionsParticipated === 0) {
     return (
@@ -24,7 +23,6 @@ export default function CountryOverview({ detail }: { detail: CountryDetail }) {
             { value: firstYear ?? "—", label: "First edition" },
             { value: editionsParticipated, label: "Editions" },
             { value: contestantsCount, label: "Contestants" },
-            { value: bestRank ? `#${bestRank}` : "—", label: "Best rank" },
           ]}
         />
         {hosted.length > 0 && (

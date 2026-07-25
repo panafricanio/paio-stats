@@ -14,5 +14,4 @@ export interface CountryAggregate {
   bronze: number;
   hm: number;
   totalMedals: number;
-  bestRank: number;
 }
