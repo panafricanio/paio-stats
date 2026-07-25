@@ -144,9 +144,9 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
             <GuideSection title="Countries">
               <p>
                 A country is a state taking part in the PAIO with an official team. In the country
-                rankings, teams are ordered first by gold medals, then silver, then bronze, and finally
-                by their best individual rank. A contestant&apos;s medals count towards their country&apos;s
-                totals only when they compete as an official team member.
+                rankings, teams are ordered first by gold medals, then silver, then bronze. A
+                contestant&apos;s medals count towards their country&apos;s totals only when they
+                compete as an official team member.
               </p>
             </GuideSection>
 

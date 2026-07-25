@@ -86,7 +86,6 @@ export interface CountryRow {
   bronze: number;
   hm: number;
   totalMedals: number;
-  bestRank: number;
 }
 
 export interface CountryEditionResults {
@@ -101,7 +100,6 @@ export interface CountryDelegationEntry {
   silver: number;
   bronze: number;
   hm: number;
-  bestRank: number;
 }
 
 /** Everything the tabbed country detail needs, in one bundle. */
@@ -111,7 +109,6 @@ export interface CountryDetail {
   editionsParticipated: number;
   contestantsCount: number;
   performance: MedalTally;
-  bestRank: number | null;
   hosted: number[];
   results: CountryEditionResults[];
   delegations: CountryDelegationEntry[];
@@ -285,12 +282,10 @@ export class StatsService {
             bronze: 0,
             hm: 0,
             totalMedals: 0,
-            bestRank: Infinity,
           };
           map.set(country.code, row);
         }
         row.participants++;
-        row.bestRank = Math.min(row.bestRank, c.rank);
         if (c.medal === "GOLD") row.gold++;
         else if (c.medal === "SILVER") row.silver++;
         else if (c.medal === "BRONZE") row.bronze++;
@@ -312,8 +307,6 @@ export class StatsService {
         b.gold - a.gold ||
         b.silver - a.silver ||
         b.bronze - a.bronze ||
-        b.hm - a.hm ||
-        a.bestRank - b.bestRank ||
         a.country.name.localeCompare(b.country.name),
     );
   }
@@ -333,7 +326,6 @@ export class StatsService {
 
     const performance: MedalTally = { gold: 0, silver: 0, bronze: 0, hm: 0 };
     let contestantsCount = 0;
-    let bestRank = Infinity;
     const results: CountryEditionResults[] = [];
     const delegations: CountryDelegationEntry[] = [];
 
@@ -350,11 +342,8 @@ export class StatsService {
         silver: 0,
         bronze: 0,
         hm: 0,
-        bestRank: Infinity,
       };
       for (const c of members) {
-        bestRank = Math.min(bestRank, c.rank);
-        del.bestRank = Math.min(del.bestRank, c.rank);
         if (c.medal === "GOLD") {
           performance.gold += 1;
           del.gold += 1;
@@ -379,7 +368,6 @@ export class StatsService {
       editionsParticipated: participated.length,
       contestantsCount,
       performance,
-      bestRank: bestRank === Infinity ? null : bestRank,
       hosted: editions.filter((e) => e.host === country.name).map((e) => e.year).sort((a, b) => a - b),
       results: results.slice().sort((a, b) => b.edition.year - a.edition.year),
       delegations: delegations.slice().sort((a, b) => b.edition.year - a.edition.year),
