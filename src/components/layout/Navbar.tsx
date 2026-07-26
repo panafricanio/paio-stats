@@ -19,16 +19,22 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
       <nav className="container flex h-16 items-center justify-between">
-        <Link href="/" className="flex min-h-11 items-center gap-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        <Link
+          href="/"
+          className="flex min-h-11 items-center gap-2.5 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          aria-label="PAIO Stats home"
+        >
           <Image
             src="/paio-logo.png"
-            alt="PAIO"
-            width={48}
-            height={32}
+            alt=""
+            width={120}
+            height={80}
             priority
-            className="h-8 w-auto dark:invert"
+            className="h-10 w-auto dark:invert md:h-12"
           />
-          <span className="font-display text-lg font-semibold text-muted-foreground">Stats</span>
+          <span className="font-display text-lg font-semibold tracking-tight text-foreground">
+            Stats
+          </span>
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">

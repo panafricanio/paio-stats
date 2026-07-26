@@ -22,6 +22,22 @@ export const metadata: Metadata = {
   },
   description:
     "Statistics for the Pan-African Informatics Olympiad: editions, countries, tasks, contestants, and all-time medal records.",
+  applicationName: "PAIO Stats",
+  openGraph: {
+    title: "PAIO Stats",
+    description:
+      "Statistics for the Pan-African Informatics Olympiad: editions, countries, tasks, contestants, and all-time medal records.",
+    siteName: "PAIO Stats",
+    images: [{ url: "/og-paio.png", width: 1200, height: 630, alt: "PAIO" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PAIO Stats",
+    description:
+      "Statistics for the Pan-African Informatics Olympiad: editions, countries, tasks, contestants, and all-time medal records.",
+    images: ["/og-paio.png"],
+  },
 };
 
 // Set the theme class before paint to avoid a flash of the wrong theme.
