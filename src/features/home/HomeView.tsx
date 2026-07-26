@@ -29,7 +29,6 @@ const archiveSections = [
 export default function HomeView({ editions }: { editions: Edition[] }) {
   const latest = editions[0];
   const count = editions.length;
-  const b = latest.bands;
 
   return (
     <div>
@@ -41,18 +40,20 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
           </span>
           <h1 className="mt-6 font-display leading-[1.05]">PAIO Statistics</h1>
           <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-            Explore the connected record of PAIO editions, medals, task scores, country standings,
-            and contestant histories.
+            An archive of PAIO olympiad results across editions — medals, task scores, country
+            standings, and contestant histories.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild>
-              <Link href={`/olympiads/${latest.slug}`}>
-                Explore {latest.name} <ArrowRight className="h-4 w-4" />
+              <Link href="/olympiads">
+                Browse editions <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
-            <Button asChild variant="outline">
-              <Link href="/olympiads">All editions</Link>
-            </Button>
+            {latest && (
+              <Button asChild variant="outline">
+                <Link href={`/olympiads/${latest.slug}`}>Latest: {latest.name}</Link>
+              </Button>
+            )}
           </div>
         </div>
       </section>
@@ -131,13 +132,28 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
 
             <GuideSection title="How medals are awarded">
               <p>
-                Medals are determined by a contestant&apos;s final rank, using the medal cut-offs set for
-                that edition. At {latest.name}, the top {b.gold[1]} ranked contestants receive{" "}
-                <span className="font-medium text-gold-foreground">Gold</span>, ranks {b.silver[0]}–
-                {b.silver[1]} <span className="font-medium text-silver-foreground">Silver</span>, ranks{" "}
-                {b.bronze[0]}–{b.bronze[1]}{" "}
-                <span className="font-medium text-bronze-foreground">Bronze</span>, and ranks {b.hm[0]}–
-                {b.hm[1]} an <span className="font-medium text-hm-foreground">Honourable Mention</span>.
+                Medals are awarded by final rank using cut-offs set for each edition (typically
+                concentrating{" "}
+                <span className="font-medium text-gold-foreground">Gold</span>,{" "}
+                <span className="font-medium text-silver-foreground">Silver</span>, and{" "}
+                <span className="font-medium text-bronze-foreground">Bronze</span> among roughly the top
+                half of the field, with{" "}
+                <span className="font-medium text-hm-foreground">Honourable Mentions</span> below that).
+                Exact bands vary by year
+                {latest && (
+                  <>
+                    {" — "}
+                    see{" "}
+                    <Link
+                      href={`/olympiads/${latest.slug}`}
+                      className="font-medium text-foreground hover:underline"
+                    >
+                      {latest.name}
+                    </Link>{" "}
+                    for a recent example
+                  </>
+                )}
+                .
               </p>
             </GuideSection>
 

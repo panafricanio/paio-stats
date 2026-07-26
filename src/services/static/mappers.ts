@@ -1,7 +1,6 @@
 // Raw records -> clean domain entities. This is the ONLY place that knows the
 // shape of the raw data files; swap it out when the backend lands.
-import type { ContestantResult } from "@/data/results";
-import type { EditionConfig, TaskConfig } from "@/data/edition-configs";
+import type { EditionConfig, TaskConfig, RawContestant } from "@/data/editions";
 import type { Edition } from "@/domain/edition";
 import type { Task } from "@/domain/task";
 import type { Contestant, ContestantStatus } from "@/domain/contestant";
@@ -9,7 +8,7 @@ import type { MedalBands } from "@/domain/medal";
 import { medalForRank } from "@/domain/medal";
 import { slugify } from "@/lib/utils";
 
-function deriveStatus(raw: ContestantResult): ContestantStatus {
+function deriveStatus(raw: RawContestant): ContestantStatus {
   if (/\(Guest\)/i.test(raw.country)) return "guest";
   if (raw.isUnofficial || raw.country === "Unofficial") return "unofficial";
   return "official";
@@ -21,7 +20,7 @@ function deriveStatus(raw: ContestantResult): ContestantStatus {
  * — "Pakistan (Guest)" and a future official "Pakistan" resolve to one country.
  * Unofficial/blank entries carry no country.
  */
-function deriveCountryName(raw: ContestantResult): string {
+function deriveCountryName(raw: RawContestant): string {
   if (raw.country === "Unofficial") return "";
   return raw.country.replace(/\s*\(Guest\)\s*$/i, "").trim();
 }
@@ -38,7 +37,7 @@ function mapTask(config: TaskConfig): Task {
 }
 
 function mapContestant(
-  raw: ContestantResult,
+  raw: RawContestant,
   tasks: TaskConfig[],
   bands: MedalBands,
   days: number[],
@@ -47,7 +46,7 @@ function mapContestant(
 
   // Per-task scores are the single source of truth; every total is derived.
   const scores: Record<string, number> = {};
-  for (const t of tasks) scores[t.slug] = Number(raw[t.rawKey]) || 0;
+  for (const t of tasks) scores[t.slug] = Number(raw.scores[t.slug]) || 0;
 
   const dayTotals = days.map((day) => ({
     day,
