@@ -1,0 +1,5 @@
+# Default reviewers for all paths
+* @Ndevu12
+
+# Security & CI
+.github/ @Ndevu12
