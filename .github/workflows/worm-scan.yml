@@ -1,0 +1,31 @@
+name: Worm scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Auto-remediation needs write access:
+#   contents: write        -> push the security/auto-clean fix branch
+#   pull-requests: write   -> open/update the rolling cleanup PR
+# (The scan itself only needs read; these are for the remediate step.)
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  strix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history — evil-merge detection needs the complete commit graph.
+          fetch-depth: 0
+
+      - uses: Ndevu12/strix@v0.1.4
+        with:
+          # On an infected verdict, run `saw fix --pr`: saw cleans the payload off
+          # the remote default branch (main) in an isolated worktree and opens ONE
+          # rolling `security/auto-clean` PR. The gate still goes RED until that PR
+          # is merged — remediation opens the fix, it does not make the check pass.
+          remediate: pr
