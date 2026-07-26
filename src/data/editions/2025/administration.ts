@@ -4,7 +4,7 @@
 // expiring external URLs. Members without a reliable photo fall back to initials.
 import type { AdministrationGroup } from "@/domain/edition";
 
-export const paio2025Administration: AdministrationGroup[] = [
+export const administration: AdministrationGroup[] = [
   {
     title: "International Scientific Committee",
     members: [

@@ -3,7 +3,7 @@
 import type { StatsDataSource } from "../ports";
 import type { Edition } from "@/domain/edition";
 import type { Country } from "@/domain/country";
-import { editionConfigs } from "@/data/edition-configs";
+import { editionConfigs } from "@/data/editions";
 import { countryRecords } from "@/data/countries";
 import { mapEdition } from "./mappers";
 
