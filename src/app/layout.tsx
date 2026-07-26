@@ -3,6 +3,8 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import JsonLd from "@/components/seo/JsonLd";
+import { getSiteUrl, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -15,27 +17,57 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const siteUrl = getSiteUrl();
+
 export const metadata: Metadata = {
+  metadataBase: siteUrl,
   title: {
-    default: "PAIO Stats",
-    template: "%s · PAIO Stats",
+    default: SITE_NAME,
+    template: `%s · ${SITE_NAME}`,
   },
-  description:
-    "Statistics for the Pan-African Informatics Olympiad: editions, countries, tasks, contestants, and all-time medal records.",
-  applicationName: "PAIO Stats",
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: [
+    "PAIO",
+    "Pan-African Informatics Olympiad",
+    "informatics olympiad",
+    "competitive programming",
+    "Africa",
+    "medals",
+    "scoreboard",
+    "statistics",
+  ],
+  authors: [{ name: "Pan-African Informatics Olympiad" }],
+  creator: "Pan-African Informatics Olympiad",
+  publisher: "Pan-African Informatics Olympiad",
+  category: "education",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
-    title: "PAIO Stats",
-    description:
-      "Statistics for the Pan-African Informatics Olympiad: editions, countries, tasks, contestants, and all-time medal records.",
-    siteName: "PAIO Stats",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    siteName: SITE_NAME,
+    url: "/",
+    locale: "en_US",
     images: [{ url: "/og-paio.png", width: 1200, height: 630, alt: "PAIO" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PAIO Stats",
-    description:
-      "Statistics for the Pan-African Informatics Olympiad: editions, countries, tasks, contestants, and all-time medal records.",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
     images: ["/og-paio.png"],
   },
 };
@@ -62,6 +94,7 @@ export default function RootLayout({
         className={`${poppins.variable} ${inter.variable} font-sans bg-background text-foreground antialiased`}
         suppressHydrationWarning
       >
+        <JsonLd />
         <a
           href="#main-content"
           className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-md bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-md outline-none transition-transform focus:translate-y-0 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background motion-reduce:transition-none"
