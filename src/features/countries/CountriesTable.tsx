@@ -118,7 +118,8 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
             <MedalSortHead
               label="Gold"
               short="G"
-              markerClassName="bg-gold"
+              surfaceClassName="bg-gold-surface"
+              foregroundClassName="text-gold-foreground"
               active={sort?.key === "gold"}
               dir={sort?.dir ?? "asc"}
               ariaSort={ariaSort("gold")}
@@ -127,7 +128,8 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
             <MedalSortHead
               label="Silver"
               short="S"
-              markerClassName="bg-silver"
+              surfaceClassName="bg-silver-surface"
+              foregroundClassName="text-silver-foreground"
               active={sort?.key === "silver"}
               dir={sort?.dir ?? "asc"}
               ariaSort={ariaSort("silver")}
@@ -136,7 +138,8 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
             <MedalSortHead
               label="Bronze"
               short="B"
-              markerClassName="bg-bronze"
+              surfaceClassName="bg-bronze-surface"
+              foregroundClassName="text-bronze-foreground"
               active={sort?.key === "bronze"}
               dir={sort?.dir ?? "asc"}
               ariaSort={ariaSort("bronze")}
@@ -145,7 +148,8 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
             <MedalSortHead
               label="Honourable mention"
               short="HM"
-              markerClassName="bg-hm"
+              surfaceClassName="bg-hm-surface"
+              foregroundClassName="text-hm-foreground"
               active={sort?.key === "hm"}
               dir={sort?.dir ?? "asc"}
               ariaSort={ariaSort("hm")}
@@ -218,11 +222,12 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
   );
 }
 
-/** Hall-of-Fame medal subheader + sort control (primary bar, accent markers — not surface fills). */
+/** Medal subheader: same surface as body cells so the column reads as one continuous band (IOI). */
 function MedalSortHead({
   label,
   short,
-  markerClassName,
+  surfaceClassName,
+  foregroundClassName,
   active,
   dir,
   ariaSort,
@@ -230,7 +235,8 @@ function MedalSortHead({
 }: {
   label: string;
   short: string;
-  markerClassName: string;
+  surfaceClassName: string;
+  foregroundClassName: string;
   active: boolean;
   dir: SortDir;
   ariaSort: "none" | "ascending" | "descending";
@@ -241,27 +247,21 @@ function MedalSortHead({
       scope="col"
       aria-sort={ariaSort}
       title={label}
-      className="w-16 bg-primary py-0 text-center text-primary-foreground"
+      className={cn("w-16 py-0 text-center", surfaceClassName, foregroundClassName)}
     >
-      <span className="inline-flex items-center justify-center gap-1.5">
-        <span
-          className={cn("h-2 w-2 rounded-full ring-1 ring-primary-foreground/20", markerClassName)}
-          aria-hidden="true"
-        />
-        <SortableTableButton
-          label={short}
-          aria-label={`Sort by ${label}`}
-          active={active}
-          dir={dir}
-          align="center"
-          onClick={onClick}
-        />
-      </span>
+      <SortableTableButton
+        label={short}
+        aria-label={`Sort by ${label}`}
+        active={active}
+        dir={dir}
+        align="center"
+        onClick={onClick}
+      />
     </TableHead>
   );
 }
 
-/** IOI-style column fill using design-system medal surface tokens. */
+/** Uniform column fill — every cell (including zero / —) uses the same surface. */
 function MedalCell({
   count,
   surfaceClassName,
@@ -272,14 +272,7 @@ function MedalCell({
   foregroundClassName: string;
 }) {
   return (
-    <TableCell
-      className={cn(
-        "text-center font-semibold tnum",
-        surfaceClassName,
-        foregroundClassName,
-        count === 0 && "opacity-55",
-      )}
-    >
+    <TableCell className={cn("text-center font-semibold tnum", surfaceClassName, foregroundClassName)}>
       {dash(count)}
     </TableCell>
   );
