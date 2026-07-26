@@ -218,7 +218,7 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
   );
 }
 
-/** Hall-of-Fame medal subheader + sort control (primary bar, accent markers — not surface fills). */
+/** Primary bar + medal marker dots (Hall of Fame pattern). Body cells carry the column bands. */
 function MedalSortHead({
   label,
   short,
@@ -261,7 +261,10 @@ function MedalSortHead({
   );
 }
 
-/** IOI-style column fill using design-system medal surface tokens. */
+/**
+ * IOI-style uniform column fill via design-system surface tokens.
+ * Same classes for every cell — including zero / — . Never condition on count.
+ */
 function MedalCell({
   count,
   surfaceClassName,
@@ -272,14 +275,7 @@ function MedalCell({
   foregroundClassName: string;
 }) {
   return (
-    <TableCell
-      className={cn(
-        "text-center font-semibold tnum",
-        surfaceClassName,
-        foregroundClassName,
-        count === 0 && "opacity-55",
-      )}
-    >
+    <TableCell className={cn("text-center font-semibold tnum", surfaceClassName, foregroundClassName)}>
       {dash(count)}
     </TableCell>
   );
