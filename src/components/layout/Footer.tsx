@@ -1,13 +1,17 @@
 import Link from "next/link";
+import PaioLogo from "@/components/brand/PaioLogo";
 import { primaryNavigation } from "./navigation";
 
 export default function Footer() {
   return (
     <footer className="border-t border-border">
       <div className="container flex flex-col items-center justify-between gap-4 py-8 text-sm text-muted-foreground md:flex-row">
-        <p>
-          PAIO Stats — Pan-African Informatics Olympiad statistics.
-        </p>
+        <div className="flex flex-col items-center gap-2 sm:flex-row sm:items-center sm:gap-3">
+          <PaioLogo size="sm" />
+          <p className="text-center sm:text-left">
+            Pan-African Informatics Olympiad statistics.
+          </p>
+        </div>
         <div className="flex flex-wrap items-center justify-center gap-x-4">
           {primaryNavigation.map((item) => (
             <Link

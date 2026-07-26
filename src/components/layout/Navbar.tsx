@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import PaioLogo from "@/components/brand/PaioLogo";
 import ThemeToggle from "./ThemeToggle";
 import { primaryNavigation } from "./navigation";
 
@@ -19,17 +19,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
       <nav className="container flex h-16 items-center justify-between">
-        <Link href="/" className="flex min-h-11 items-center gap-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          <Image
-            src="/paio-logo.png"
-            alt="PAIO"
-            width={48}
-            height={32}
-            priority
-            className="h-8 w-auto dark:invert"
-          />
-          <span className="font-display text-lg font-semibold text-muted-foreground">Stats</span>
-        </Link>
+        <PaioLogo size="md" priority />
 
         <div className="hidden items-center gap-1 md:flex">
           {primaryNavigation.map((l) => (

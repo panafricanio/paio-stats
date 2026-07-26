@@ -61,14 +61,14 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     url: "/",
     locale: "en_US",
-    images: [{ url: "/paio-logo.png", width: 612, height: 408, alt: "PAIO" }],
+    images: [{ url: "/og-paio.png", width: 1200, height: 630, alt: "PAIO" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
-    images: ["/paio-logo.png"],
+    images: ["/og-paio.png"],
   },
 };
 
