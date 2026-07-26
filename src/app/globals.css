@@ -90,19 +90,18 @@
     --silver: 0 0% 72%;
     --bronze: 25 70% 52%;
     --hm: 142 65% 50%;
-    /* Light / tinted text on rich dark surfaces */
-    --gold-foreground: 45 96% 88%;
-    --silver-foreground: 210 20% 94%;
-    --bronze-foreground: 28 70% 90%;
-    --hm-foreground: 148 48% 84%;
     /*
-     * Dark column fills: clear tinted bands (not muddy charcoal).
-     * Amber / steel / copper / emerald — richer chroma + mid lightness on near-black UI.
+     * Medal column fills stay identical across themes (IOI palette).
+     * Same surfaces + dark-on-fill text as :root — do not invent a dark variant.
      */
-    --gold-surface: 43 78% 32%;
-    --silver-surface: 215 16% 38%;
-    --bronze-surface: 24 62% 34%;
-    --hm-surface: 148 40% 28%;
+    --gold-foreground: 40 80% 16%;
+    --silver-foreground: 0 0% 18%;
+    --bronze-foreground: 28 55% 12%;
+    --hm-foreground: 142 60% 18%;
+    --gold-surface: 54 100% 66.67%;
+    --silver-surface: 0 0% 80%;
+    --bronze-surface: 30 53.5% 47%;
+    --hm-surface: 142 42% 88%;
   }
 }
 
