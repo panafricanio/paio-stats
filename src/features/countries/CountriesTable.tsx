@@ -118,8 +118,7 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
             <MedalSortHead
               label="Gold"
               short="G"
-              surfaceClassName="bg-gold-surface"
-              foregroundClassName="text-gold-foreground"
+              markerClassName="bg-gold"
               active={sort?.key === "gold"}
               dir={sort?.dir ?? "asc"}
               ariaSort={ariaSort("gold")}
@@ -128,8 +127,7 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
             <MedalSortHead
               label="Silver"
               short="S"
-              surfaceClassName="bg-silver-surface"
-              foregroundClassName="text-silver-foreground"
+              markerClassName="bg-silver"
               active={sort?.key === "silver"}
               dir={sort?.dir ?? "asc"}
               ariaSort={ariaSort("silver")}
@@ -138,8 +136,7 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
             <MedalSortHead
               label="Bronze"
               short="B"
-              surfaceClassName="bg-bronze-surface"
-              foregroundClassName="text-bronze-foreground"
+              markerClassName="bg-bronze"
               active={sort?.key === "bronze"}
               dir={sort?.dir ?? "asc"}
               ariaSort={ariaSort("bronze")}
@@ -148,8 +145,7 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
             <MedalSortHead
               label="Honourable mention"
               short="HM"
-              surfaceClassName="bg-hm-surface"
-              foregroundClassName="text-hm-foreground"
+              markerClassName="bg-hm"
               active={sort?.key === "hm"}
               dir={sort?.dir ?? "asc"}
               ariaSort={ariaSort("hm")}
@@ -222,12 +218,11 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
   );
 }
 
-/** Medal subheader: same surface as body cells so the column reads as one continuous band (IOI). */
+/** Primary bar + medal marker dots (Hall of Fame pattern). Body cells carry the column bands. */
 function MedalSortHead({
   label,
   short,
-  surfaceClassName,
-  foregroundClassName,
+  markerClassName,
   active,
   dir,
   ariaSort,
@@ -235,8 +230,7 @@ function MedalSortHead({
 }: {
   label: string;
   short: string;
-  surfaceClassName: string;
-  foregroundClassName: string;
+  markerClassName: string;
   active: boolean;
   dir: SortDir;
   ariaSort: "none" | "ascending" | "descending";
@@ -247,21 +241,30 @@ function MedalSortHead({
       scope="col"
       aria-sort={ariaSort}
       title={label}
-      className={cn("w-16 py-0 text-center", surfaceClassName, foregroundClassName)}
+      className="w-16 bg-primary py-0 text-center text-primary-foreground"
     >
-      <SortableTableButton
-        label={short}
-        aria-label={`Sort by ${label}`}
-        active={active}
-        dir={dir}
-        align="center"
-        onClick={onClick}
-      />
+      <span className="inline-flex items-center justify-center gap-1.5">
+        <span
+          className={cn("h-2 w-2 rounded-full ring-1 ring-primary-foreground/20", markerClassName)}
+          aria-hidden="true"
+        />
+        <SortableTableButton
+          label={short}
+          aria-label={`Sort by ${label}`}
+          active={active}
+          dir={dir}
+          align="center"
+          onClick={onClick}
+        />
+      </span>
     </TableHead>
   );
 }
 
-/** Uniform column fill — every cell (including zero / —) uses the same surface. */
+/**
+ * IOI-style uniform column fill via design-system surface tokens.
+ * Same classes for every cell — including zero / — . Never condition on count.
+ */
 function MedalCell({
   count,
   surfaceClassName,
