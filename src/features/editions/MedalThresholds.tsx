@@ -35,7 +35,6 @@ export default function MedalThresholds({
                   / {formatScore(maxScore)}
                 </span>
               </div>
-              <div className="mt-1 text-xs text-muted-foreground">{t.count} awarded</div>
             </CardContent>
           </Card>
         ))}
