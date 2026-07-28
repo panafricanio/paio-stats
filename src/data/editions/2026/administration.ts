@@ -1,10 +1,109 @@
-// PAIO 2026 delegation leaders (Team / Deputy), snapshotted from the
-// shared Drive photo dump. Filenames use Country_Name_Role; names without a
-// fuller known form are taken from the image filename. Photos live under
-// /public/images/editions/2026.
+// PAIO 2026 administration: IC / ISC / ITC, plus delegation Team / Deputy leaders.
+// ISC portraits reused from PAIO 2025 where available; IC/ITC reuse existing local
+// snapshots. New IC portraits: Abinew (Google Scholar). Wendy and Martin pending.
 import type { AdministrationGroup } from "@/domain/edition";
 
 export const administration: AdministrationGroup[] = [
+  {
+    title: "International Committee",
+    members: [
+      {
+        name: "Hirwa Arnold",
+        roles: ["Chairman", "Rwanda Olympiad Foundation"],
+        image: "/images/hirwa.jpeg",
+      },
+      {
+        name: "Obed Nsanzimfura",
+        roles: ["Rwanda Olympiad Foundation"],
+        image: "/images/obed.webp",
+      },
+      {
+        name: "Wendy Essuman",
+        roles: ["African Olympiad Academy"],
+      },
+      {
+        name: "Abinew Ali Ayele",
+        roles: ["University of Hamburg"],
+        image: "/images/administration/abinew-ali-ayele.jpg",
+      },
+      {
+        name: "Martin Mungai",
+        roles: ["CEMASTEA, Kenya"],
+      },
+    ],
+  },
+  {
+    title: "International Scientific Committee",
+    members: [
+      {
+        name: "Mina Gayed",
+        roles: ["PAIO 2025 Champion", "IOI 2025 Silver Medalist"],
+      },
+      {
+        name: "Bartosz Kostka",
+        roles: ["Software Engineer, Google", "IOI Scientific Committee"],
+        image: "/images/administration/bartosz-kostka.png",
+      },
+      {
+        name: "Qingyu Shi",
+        roles: ["Asia Pacific Informatics Olympiad Scientific Committee", "Co-President of Universal Cup"],
+        image: "/images/qingyu.jpg",
+      },
+      {
+        name: "Prof Pedro Paredes",
+        roles: ["Teaching Professor, Princeton", "Head of Portugal International Scientific Committee"],
+        image: "/images/administration/pedro-paredes.jpg",
+      },
+      {
+        name: "Bernard Ibrahimcha",
+        roles: [
+          "IOI 2023 Honorable Mention",
+          "Syrian National Scientific Committee & IIOT Scientific Committee",
+        ],
+        image: "/images/Bernard.jpg",
+      },
+      {
+        name: "Tamio-Vesa Nakajima",
+        roles: ["IOI 2017 Gold Medalist", "Head of Romanian Scientific Committee"],
+        image: "/images/administration/tamio-nakajima.png",
+      },
+    ],
+  },
+  {
+    title: "International Technical Committee",
+    members: [
+      {
+        name: "Jean Paul Elisa NIYOKWIZERWA",
+        roles: ["Rwanda Computing Olympiad"],
+        image: "/images/administration/jean-paul.jpg",
+      },
+      {
+        name: "Niyokwizera Jean D'Amour",
+        roles: ["Rwanda Computing Olympiad"],
+        image: "/images/brojeid.webp",
+      },
+      {
+        name: "Etienne Kagaba",
+        roles: ["Rwanda Computing Olympiad"],
+        image: "/images/kagaba.webp",
+      },
+      {
+        name: "Joel Lee",
+        roles: ["Software and Avocado Enthusiast"],
+        image: "/images/joel.webp",
+      },
+      {
+        name: "Norbert Ndayisenga",
+        roles: ["Rwanda Computing Olympiad"],
+        image: "/images/norbert.webp",
+      },
+      {
+        name: "Raouf Ould Ali",
+        roles: ["Algeria"],
+        image: "/images/administration/raouf.png",
+      },
+    ],
+  },
   {
     title: "Team Leaders",
     members: [
