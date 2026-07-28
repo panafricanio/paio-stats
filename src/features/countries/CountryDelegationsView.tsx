@@ -1,15 +1,6 @@
 import CountryContestantsTable from "./CountryContestantsTable";
+import DelegationLeaders from "@/components/ui/DelegationLeaders";
 import type { CountryDelegationEntry } from "@/services";
-import type { Official } from "@/domain";
-
-function LeaderRow({ label, person }: { label: string; person: Official | null }) {
-  return (
-    <li className="flex items-baseline justify-between gap-3 text-sm sm:justify-start sm:gap-6">
-      <span className="w-28 shrink-0 text-muted-foreground">{label}</span>
-      <span className="font-medium">{person?.name ?? "—"}</span>
-    </li>
-  );
-}
 
 export default function CountryDelegationsView({
   delegations,
@@ -21,13 +12,15 @@ export default function CountryDelegationsView({
   }
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-12">
       {delegations.map((d) => (
-        <section key={d.edition.slug}>
-          <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-display text-2xl">{d.edition.name}</h2>
+        <section key={d.edition.slug} className="space-y-6">
+          <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-border pb-4">
+            <h2 className="font-display text-2xl tracking-tight">{d.edition.name}</h2>
             <div className="flex flex-wrap gap-x-4 text-sm text-muted-foreground">
-              <span>{d.contestants.length} contestants</span>
+              <span>
+                {d.contestants.length} contestant{d.contestants.length === 1 ? "" : "s"}
+              </span>
               {d.gold > 0 && <span className="text-gold-foreground">{d.gold} gold</span>}
               {d.silver > 0 && <span className="text-silver-foreground">{d.silver} silver</span>}
               {d.bronze > 0 && <span className="text-bronze-foreground">{d.bronze} bronze</span>}
@@ -35,17 +28,19 @@ export default function CountryDelegationsView({
             </div>
           </div>
 
-          <div className="mb-4 rounded-lg border border-border px-4 py-3">
-            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          <div>
+            <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
               Leaders
             </h3>
-            <ul className="space-y-1.5">
-              <LeaderRow label="Team Leader" person={d.teamLeader} />
-              <LeaderRow label="Deputy Leader" person={d.deputyLeader} />
-            </ul>
+            <DelegationLeaders teamLeader={d.teamLeader} deputyLeader={d.deputyLeader} />
           </div>
 
-          <CountryContestantsTable contestants={d.contestants} />
+          <div>
+            <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+              Team
+            </h3>
+            <CountryContestantsTable contestants={d.contestants} />
+          </div>
         </section>
       ))}
     </div>
