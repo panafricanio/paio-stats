@@ -31,12 +31,14 @@ export default function CountryDelegationsView({
               </div>
             </div>
 
-            <div>
-              <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                Leaders
-              </h3>
-              <DelegationLeaders teamLeader={d.teamLeader} deputyLeader={d.deputyLeader} />
-            </div>
+            {(d.teamLeader || d.deputyLeader) && (
+              <div>
+                <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                  Leaders
+                </h3>
+                <DelegationLeaders teamLeader={d.teamLeader} deputyLeader={d.deputyLeader} />
+              </div>
+            )}
 
             <div>
               <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
