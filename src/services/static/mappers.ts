@@ -4,9 +4,8 @@ import type { EditionConfig, TaskConfig, RawContestant } from "@/data/editions";
 import type { Edition } from "@/domain/edition";
 import type { Task } from "@/domain/task";
 import type { Contestant, ContestantStatus, ContestVenue } from "@/domain/contestant";
-import type { MedalBands, ScoreMedalThresholds } from "@/domain/medal";
-import { medalForRank, medalForScore } from "@/domain/medal";
-import { assignCompetitionRanks, normalizeScore } from "@/domain/ranking";
+import type { MedalBands } from "@/domain/medal";
+import { medalForRank } from "@/domain/medal";
 import { slugify } from "@/lib/utils";
 
 function deriveStatus(raw: RawContestant): ContestantStatus {
@@ -32,6 +31,11 @@ export function defaultVenueFromFormat(format: string): ContestVenue {
   return /online/i.test(format) ? "online" : "onsite";
 }
 
+/** Keep sheet decimals stable (e.g. 799.88) without float noise. */
+function scoreValue(n: number): number {
+  return Math.round(n * 100) / 100;
+}
+
 function mapTask(config: TaskConfig): Task {
   return {
     slug: config.slug,
@@ -43,51 +47,33 @@ function mapTask(config: TaskConfig): Task {
   };
 }
 
-function scoresFromRaw(raw: RawContestant, tasks: TaskConfig[]): Record<string, number> {
-  const scores: Record<string, number> = {};
-  for (const t of tasks) {
-    scores[t.slug] = normalizeScore(Number(raw.scores[t.slug]) || 0);
-  }
-  return scores;
-}
-
-function medalForContestant(
-  rank: number,
-  total: number,
-  status: ContestantStatus,
-  bands: MedalBands,
-  scoreThresholds?: ScoreMedalThresholds,
-) {
-  if (scoreThresholds) return medalForScore(total, scoreThresholds, status);
-  return medalForRank(rank, bands, status);
-}
-
-function mapContestantBase(
+function mapContestant(
   raw: RawContestant,
   tasks: TaskConfig[],
+  bands: MedalBands,
   days: number[],
   defaultVenue: ContestVenue,
-): Omit<Contestant, "rank" | "medal"> & { rank?: number } {
+): Contestant {
   const status = deriveStatus(raw);
-  const scores = scoresFromRaw(raw, tasks);
+
+  // Per-task scores are the single source of truth; every total is derived.
+  const scores: Record<string, number> = {};
+  for (const t of tasks) scores[t.slug] = scoreValue(Number(raw.scores[t.slug]) || 0);
 
   const dayTotals = days.map((day) => ({
     day,
-    total: normalizeScore(
+    total: scoreValue(
       tasks.filter((t) => t.day === day).reduce((sum, t) => sum + (scores[t.slug] ?? 0), 0),
     ),
   }));
 
-  const total = normalizeScore(Object.values(scores).reduce((sum, v) => sum + v, 0));
-  const firstName = raw.firstName.trim();
-  const lastName = raw.lastName.trim();
-  const fullName = `${firstName} ${lastName}`.trim();
+  const total = scoreValue(Object.values(scores).reduce((sum, v) => sum + v, 0));
 
   return {
-    slug: slugify(fullName || firstName || lastName || "contestant"),
-    firstName,
-    lastName,
-    fullName,
+    slug: slugify(`${raw.firstName} ${raw.lastName}`.trim() || "contestant"),
+    firstName: raw.firstName,
+    lastName: raw.lastName,
+    fullName: `${raw.firstName} ${raw.lastName}`.trim(),
     rank: raw.rank,
     countryName: deriveCountryName(raw),
     status,
@@ -95,6 +81,7 @@ function mapContestantBase(
     scores,
     dayTotals,
     total,
+    medal: medalForRank(raw.rank, bands, status),
     specialAward: raw.specialAward,
   };
 }
@@ -103,55 +90,6 @@ export function mapEdition(config: EditionConfig): Edition {
   // Derive the contest days from the task configuration — no fixed day count.
   const days = [...new Set(config.tasks.map((t) => t.day))].sort((a, b) => a - b);
   const defaultVenue = defaultVenueFromFormat(config.format);
-
-  let bases = config.results.map((r) => mapContestantBase(r, config.tasks, days, defaultVenue));
-
-  // Injectable ranking: compute once here, never in the UI.
-  if (config.assignCompetitionRanks) {
-    bases = assignCompetitionRanks(
-      bases.map((c) => ({ ...c, sortName: c.fullName })),
-    ).map((ranked) => {
-      const { sortName, ...rest } = ranked;
-      void sortName;
-      return rest;
-    });
-  }
-
-  const contestants: Contestant[] = bases.map((c) => {
-    const rank = c.rank;
-    if (rank == null || !Number.isFinite(rank)) {
-      throw new Error(
-        `Missing rank for contestant "${c.fullName}" in ${config.name}. ` +
-          `Set raw ranks or enable assignCompetitionRanks.`,
-      );
-    }
-    return {
-      slug: c.slug,
-      firstName: c.firstName,
-      lastName: c.lastName,
-      fullName: c.fullName,
-      rank,
-      countryName: c.countryName,
-      status: c.status,
-      venue: c.venue,
-      scores: c.scores,
-      dayTotals: c.dayTotals,
-      total: c.total,
-      specialAward: c.specialAward,
-      medal: medalForContestant(
-        rank,
-        c.total,
-        c.status,
-        config.bands,
-        config.scoreThresholds,
-      ),
-    };
-  });
-
-  // Keep scoreboard order stable: competition rank, then name within a tie.
-  contestants.sort(
-    (a, b) => a.rank - b.rank || a.fullName.localeCompare(b.fullName, undefined, { sensitivity: "base" }),
-  );
 
   return {
     year: config.year,
@@ -166,7 +104,9 @@ export function mapEdition(config: EditionConfig): Edition {
     bands: config.bands,
     days,
     tasks: config.tasks.map(mapTask),
-    contestants,
+    contestants: config.results.map((r) =>
+      mapContestant(r, config.tasks, config.bands, days, defaultVenue),
+    ),
     administration: config.administration ?? [],
   };
 }
