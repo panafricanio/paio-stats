@@ -15,7 +15,7 @@ export default async function TasksPage() {
     <div>
       <PageHeader
         title="Tasks"
-        subtitle="Every problem, with its average score and full-solve rate. Lower averages and fewer full solves mean a harder task."
+        subtitle="Average score and full-solve rate per problem. Lower averages mean harder tasks."
       />
       <div className="container space-y-10 py-10">
         {items.map(({ edition, stats }) => (

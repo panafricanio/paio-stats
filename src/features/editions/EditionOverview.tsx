@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink, ArrowRight } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import MedalTallyStats from "@/components/ui/MedalTallyStats";
 import MedalThresholds from "@/features/editions/MedalThresholds";
@@ -13,6 +13,17 @@ export default function EditionOverview({ detail }: { detail: EditionDetail }) {
   const official = rows.filter((r) => r.status === "official").length;
   const guests = rows.filter((r) => r.status === "guest").length;
   const unofficial = rows.filter((r) => r.status === "unofficial").length;
+
+  const contestantBreakdown =
+    hasResults && (guests > 0 || unofficial > 0)
+      ? [
+          `${official} official`,
+          guests > 0 ? `${guests} guest` : null,
+          unofficial > 0 ? `${unofficial} unofficial` : null,
+        ]
+          .filter(Boolean)
+          .join(" · ")
+      : null;
 
   const info: { label: string; value: React.ReactNode }[] = [
     {
@@ -33,13 +44,8 @@ export default function EditionOverview({ detail }: { detail: EditionDetail }) {
       value: hasResults ? (
         <>
           {summary.participants}
-          {(guests > 0 || unofficial > 0) && (
-            <span className="text-muted-foreground">
-              {" "}
-              ({official} official
-              {guests > 0 && `, ${guests} guest`}
-              {unofficial > 0 && `, ${unofficial} unofficial`})
-            </span>
+          {contestantBreakdown && (
+            <span className="text-muted-foreground"> ({contestantBreakdown})</span>
           )}
         </>
       ) : (
@@ -80,7 +86,6 @@ export default function EditionOverview({ detail }: { detail: EditionDetail }) {
 
   return (
     <div className="space-y-10">
-      {/* General information */}
       <section>
         <h2 className="mb-4 font-display text-2xl">General information</h2>
         <Card>
@@ -98,13 +103,9 @@ export default function EditionOverview({ detail }: { detail: EditionDetail }) {
       </section>
 
       {!hasResults && (
-        <p className="text-sm text-muted-foreground">
-          Results for this edition have not been published yet. Host, dates, and website are listed
-          above; the scoreboard will appear here after the contest.
-        </p>
+        <p className="text-sm text-muted-foreground">No results published yet.</p>
       )}
 
-      {/* Awards — only once results exist */}
       {hasResults && (
         <section className="space-y-6">
           <div>
@@ -116,44 +117,7 @@ export default function EditionOverview({ detail }: { detail: EditionDetail }) {
           </div>
           <MedalTallyStats tally={summary.official} />
           <MedalThresholds thresholds={thresholds} maxScore={maxScore} />
-          {summary.guest.gold + summary.guest.silver + summary.guest.bronze > 0 && (
-            <p className="text-sm text-muted-foreground">
-              Guest contestants additionally earned {summary.guest.gold} gold, {summary.guest.silver}{" "}
-              silver and {summary.guest.bronze} bronze; guest results are recognised individually but
-              do not count toward country rankings.
-            </p>
-          )}
         </section>
-      )}
-
-      {/* Jump links */}
-      {(hasResults || hasTasks) && (
-        <div className="flex flex-wrap gap-3">
-          {hasResults && (
-            <Link
-              href={`/olympiads/${edition.slug}/results`}
-              className="inline-flex min-h-11 items-center gap-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground outline-none hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              View full results <ArrowRight className="h-4 w-4" />
-            </Link>
-          )}
-          {hasResults && (
-            <Link
-              href={`/olympiads/${edition.slug}/countries`}
-              className="inline-flex min-h-11 items-center gap-1 rounded-md border border-border px-4 py-2 text-sm font-medium outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              Countries
-            </Link>
-          )}
-          {hasTasks && (
-            <Link
-              href={`/olympiads/${edition.slug}/tasks`}
-              className="inline-flex min-h-11 items-center gap-1 rounded-md border border-border px-4 py-2 text-sm font-medium outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              Tasks
-            </Link>
-          )}
-        </div>
       )}
     </div>
   );

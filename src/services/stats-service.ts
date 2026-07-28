@@ -88,6 +88,8 @@ export interface CountryRow {
   bronze: number;
   hm: number;
   totalMedals: number;
+  /** Sum of contestant totals (marks) across included appearances. */
+  totalMarks: number;
 }
 
 export interface CountryEditionResults {
@@ -286,10 +288,12 @@ export class StatsService {
             bronze: 0,
             hm: 0,
             totalMedals: 0,
+            totalMarks: 0,
           };
           map.set(country.code, row);
         }
         row.participants++;
+        row.totalMarks += c.total;
         if (c.medal === "GOLD") row.gold++;
         else if (c.medal === "SILVER") row.silver++;
         else if (c.medal === "BRONZE") row.bronze++;
@@ -315,7 +319,7 @@ export class StatsService {
     );
   }
 
-  /** Country medal standings for a single edition (official + guest teams). */
+  /** Country standings for a single edition (official + guest teams), ranked by total marks. */
   async listEditionCountryRows(slug: string): Promise<CountryRow[]> {
     const [edition, byName] = await Promise.all([
       this.getEdition(slug),
@@ -340,10 +344,12 @@ export class StatsService {
           bronze: 0,
           hm: 0,
           totalMedals: 0,
+          totalMarks: 0,
         };
         map.set(country.code, row);
       }
       row.participants++;
+      row.totalMarks += c.total;
       if (c.medal === "GOLD") row.gold++;
       else if (c.medal === "SILVER") row.silver++;
       else if (c.medal === "BRONZE") row.bronze++;
@@ -357,9 +363,7 @@ export class StatsService {
     return [...map.values()].sort(
       (a, b) =>
         Number(a.guest) - Number(b.guest) ||
-        b.gold - a.gold ||
-        b.silver - a.silver ||
-        b.bronze - a.bronze ||
+        b.totalMarks - a.totalMarks ||
         a.country.name.localeCompare(b.country.name),
     );
   }

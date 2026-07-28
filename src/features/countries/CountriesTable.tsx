@@ -14,10 +14,10 @@ import {
   TableRow,
   TABLE_SCROLL_MAX_HEIGHT,
 } from "@/components/ui/table";
-import { cn } from "@/lib/utils";
+import { cn, formatScore } from "@/lib/utils";
 import type { CountryRow } from "@/services";
 
-type SortKey = "country" | "participants" | "gold" | "silver" | "bronze" | "hm" | "total";
+type SortKey = "country" | "participants" | "marks" | "gold" | "silver" | "bronze" | "hm" | "total";
 type SortDir = "asc" | "desc";
 
 const dash = (n: number) => (n ? n : "—");
@@ -26,6 +26,8 @@ function valueOf(r: CountryRow, key: SortKey): number {
   switch (key) {
     case "participants":
       return r.participants;
+    case "marks":
+      return r.totalMarks;
     case "gold":
       return r.gold;
     case "silver":
@@ -44,11 +46,14 @@ function valueOf(r: CountryRow, key: SortKey): number {
 export default function CountriesTable({
   rows,
   showHosted = true,
+  showMarks = false,
   caption = "PAIO country ranking by gold, then silver, then bronze.",
 }: {
   rows: CountryRow[];
   /** Hide the Hosted column on per-edition country standings. */
   showHosted?: boolean;
+  /** Show Marks column (sum of contestant totals) — used for per-edition standings. */
+  showMarks?: boolean;
   caption?: string;
 }) {
   const [sort, setSort] = useState<{ key: SortKey; dir: SortDir } | null>(null);
@@ -116,6 +121,22 @@ export default function CountriesTable({
                 onClick={() => toggleSort("participants")}
               />
             </TableHead>
+            {showMarks && (
+              <TableHead
+                rowSpan={2}
+                scope="col"
+                aria-sort={ariaSort("marks")}
+                className="bg-primary py-0 text-center text-primary-foreground"
+              >
+                <SortableTableButton
+                  label="Marks"
+                  active={sort?.key === "marks"}
+                  dir={sort?.dir ?? "asc"}
+                  align="center"
+                  onClick={() => toggleSort("marks")}
+                />
+              </TableHead>
+            )}
             <TableHead
               colSpan={5}
               scope="colgroup"
@@ -201,6 +222,11 @@ export default function CountriesTable({
                 </TableCell>
               )}
               <TableCell className="text-center tnum">{r.participants}</TableCell>
+              {showMarks && (
+                <TableCell className="text-center font-semibold tnum">
+                  {formatScore(r.totalMarks)}
+                </TableCell>
+              )}
               <MedalCell
                 count={r.gold}
                 surfaceClassName="bg-gold-surface"

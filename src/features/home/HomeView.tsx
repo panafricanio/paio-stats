@@ -7,22 +7,22 @@ const archiveSections = [
   {
     href: "/olympiads",
     title: "Editions",
-    description: "Full scoreboards, medal counts, hosts, and per-task results.",
+    description: "Scoreboards, medals, hosts, and per-task results.",
   },
   {
     href: "/countries",
     title: "Countries",
-    description: "National participation histories and official medal standings.",
+    description: "Participation histories and all-time medal standings.",
   },
   {
     href: "/tasks",
     title: "Tasks",
-    description: "Problem statistics, score distributions, and full-solve rates.",
+    description: "Averages, full-solve rates, and score distributions.",
   },
   {
     href: "/hall-of-fame",
     title: "Hall of Fame",
-    description: "All-time contestant records ordered by gold, silver, then bronze.",
+    description: "All-time contestant records by gold, silver, then bronze.",
   },
 ] as const;
 
@@ -33,7 +33,6 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
 
   return (
     <div>
-      {/* Hero / intro */}
       <section className="border-b border-border">
         <div className="container py-16 md:py-24 [&>*]:max-w-4xl">
           <span className="rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground">
@@ -41,8 +40,7 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
           </span>
           <h1 className="mt-6 font-display leading-[1.05]">PAIO Statistics</h1>
           <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-            An archive of PAIO olympiad results across editions — medals, task scores, country
-            standings, and contestant histories.
+            Official PAIO results: medals, task scores, country standings, and contestant histories.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild>
@@ -59,17 +57,15 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
         </div>
       </section>
 
-      {/* Archive index */}
       <section className="container py-14 md:py-20">
         <div className="grid gap-8 md:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] md:gap-14">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-              Archive index
+              Sections
             </p>
-            <h2 className="mt-3 font-display text-2xl md:text-3xl">Follow the record</h2>
+            <h2 className="mt-3 font-display text-2xl md:text-3xl">Browse the archive</h2>
             <p className="mt-3 max-w-md text-muted-foreground">
-              Start with an edition, country, task, or all-time contestant record. Each entry links
-              back to its supporting results.
+              Editions, countries, tasks, and all-time contestant records.
             </p>
           </div>
           <nav className="border-t border-border" aria-label="Statistics sections">
@@ -98,15 +94,13 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
         </div>
       </section>
 
-      {/* Guidance / notes */}
       <div className="border-t border-border">
         <div className="container">
           <div className="mx-auto max-w-5xl divide-y divide-border">
             <GuideSection title="About this site">
               <p>
-                The results shown here are compiled from the official PAIO results. Browsing is open to
-                everyone and requires no account. The site currently covers {count}{" "}
-                edition{count === 1 ? "" : "s"}
+                Compiled from official PAIO results. Open to browse; no account required. Currently{" "}
+                {count} edition{count === 1 ? "" : "s"}
                 {": "}
                 {editions.map((e, i) => (
                   <span key={e.slug}>
@@ -119,28 +113,25 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
                     </Link>
                   </span>
                 ))}
-                . Further editions will be added as they take place.
+                .
               </p>
             </GuideSection>
 
             <GuideSection title="Data and accuracy">
               <p>
-                Results for recent editions are taken from the official final standings and are
-                considered complete. Where earlier or partial data is missing, it may be filled in over
-                time. The underlying results data belongs to the PAIO.
+                Recent editions use the official final standings. Missing earlier data may be added
+                over time. Results data belongs to the PAIO.
               </p>
             </GuideSection>
 
             <GuideSection title="How medals are awarded">
               <p>
-                Medals are awarded by final rank using cut-offs set for each edition (typically
-                concentrating{" "}
+                Medals follow each edition&apos;s rank cut-offs (typically{" "}
                 <span className="font-medium text-gold">Gold</span>,{" "}
                 <span className="font-medium text-silver">Silver</span>, and{" "}
-                <span className="font-medium text-bronze">Bronze</span> among roughly the top half of
-                the field, with{" "}
-                <span className="font-medium text-hm">Honourable Mentions</span> below that). Exact
-                bands vary by year
+                <span className="font-medium text-bronze">Bronze</span> in roughly the top half, with{" "}
+                <span className="font-medium text-hm">Honourable Mentions</span> below). Exact bands
+                vary by year
                 {latestWithResults && (
                   <>
                     {" — "}
@@ -150,8 +141,7 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
                       className="font-medium text-foreground hover:underline"
                     >
                       {latestWithResults.name}
-                    </Link>{" "}
-                    for a recent example
+                    </Link>
                   </>
                 )}
                 .
@@ -160,40 +150,37 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
 
             <GuideSection title="Countries">
               <p>
-                A country is a state taking part in the PAIO with an official team. In the country
-                rankings, teams are ordered first by gold medals, then silver, then bronze. A
-                contestant&apos;s medals count towards their country&apos;s totals only when they
-                compete as an official team member.
+                All-time country standings are ordered by gold, then silver, then bronze. Within an
+                edition, countries are ordered by total marks. Only official team medals count toward
+                country medal totals.
               </p>
             </GuideSection>
 
             <GuideSection title="Contestant status">
               <p>
-                When an edition has both modes, On-site and Online results appear as separate boards on
-                the same page (On-site first). Within each board, contestants are grouped by status:
+                Official boards are split by On-site and Online when both exist. Guests and Unofficial
+                each appear in one table for the edition.
               </p>
               <ul className="mt-3 space-y-2">
                 <li>
-                  <span className="font-medium text-foreground">Official Contestants:</span> team
-                  members whose medals count toward both the contestant and their country.
+                  <span className="font-medium text-foreground">Official:</span> team members; medals
+                  count for the contestant and their country.
                 </li>
                 <li>
-                  <span className="font-medium text-foreground">Guest:</span> invited teams competing
-                  outside the official country standings. Medals are recognised for the contestant but
-                  do not count toward country rankings.
+                  <span className="font-medium text-foreground">Guest:</span> invited teams; medals
+                  count for the contestant, not country standings.
                 </li>
                 <li>
-                  <span className="font-medium text-foreground">Unofficial:</span> additional participants
-                  shown for completeness, who are not ranked for medals.
+                  <span className="font-medium text-foreground">Unofficial:</span> shown for the
+                  record; not ranked for medals.
                 </li>
               </ul>
             </GuideSection>
 
             <GuideSection title="Corrections and contributions">
               <p>
-                Spotted a mistake, or have results for a missing edition? Reach out to the PAIO
-                organising committee so the data can be reviewed and updated. All corrections are checked
-                before they are published.
+                Report errors or missing edition results to the PAIO organising committee. Corrections
+                are checked before publication.
               </p>
             </GuideSection>
           </div>

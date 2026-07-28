@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import MedalBadge from "@/components/ui/MedalBadge";
 import DelegationLeaders from "@/components/ui/DelegationLeaders";
 import type { Delegation } from "@/domain";
+import { formatScore } from "@/lib/utils";
 
 export default function EditionDelegations({
   delegations,
@@ -20,8 +21,8 @@ export default function EditionDelegations({
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        {delegations.length} delegation{delegations.length === 1 ? "" : "s"} took part, ordered by
-        gold, then silver, then bronze. Places are olympiad ranks in a field of {fieldSize}.
+        {delegations.length} delegation{delegations.length === 1 ? "" : "s"}, ordered by total marks.
+        Places are olympiad ranks in a field of {fieldSize}.
       </p>
       <div className="grid gap-4 md:grid-cols-2">
         {delegations.map((d) => (
@@ -47,6 +48,9 @@ export default function EditionDelegations({
               <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
                 <span>
                   {d.participants} contestant{d.participants === 1 ? "" : "s"}
+                </span>
+                <span className="tnum font-medium text-foreground">
+                  {formatScore(d.totalMarks)} marks
                 </span>
                 {d.gold > 0 && <span className="text-gold">{d.gold} gold</span>}
                 {d.silver > 0 && <span className="text-silver">{d.silver} silver</span>}
