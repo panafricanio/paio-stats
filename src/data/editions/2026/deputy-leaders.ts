@@ -4,6 +4,7 @@ import type { Official } from "@/domain/edition";
 export const deputyLeaders: Official[] = [
   { name: "Kheira Mihoub", roles: ["Algeria"] },
   { name: "Thatayaone Monkgogi", roles: ["Botswana"] },
+  { name: "Beatrice Boatemaa Kodua", roles: ["Ghana"] },
   { name: "Zsolt", roles: ["Hungary"], image: "/images/editions/2026/hungary-zsolt-deputy-leader.jpg" },
   { name: "Daniel Kiilu Mwania", roles: ["Kenya"] },
   { name: "Mousa", roles: ["Libya"], image: "/images/editions/2026/libya-mousa-deputy-leader.jpg" },
