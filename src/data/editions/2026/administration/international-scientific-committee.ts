@@ -4,7 +4,7 @@ import type { Official } from "@/domain/edition";
  * PAIO 2026 International Scientific Committee (ISC).
  * Roster carried forward from PAIO 2025, plus Mina Gayed.
  */
-export const scientificCommittee: Official[] = [
+export const internationalScientificCommittee: Official[] = [
   {
     name: "Mina Gayed",
     roles: ["ISC member"],

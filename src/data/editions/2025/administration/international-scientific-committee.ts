@@ -1,7 +1,7 @@
 import type { Official } from "@/domain/edition";
 
 /** PAIO 2025 International Scientific Committee (ISC). */
-export const scientificCommittee: Official[] = [
+export const internationalScientificCommittee: Official[] = [
   {
     name: "Anton Tsypko",
     roles: ["ISC member"],

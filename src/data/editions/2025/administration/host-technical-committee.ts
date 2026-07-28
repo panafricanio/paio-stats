@@ -1,34 +1,31 @@
 import type { Official } from "@/domain/edition";
 
-/**
- * PAIO 2025 International Technical Committee (ITC).
- * Historical Host Committee roster, presented under the shared ITC section.
- */
-export const technicalCommittee: Official[] = [
-  { name: "Dr. Papias Niyigena", roles: ["ITC member"] },
+/** PAIO 2025 Host Technical Committee (HTC). */
+export const hostTechnicalCommittee: Official[] = [
+  { name: "Dr. Papias Niyigena", roles: ["HTC member"] },
   {
     name: "Hirwa Arnold",
-    roles: ["ITC member"],
+    roles: ["HTC member"],
     image: "/images/hirwa.jpeg",
   },
   {
     name: "Arun Shanmuganathan",
-    roles: ["ITC member"],
+    roles: ["HTC member"],
     image: "/images/administration/arun.jpg",
   },
   {
     name: "Joel Lee",
-    roles: ["ITC member"],
+    roles: ["HTC member"],
     image: "/images/joel.webp",
   },
   {
     name: "Norbert Ndayisenga",
-    roles: ["ITC member"],
+    roles: ["HTC member"],
     image: "/images/norbert.webp",
   },
   {
     name: "Jean Paul Elisa NIYOKWIZERWA",
-    roles: ["ITC member"],
+    roles: ["HTC member"],
     image: "/images/administration/jean-paul.jpg",
   },
 ];

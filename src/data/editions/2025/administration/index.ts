@@ -1,11 +1,13 @@
-// PAIO 2025 administration — same IC → ISC → ITC shape as every other edition.
+// PAIO 2025 administration — shared IC → ISC → ITC → HTC shape.
 import { composeAdministration } from "../../compose-administration";
+import { hostTechnicalCommittee } from "./host-technical-committee";
 import { internationalCommittee } from "./international-committee";
-import { scientificCommittee } from "./scientific-committee";
-import { technicalCommittee } from "./technical-committee";
+import { internationalScientificCommittee } from "./international-scientific-committee";
+import { internationalTechnicalCommittee } from "./international-technical-committee";
 
 export const administration = composeAdministration({
-  international: internationalCommittee,
-  scientific: scientificCommittee,
-  technical: technicalCommittee,
+  internationalCommittee,
+  internationalScientificCommittee,
+  internationalTechnicalCommittee,
+  hostTechnicalCommittee,
 });

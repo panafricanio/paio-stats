@@ -1,24 +1,46 @@
 import type { AdministrationGroup, Official } from "@/domain/edition";
 
-/** Canonical Administration section titles — same for every edition (IOI-style). */
+/**
+ * Canonical Administration section titles for every edition.
+ * Full names with abbreviations — never short informal labels alone.
+ */
 export const ADMINISTRATION_TITLES = {
-  international: "International Committee",
-  scientific: "International Scientific Committee",
-  technical: "International Technical Committee",
+  internationalCommittee: "International Committee (IC)",
+  internationalScientificCommittee: "International Scientific Committee (ISC)",
+  internationalTechnicalCommittee: "International Technical Committee (ITC)",
+  hostTechnicalCommittee: "Host Technical Committee (HTC)",
 } as const;
 
+export type AdministrationCommittees = {
+  internationalCommittee: Official[];
+  internationalScientificCommittee: Official[];
+  internationalTechnicalCommittee: Official[];
+  hostTechnicalCommittee: Official[];
+};
+
 /**
- * Build the Administration tab groups in a fixed order shared by every edition.
- * Only data (members) varies per year; empty committees are omitted.
+ * Build Administration groups in a fixed order shared by every edition.
+ * Only member rosters change per year; empty committees are omitted.
  */
-export function composeAdministration(committees: {
-  international: Official[];
-  scientific: Official[];
-  technical: Official[];
-}): AdministrationGroup[] {
+export function composeAdministration(
+  committees: AdministrationCommittees,
+): AdministrationGroup[] {
   return [
-    { title: ADMINISTRATION_TITLES.international, members: committees.international },
-    { title: ADMINISTRATION_TITLES.scientific, members: committees.scientific },
-    { title: ADMINISTRATION_TITLES.technical, members: committees.technical },
+    {
+      title: ADMINISTRATION_TITLES.internationalCommittee,
+      members: committees.internationalCommittee,
+    },
+    {
+      title: ADMINISTRATION_TITLES.internationalScientificCommittee,
+      members: committees.internationalScientificCommittee,
+    },
+    {
+      title: ADMINISTRATION_TITLES.internationalTechnicalCommittee,
+      members: committees.internationalTechnicalCommittee,
+    },
+    {
+      title: ADMINISTRATION_TITLES.hostTechnicalCommittee,
+      members: committees.hostTechnicalCommittee,
+    },
   ].filter((group) => group.members.length > 0);
 }
