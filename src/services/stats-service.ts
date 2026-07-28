@@ -18,6 +18,7 @@ import {
   computeTaskStats,
   distributeTaskScores,
   editionDelegations,
+  findOfficialForCountry,
   medalThresholds,
   tallyMedals,
 } from "@/domain/aggregation";
@@ -100,6 +101,8 @@ export interface CountryDelegationEntry {
   silver: number;
   bronze: number;
   hm: number;
+  teamLeader: Official | null;
+  deputyLeader: Official | null;
 }
 
 /** Everything the tabbed country detail needs, in one bundle. */
@@ -342,6 +345,8 @@ export class StatsService {
         silver: 0,
         bronze: 0,
         hm: 0,
+        teamLeader: findOfficialForCountry(edition, country.name, "Team Leaders"),
+        deputyLeader: findOfficialForCountry(edition, country.name, "Deputy Leaders"),
       };
       for (const c of members) {
         if (c.medal === "GOLD") {
@@ -378,7 +383,7 @@ export class StatsService {
   /**
    * People tied to a country. Matching is EXACT (never substring, which would
    * make "Niger" match "Nigeria" or "Mali" match "Somalia"):
-   *  - a Team Leader whose role names exactly this country, and
+   *  - Team / Deputy Leaders whose role names exactly this country, and
    *  - for the host country, its Host Committee and Coaches.
    * Deduped by name, merging roles.
    */
@@ -391,7 +396,7 @@ export class StatsService {
       for (const group of edition.administration) {
         for (const member of group.members) {
           const isLeader =
-            group.title === "Team Leaders" &&
+            (group.title === "Team Leaders" || group.title === "Deputy Leaders") &&
             member.roles.some((r) => cleanRole(r) === country.name);
           const isHostStaff =
             isHost && (group.title === "Host Committee" || group.title === "Coaches");

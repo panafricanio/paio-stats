@@ -107,6 +107,17 @@ export const administration: AdministrationGroup[] = [
     ],
   },
   {
+    // Confirmed deputies only; remaining countries show "—" until names are available.
+    title: "Deputy Leaders",
+    members: [
+      {
+        name: "Niyokwizera Jean D'Amour",
+        roles: ["Rwanda"],
+        image: "/images/brojeid.webp",
+      },
+    ],
+  },
+  {
     title: "Coaches",
     members: [
       { name: "Hirwa Arnold", roles: ["Coach"], image: "/images/hirwa.jpeg" },

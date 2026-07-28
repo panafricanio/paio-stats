@@ -2,7 +2,16 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import MedalBadge from "@/components/ui/MedalBadge";
-import type { Delegation } from "@/domain";
+import type { Delegation, Official } from "@/domain";
+
+function LeaderRow({ label, person }: { label: string; person: Official | null }) {
+  return (
+    <li className="flex items-baseline justify-between gap-3 text-sm">
+      <span className="text-muted-foreground">{label}</span>
+      <span className="text-right font-medium">{person?.name ?? "—"}</span>
+    </li>
+  );
+}
 
 export default function EditionDelegations({
   delegations,
@@ -46,7 +55,17 @@ export default function EditionDelegations({
                 {d.hm > 0 && <span className="text-hm-foreground">{d.hm} HM</span>}
               </div>
 
-              <ul className="mt-4 space-y-1.5">
+              <div className="mt-4 border-t border-border pt-3">
+                <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Leaders
+                </h3>
+                <ul className="space-y-1.5">
+                  <LeaderRow label="Team Leader" person={d.teamLeader} />
+                  <LeaderRow label="Deputy Leader" person={d.deputyLeader} />
+                </ul>
+              </div>
+
+              <ul className="mt-4 space-y-1.5 border-t border-border pt-3">
                 {d.contestants.map((c) => (
                   <li key={c.slug} className="flex items-center justify-between gap-2 text-sm">
                     <Link href={`/contestants/${c.slug}`} className="hover:underline">

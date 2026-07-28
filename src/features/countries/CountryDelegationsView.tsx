@@ -1,5 +1,15 @@
 import CountryContestantsTable from "./CountryContestantsTable";
 import type { CountryDelegationEntry } from "@/services";
+import type { Official } from "@/domain";
+
+function LeaderRow({ label, person }: { label: string; person: Official | null }) {
+  return (
+    <li className="flex items-baseline justify-between gap-3 text-sm sm:justify-start sm:gap-6">
+      <span className="w-28 shrink-0 text-muted-foreground">{label}</span>
+      <span className="font-medium">{person?.name ?? "—"}</span>
+    </li>
+  );
+}
 
 export default function CountryDelegationsView({
   delegations,
@@ -24,6 +34,17 @@ export default function CountryDelegationsView({
               {d.hm > 0 && <span className="text-hm-foreground">{d.hm} HM</span>}
             </div>
           </div>
+
+          <div className="mb-4 rounded-lg border border-border px-4 py-3">
+            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Leaders
+            </h3>
+            <ul className="space-y-1.5">
+              <LeaderRow label="Team Leader" person={d.teamLeader} />
+              <LeaderRow label="Deputy Leader" person={d.deputyLeader} />
+            </ul>
+          </div>
+
           <CountryContestantsTable contestants={d.contestants} />
         </section>
       ))}
