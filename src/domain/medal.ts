@@ -1,5 +1,5 @@
-// Medal domain: the value type, the ranking bands, the tally, and the rule that
-// turns a rank into a medal. Business rule lives with the type it governs.
+// Medal domain: the value type, the ranking bands, the tally, and the rules that
+// turn a rank or a score into a medal. Business rules live with the type they govern.
 import type { ContestantStatus } from "./contestant";
 
 export type MedalType = "GOLD" | "SILVER" | "BRONZE" | "HM";
@@ -9,6 +9,14 @@ export interface MedalBands {
   silver: [number, number];
   bronze: [number, number];
   hm: [number, number];
+}
+
+/** Minimum total score that earns each medal (PAIO score-threshold editions). */
+export interface ScoreMedalThresholds {
+  gold: number;
+  silver: number;
+  bronze: number;
+  hm: number;
 }
 
 export interface MedalTally {
@@ -25,7 +33,7 @@ const ORDER: { type: MedalType; key: keyof MedalBands }[] = [
   { type: "HM", key: "hm" },
 ];
 
-/** The single source of truth for who earns which medal. */
+/** Rank-band awards (e.g. PAIO 2025). */
 export function medalForRank(
   rank: number,
   bands: MedalBands,
@@ -36,6 +44,23 @@ export function medalForRank(
     const [lo, hi] = bands[key];
     if (rank >= lo && rank <= hi) return type;
   }
+  return null;
+}
+
+/**
+ * Score-threshold awards (e.g. PAIO 2026).
+ * Unofficial contestants never receive medals. Guests use the same thresholds.
+ */
+export function medalForScore(
+  total: number,
+  thresholds: ScoreMedalThresholds,
+  status: ContestantStatus,
+): MedalType | null {
+  if (status === "unofficial") return null;
+  if (total >= thresholds.gold) return "GOLD";
+  if (total >= thresholds.silver) return "SILVER";
+  if (total >= thresholds.bronze) return "BRONZE";
+  if (total >= thresholds.hm) return "HM";
   return null;
 }
 

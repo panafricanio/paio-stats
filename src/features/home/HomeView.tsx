@@ -133,14 +133,14 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
 
             <GuideSection title="How medals are awarded">
               <p>
-                Medals are awarded by final rank using cut-offs set for each edition (typically
-                concentrating{" "}
+                Medals follow each edition&apos;s published cut-offs — either by final rank bands or by
+                total-score thresholds (for example PAIO 2026). Typically that concentrates{" "}
                 <span className="font-medium text-gold">Gold</span>,{" "}
                 <span className="font-medium text-silver">Silver</span>, and{" "}
-                <span className="font-medium text-bronze">Bronze</span> among roughly the top
-                half of the field, with{" "}
-                <span className="font-medium text-hm">Honourable Mentions</span> below that).
-                Exact bands vary by year
+                <span className="font-medium text-bronze">Bronze</span> among roughly the top half of
+                the African field, with{" "}
+                <span className="font-medium text-hm">Honourable Mentions</span> below that. Exact
+                cut-offs vary by year
                 {latestWithResults && (
                   <>
                     {" — "}

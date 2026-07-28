@@ -4,6 +4,7 @@ import Bar from "@/components/ui/Bar";
 import type { Edition } from "@/domain/edition";
 import type { Contestant } from "@/domain/contestant";
 import type { Task } from "@/domain/task";
+import { formatScore } from "@/lib/utils";
 
 interface Row {
   task: Task;
@@ -42,7 +43,7 @@ export default function ContestantScoreTable({
       cellClassName: "font-semibold",
       cell: (r) => (
         <>
-          {r.score}
+          {formatScore(r.score)}
           <span className="text-muted-foreground"> / {r.task.maxScore}</span>
         </>
       ),

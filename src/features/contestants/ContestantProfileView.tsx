@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, formatScore } from "@/lib/utils";
 import Avatar from "@/components/ui/Avatar";
 import MedalBadge from "@/components/ui/MedalBadge";
 import { Badge } from "@/components/ui/badge";
@@ -49,7 +49,7 @@ export default function ContestantProfileView({ profile }: { profile: Contestant
         </span>
       ),
     },
-    { id: "total", header: "Total", align: "center", numeric: true, cellClassName: "font-semibold", cell: (p) => p.contestant.total },
+    { id: "total", header: "Total", align: "center", numeric: true, cellClassName: "font-semibold", cell: (p) => formatScore(p.contestant.total) },
     {
       id: "rank",
       header: "Rank",
