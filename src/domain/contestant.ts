@@ -22,6 +22,8 @@ export interface Contestant {
   status: ContestantStatus;
   /** Online vs on-site participation for this edition. */
   venue: ContestVenue;
+  /** Optional portrait path under /public. */
+  image?: string;
   /** Score per task, keyed by task slug. */
   scores: Record<string, number>;
   /** Per-day totals, derived from scores + each task's day. Any number of days. */

@@ -9,6 +9,8 @@ export interface RawContestant {
   firstName: string;
   lastName: string;
   country: string;
+  /** Optional portrait path under /public (e.g. /images/editions/2026/…). */
+  image?: string;
   /** Per-task scores keyed by task slug. */
   scores: Record<string, number>;
   isUnofficial?: boolean;

@@ -9,6 +9,7 @@ export const results: RawContestant[] = [
     firstName: "Ahmed",
     lastName: "Osman",
     country: "Egypt",
+    image: "/images/editions/2026/egypt-osman-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -26,6 +27,7 @@ export const results: RawContestant[] = [
     firstName: "Balázs",
     lastName: "Szilágyi",
     country: "Hungary (Guest)",
+    image: "/images/editions/2026/hungary-balazs-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -77,6 +79,7 @@ export const results: RawContestant[] = [
     firstName: "Tamás",
     lastName: "Görömbey",
     country: "Hungary (Guest)",
+    image: "/images/editions/2026/hungary-tamas-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -94,6 +97,7 @@ export const results: RawContestant[] = [
     firstName: "Moez",
     lastName: "Abozeid",
     country: "Egypt",
+    image: "/images/editions/2026/egypt-moez-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -128,6 +132,7 @@ export const results: RawContestant[] = [
     firstName: "Albaraa",
     lastName: "Ahmed",
     country: "Egypt",
+    image: "/images/editions/2026/egypt-albaraa-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -145,6 +150,7 @@ export const results: RawContestant[] = [
     firstName: "Mishari",
     lastName: "Alhussain",
     country: "Saudi Arabia (Guest)",
+    image: "/images/editions/2026/saudi-arabia-mishari-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -179,6 +185,7 @@ export const results: RawContestant[] = [
     firstName: "Jalaladdin",
     lastName: "Nargulyyev",
     country: "Turkmenistan (Guest)",
+    image: "/images/editions/2026/turkmenistan-jalaladdin-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -196,6 +203,7 @@ export const results: RawContestant[] = [
     firstName: "Ahmed",
     lastName: "Solyman",
     country: "",
+    image: "/images/editions/2026/egypt-soleyman-student.jpg",
     isUnofficial: true,
     venue: "online",
     scores: {
@@ -214,6 +222,7 @@ export const results: RawContestant[] = [
     firstName: "Akmuhammet",
     lastName: "Shohratgeldiyev",
     country: "Turkmenistan (Guest)",
+    image: "/images/editions/2026/turkmenistan-akmuhammet-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -283,6 +292,7 @@ export const results: RawContestant[] = [
     firstName: "Júlia",
     lastName: "Baran",
     country: "Hungary (Guest)",
+    image: "/images/editions/2026/hungary-julia-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -334,6 +344,7 @@ export const results: RawContestant[] = [
     firstName: "Kasym",
     lastName: "Kochekov",
     country: "Turkmenistan (Guest)",
+    image: "/images/editions/2026/turkmenistan-kasym-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -351,6 +362,7 @@ export const results: RawContestant[] = [
     firstName: "Bendegúz",
     lastName: "Vámosi",
     country: "Hungary (Guest)",
+    image: "/images/editions/2026/hungary-bendeguz-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -385,6 +397,7 @@ export const results: RawContestant[] = [
     firstName: "Hana",
     lastName: "Moustafa",
     country: "Egypt",
+    image: "/images/editions/2026/egypt-hana-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -402,6 +415,7 @@ export const results: RawContestant[] = [
     firstName: "Albara",
     lastName: "Abdulhafith",
     country: "Libya",
+    image: "/images/editions/2026/libya-albara-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -470,6 +484,7 @@ export const results: RawContestant[] = [
     firstName: "Emma",
     lastName: "Tarján",
     country: "Hungary (Guest)",
+    image: "/images/editions/2026/hungary-emma-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -487,6 +502,7 @@ export const results: RawContestant[] = [
     firstName: "Shasenem",
     lastName: "Muhammetmyradova",
     country: "Turkmenistan (Guest)",
+    image: "/images/editions/2026/turkmenistan-shasenem-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -538,6 +554,7 @@ export const results: RawContestant[] = [
     firstName: "Habiba",
     lastName: "Abdelhady",
     country: "Egypt",
+    image: "/images/editions/2026/egypt-habiba-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -555,6 +572,7 @@ export const results: RawContestant[] = [
     firstName: "Bassant",
     lastName: "Tamer",
     country: "Egypt",
+    image: "/images/editions/2026/egypt-bassant-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -572,6 +590,7 @@ export const results: RawContestant[] = [
     firstName: "Mahriban",
     lastName: "Bayramova",
     country: "Turkmenistan (Guest)",
+    image: "/images/editions/2026/turkmenistan-mahriban-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -861,6 +880,7 @@ export const results: RawContestant[] = [
     firstName: "Lihn Nguyen-Kovács",
     lastName: "My",
     country: "Hungary (Guest)",
+    image: "/images/editions/2026/hungary-lihn-student.jpg",
     venue: "online",
     scores: {
       vials: 100,
@@ -895,6 +915,7 @@ export const results: RawContestant[] = [
     firstName: "Maryam",
     lastName: "Amr",
     country: "",
+    image: "/images/editions/2026/egypt-maryam-student.jpg",
     isUnofficial: true,
     venue: "online",
     scores: {
@@ -1066,6 +1087,7 @@ export const results: RawContestant[] = [
     firstName: "Mahri",
     lastName: "Seyidova",
     country: "Turkmenistan (Guest)",
+    image: "/images/editions/2026/turkmenistan-mahri-student.jpg",
     venue: "online",
     scores: {
       vials: 8,
@@ -1202,6 +1224,7 @@ export const results: RawContestant[] = [
     firstName: "Nnabugo",
     lastName: "Ofordile",
     country: "Nigeria",
+    image: "/images/editions/2026/nigeria-nnabugo-student.jpg",
     venue: "online",
     scores: {
       vials: 0,
@@ -1253,6 +1276,7 @@ export const results: RawContestant[] = [
     firstName: "Agbo",
     lastName: "Adoga",
     country: "Nigeria",
+    image: "/images/editions/2026/nigeria-agbo-student.jpg",
     venue: "online",
     scores: {
       vials: 0,
@@ -1423,6 +1447,7 @@ export const results: RawContestant[] = [
     firstName: "Hallel",
     lastName: "Okpere-udo",
     country: "Nigeria",
+    image: "/images/editions/2026/nigeria-halel-student.jpg",
     venue: "online",
     scores: {
       vials: 0,
@@ -1542,6 +1567,7 @@ export const results: RawContestant[] = [
     firstName: "Layth",
     lastName: "Alzahrani",
     country: "Saudi Arabia (Guest)",
+    image: "/images/editions/2026/saudi-arabia-layith-student.jpg",
     venue: "online",
     scores: {
       vials: 0,
@@ -1644,6 +1670,7 @@ export const results: RawContestant[] = [
     firstName: "Mohamed",
     lastName: "Alzahrani",
     country: "Saudi Arabia (Guest)",
+    image: "/images/editions/2026/saudi-arabia-mohamed-student.jpg",
     venue: "online",
     scores: {
       vials: 0,

@@ -1,4 +1,5 @@
 import type { EditionConfig, TaskConfig } from "../types";
+import { administration } from "./administration";
 import { results } from "./results";
 
 const tasks: TaskConfig[] = [
@@ -36,4 +37,5 @@ export const paio2026: EditionConfig = {
   },
   tasks,
   results,
+  administration,
 };
