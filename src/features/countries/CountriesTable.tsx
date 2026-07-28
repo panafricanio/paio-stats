@@ -47,6 +47,7 @@ export default function CountriesTable({
   rows,
   showHosted = true,
   showMarks = false,
+  showGuestBadge = true,
   caption = "PAIO country ranking by gold, then silver, then bronze.",
 }: {
   rows: CountryRow[];
@@ -54,12 +55,14 @@ export default function CountriesTable({
   showHosted?: boolean;
   /** Show Marks column (sum of contestant totals) — used for per-edition standings. */
   showMarks?: boolean;
+  /** Hide when the section heading already conveys guest status. */
+  showGuestBadge?: boolean;
   caption?: string;
 }) {
   const [sort, setSort] = useState<{ key: SortKey; dir: SortDir } | null>(null);
 
   const sorted = useMemo(() => {
-    if (!sort) return rows; // default: service ranking (guests last)
+    if (!sort) return rows; // default: service ranking
     const factor = sort.dir === "asc" ? 1 : -1;
     return [...rows].sort((a, b) => {
       if (sort.key === "country") return a.country.name.localeCompare(b.country.name) * factor;
@@ -209,7 +212,7 @@ export default function CountriesTable({
                     <span className="text-base leading-none">{r.country.flag}</span>
                     {r.country.name.replace(" (Guest)", "")}
                   </Link>
-                  {r.guest && (
+                  {showGuestBadge && r.guest && (
                     <Badge variant="outline" className="border-chart-5/30 py-0 text-[10px] text-chart-5">
                       Guest
                     </Badge>

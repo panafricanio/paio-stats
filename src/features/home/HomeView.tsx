@@ -151,8 +151,8 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
             <GuideSection title="Countries">
               <p>
                 All-time country standings are ordered by gold, then silver, then bronze. Within an
-                edition, countries are ordered by total marks. Only official team medals count toward
-                country medal totals.
+                edition, countries are ordered by total marks. Official and guest countries appear in
+                separate tables. Only official team medals count toward country medal totals.
               </p>
             </GuideSection>
 
