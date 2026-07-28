@@ -23,6 +23,7 @@ export default function DelegationTeamCards({
           <Card className="h-full overflow-hidden">
             <CardContent className="flex h-full flex-col items-center p-5 text-center">
               <Avatar
+                src={c.image}
                 name={c.fullName}
                 sizes="(max-width: 639px) 96px, 112px"
                 className="h-24 w-24 text-2xl ring-1 ring-border sm:h-28 sm:w-28"

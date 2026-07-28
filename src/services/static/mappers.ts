@@ -78,6 +78,7 @@ function mapContestant(
     countryName: deriveCountryName(raw),
     status,
     venue: raw.venue ?? defaultVenue,
+    image: raw.image,
     scores,
     dayTotals,
     total,

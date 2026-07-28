@@ -17,6 +17,8 @@ const chipClass: Record<MedalType, string> = {
 
 export default function ContestantProfileView({ profile }: { profile: ContestantProfile }) {
   const { fullName, country, status, medalTally, participations } = profile;
+  const portrait =
+    participations.find((p) => p.contestant.image)?.contestant.image ?? undefined;
 
   const chips = (
     [
@@ -81,6 +83,7 @@ export default function ContestantProfileView({ profile }: { profile: Contestant
       <div className="border-b border-border bg-secondary/40">
         <div className="container flex flex-col items-center gap-6 py-12 text-center sm:flex-row sm:text-left">
           <Avatar
+            src={portrait}
             name={fullName}
             className="h-28 w-28 text-3xl ring-1 ring-border sm:h-32 sm:w-32"
           />
