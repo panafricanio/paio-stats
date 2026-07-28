@@ -52,11 +52,16 @@ export default function EditionScoreboard({
   tasks,
   days,
   showCountryFilter = true,
+  showStatusBadges = true,
+  caption,
 }: {
   rows: ScoreRow[];
   tasks: ScoreboardTask[];
   days: number[];
   showCountryFilter?: boolean;
+  /** When false, omit Guest/Unofficial chips (section heading already conveys status). */
+  showStatusBadges?: boolean;
+  caption?: string;
 }) {
   const multiDay = days.length > 1;
   const [country, setCountry] = useState("all");
@@ -118,12 +123,12 @@ export default function EditionScoreboard({
           <Link href={`/contestants/${r.slug}`} className="font-medium hover:underline">
             {r.fullName}
           </Link>
-          {r.status === "guest" && (
+          {showStatusBadges && r.status === "guest" && (
             <Badge variant="outline" className="border-chart-5/30 py-0 text-[10px] text-chart-5">
               Guest
             </Badge>
           )}
-          {r.status === "unofficial" && (
+          {showStatusBadges && r.status === "unofficial" && (
             <Badge variant="secondary" className="py-0 text-[10px] text-muted-foreground">
               Unofficial
             </Badge>
@@ -257,7 +262,10 @@ export default function EditionScoreboard({
         rows={rowsForView}
         getRowKey={(r) => `${r.slug}-${r.rank}`}
         minWidth="960px"
-        caption="PAIO edition scoreboard. Sort by rank, task score, day total, or overall total."
+        caption={
+          caption ??
+          "PAIO edition scoreboard. Sort by rank, task score, day total, or overall total."
+        }
         rowClassName={(r) =>
           r.status === "unofficial"
             ? "opacity-70"

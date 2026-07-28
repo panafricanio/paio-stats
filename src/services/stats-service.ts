@@ -57,6 +57,7 @@ export interface ScoreRow {
   countryFlag: string;
   countryCode: string | null;
   status: Contestant["status"];
+  venue: Contestant["venue"];
   medal: Contestant["medal"];
   specialAward?: string;
   scores: Record<string, number>;
@@ -676,6 +677,7 @@ export class StatsService {
       countryFlag: byName.get(c.countryName)?.flag ?? "",
       countryCode: byName.get(c.countryName)?.code ?? null,
       status: c.status,
+      venue: c.venue,
       medal: c.medal,
       specialAward: c.specialAward,
       scores: c.scores,

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { statsService } from "@/services";
 import { getCountryByCode } from "@/data/countries";
-import EditionScoreboard from "@/features/editions/EditionScoreboard";
+import EditionResultsView from "@/features/editions/EditionResultsView";
 
 export async function generateStaticParams() {
   const countries = await statsService.listCountries();
@@ -33,14 +33,14 @@ export default async function CountryResultsPage({
   }
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-12">
       {detail.results.map(({ edition, rows }) => (
-        <section key={edition.slug}>
-          <h2 className="mb-4 font-display text-2xl">{edition.name}</h2>
-          <EditionScoreboard
+        <section key={edition.slug} className="space-y-6">
+          <h2 className="font-display text-2xl tracking-tight">{edition.name}</h2>
+          <EditionResultsView
+            idPrefix={`${edition.slug}-`}
             rows={rows}
             days={edition.days}
-            showCountryFilter={false}
             tasks={edition.tasks.map((t) => ({
               slug: t.slug,
               short: t.short,

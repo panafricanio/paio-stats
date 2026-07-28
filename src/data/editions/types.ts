@@ -12,6 +12,11 @@ export interface RawContestant {
   /** Per-task scores keyed by task slug. */
   scores: Record<string, number>;
   isUnofficial?: boolean;
+  /**
+   * Optional override. When omitted, the edition’s format decides
+   * (online competition → online, otherwise onsite).
+   */
+  venue?: "online" | "onsite";
   specialAward?: string;
 }
 
