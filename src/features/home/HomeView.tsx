@@ -169,14 +169,15 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
 
             <GuideSection title="Contestant status">
               <p>
-                Edition results are listed in separate scoreboards by how (and whether) contestants
-                competed officially:
+                Edition and country results use separate scoreboard tables by status (like PAMO&apos;s
+                Official / Unofficial boards). Online vs on-site is shown as a Venue column in each
+                table:
               </p>
               <ul className="mt-3 space-y-2">
                 <li>
-                  <span className="font-medium text-foreground">Online / On-site:</span> official team
-                  members, grouped by participation mode for that edition. Their medals count toward
-                  both the contestant and their country.
+                  <span className="font-medium text-foreground">Official Contestants:</span> team
+                  members whose medals count toward both the contestant and their country. The Venue
+                  column marks Online or On-site participation.
                 </li>
                 <li>
                   <span className="font-medium text-foreground">Guest:</span> invited teams competing

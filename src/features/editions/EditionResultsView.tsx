@@ -1,41 +1,32 @@
 import EditionScoreboard, { type ScoreboardTask } from "@/features/editions/EditionScoreboard";
 import type { ScoreRow } from "@/services";
 
+/**
+ * PAMO-style results layout: Official / Guests / Unofficial as separate tables.
+ * Online vs on-site is a Venue column inside each table (like PAMO’s PAMOG column),
+ * not a top-level section split.
+ */
 const SECTIONS = [
   {
-    id: "online",
-    title: "Online",
-    description: "Official contestants who competed online.",
-    filter: (r: ScoreRow) => r.status === "official" && r.venue === "online",
-    showStatusBadges: false,
-  },
-  {
-    id: "onsite",
-    title: "On-site",
-    description: "Official contestants who competed in person.",
-    filter: (r: ScoreRow) => r.status === "official" && r.venue === "onsite",
-    showStatusBadges: false,
+    id: "official",
+    title: "Official Contestants",
+    description: "Official team members. Medals count toward country rankings.",
+    filter: (r: ScoreRow) => r.status === "official",
   },
   {
     id: "guests",
     title: "Guests",
     description: "Invited teams recognised individually; medals do not count toward country rankings.",
     filter: (r: ScoreRow) => r.status === "guest",
-    showStatusBadges: false,
   },
   {
     id: "unofficial",
-    title: "Unofficial",
+    title: "Unofficial Contestants",
     description: "Additional participants shown for completeness; not ranked for medals.",
     filter: (r: ScoreRow) => r.status === "unofficial",
-    showStatusBadges: false,
   },
 ] as const;
 
-/**
- * Edition results split into Online / On-site / Guests / Unofficial scoreboards.
- * Empty sections are omitted so a fully online edition only shows Online (+ guests/unofficial).
- */
 export default function EditionResultsView({
   rows,
   tasks,
@@ -61,9 +52,9 @@ export default function EditionResultsView({
   return (
     <div className="space-y-12">
       <p className="text-sm text-muted-foreground">
-        Results are grouped by participation mode and status. Places are ranks in the full edition
-        field
-        {sections.length > 1 ? "; each group is listed separately below" : ""}.
+        Results follow the PAMO country-board layout: official contestants, then guests and
+        unofficials when present. Places are ranks in the full edition field; Online vs On-site
+        appears in the Venue column.
       </p>
 
       {sections.map((section) => (
@@ -81,7 +72,8 @@ export default function EditionResultsView({
             rows={section.rows}
             tasks={tasks}
             days={days}
-            showStatusBadges={section.showStatusBadges}
+            showStatusBadges={false}
+            showVenueColumn
             caption={`${section.title} scoreboard for this PAIO edition.`}
           />
         </section>
