@@ -659,7 +659,9 @@ export class StatsService {
     const official = tallyMedals(edition, "official");
     const guest = tallyMedals(edition, "guest");
     return {
-      participants: edition.contestants.filter((c) => c.status !== "unofficial").length,
+      // Full published field, including unofficials — matches Results boards and
+      // Overview breakdown (official + guest + unofficial).
+      participants: edition.contestants.length,
       countriesCount: aggregateCountries(edition, byName).length,
       tasksCount: edition.tasks.length,
       official,
