@@ -1,6 +1,8 @@
 import type { EditionConfig, TaskConfig } from "../types";
 import { results } from "./results";
 import { administration } from "./administration";
+import { teamLeaders } from "./team-leaders";
+import { deputyLeaders } from "./deputy-leaders";
 
 const tasks: TaskConfig[] = [
   { slug: "cards", name: "Cards", short: "Cards", day: 1, maxScore: 100, pdf: "/tasks/2025/cards.pdf" },
@@ -32,4 +34,6 @@ export const paio2025: EditionConfig = {
   tasks,
   results,
   administration,
+  teamLeaders,
+  deputyLeaders,
 };

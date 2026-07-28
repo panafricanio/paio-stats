@@ -399,8 +399,8 @@ export class StatsService {
         silver: 0,
         bronze: 0,
         hm: 0,
-        teamLeader: findOfficialForCountry(edition, country.name, "Team Leaders"),
-        deputyLeader: findOfficialForCountry(edition, country.name, "Deputy Leaders"),
+        teamLeader: findOfficialForCountry(edition.teamLeaders, country.name),
+        deputyLeader: findOfficialForCountry(edition.deputyLeaders, country.name),
       };
       for (const c of members) {
         if (c.medal === "GOLD") {
@@ -451,37 +451,36 @@ export class StatsService {
     const cleanRole = (r: string) => r.replace(/\s*\(Guest\)\s*$/i, "").trim();
     const byName = new Map<string, Official>();
 
+    const add = (member: Official, displayRoles: string[]) => {
+      const existing = byName.get(member.name);
+      if (existing) {
+        for (const r of displayRoles) if (!existing.roles.includes(r)) existing.roles.push(r);
+        if (!existing.image && member.image) existing.image = member.image;
+      } else {
+        byName.set(member.name, {
+          name: member.name,
+          roles: displayRoles,
+          image: member.image,
+        });
+      }
+    };
+
     for (const edition of editions) {
-      const isHost = edition.host === country.name;
-      for (const group of edition.administration) {
-        for (const member of group.members) {
-          const isTeamLeader =
-            group.title === "Team Leaders" &&
-            member.roles.some((r) => cleanRole(r) === country.name);
-          const isDeputyLeader =
-            group.title === "Deputy Leaders" &&
-            member.roles.some((r) => cleanRole(r) === country.name);
-          const isHostStaff = isHost && group.title === "Host Committee";
-          if (!isTeamLeader && !isDeputyLeader && !isHostStaff) continue;
-
-          const displayRoles = isTeamLeader
-            ? ["Team Leader"]
-            : isDeputyLeader
-              ? ["Deputy Leader"]
-              : [...member.roles];
-
-          const existing = byName.get(member.name);
-          if (existing) {
-            for (const r of displayRoles) if (!existing.roles.includes(r)) existing.roles.push(r);
-            if (!existing.image && member.image) existing.image = member.image;
-          } else {
-            byName.set(member.name, {
-              name: member.name,
-              roles: displayRoles,
-              image: member.image,
-            });
-          }
+      for (const member of edition.teamLeaders) {
+        if (member.roles.some((r) => cleanRole(r) === country.name)) {
+          add(member, ["Team Leader"]);
         }
+      }
+      for (const member of edition.deputyLeaders) {
+        if (member.roles.some((r) => cleanRole(r) === country.name)) {
+          add(member, ["Deputy Leader"]);
+        }
+      }
+
+      if (edition.host !== country.name) continue;
+      for (const group of edition.administration) {
+        if (group.title !== "Host Committee") continue;
+        for (const member of group.members) add(member, [...member.roles]);
       }
     }
     return [...byName.values()];

@@ -10,7 +10,7 @@ export interface Official {
   image?: string;
 }
 
-/** A titled group of officials (e.g. "Team Leaders", "Deputy Leaders"). */
+/** A titled group of officials (e.g. "International Committee"). */
 export interface AdministrationGroup {
   title: string;
   members: Official[];
@@ -31,5 +31,10 @@ export interface Edition {
   days: number[];
   tasks: Task[];
   contestants: Contestant[];
+  /** Organising committees shown on the Administration tab. */
   administration: AdministrationGroup[];
+  /** National team leaders for this edition (Delegations / country people). */
+  teamLeaders: Official[];
+  /** National deputy leaders for this edition (Delegations / country people). */
+  deputyLeaders: Official[];
 }
