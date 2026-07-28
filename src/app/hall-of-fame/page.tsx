@@ -13,7 +13,8 @@ export default async function HallOfFamePage() {
     statsService.listHallOfFameRows(),
     statsService.listEditions(),
   ]);
-  const latestYear = editions[0]?.year;
+  const editionsWithResults = editions.filter((e) => e.contestants.length > 0);
+  const latestYear = editionsWithResults[0]?.year;
 
   return (
     <div>
@@ -32,8 +33,8 @@ export default async function HallOfFamePage() {
       <div className="container py-10">
         <div className="mb-4 flex flex-col gap-1 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>
-            {rows.length} contestants across {editions.length} edition
-            {editions.length === 1 ? "" : "s"}
+            {rows.length} contestants across {editionsWithResults.length} edition
+            {editionsWithResults.length === 1 ? "" : "s"}
           </p>
           <p>Guest medals count; unofficial awards and Honourable Mentions do not.</p>
         </div>

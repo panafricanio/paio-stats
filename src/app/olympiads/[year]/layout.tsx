@@ -33,7 +33,11 @@ export default async function EditionLayout({
       />
       <div className="sticky top-16 z-40 border-b border-border bg-background/80 backdrop-blur">
         <div className="container">
-          <EditionTabs slug={year} />
+          <EditionTabs
+            slug={year}
+            hasResults={edition.contestants.length > 0}
+            hasTasks={edition.tasks.length > 0}
+          />
         </div>
       </div>
       <div className="container py-10">{children}</div>

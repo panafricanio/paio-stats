@@ -28,6 +28,7 @@ const archiveSections = [
 
 export default function HomeView({ editions }: { editions: Edition[] }) {
   const latest = editions[0];
+  const latestWithResults = editions.find((e) => e.contestants.length > 0);
   const count = editions.length;
 
   return (
@@ -140,15 +141,15 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
                 half of the field, with{" "}
                 <span className="font-medium text-hm-foreground">Honourable Mentions</span> below that).
                 Exact bands vary by year
-                {latest && (
+                {latestWithResults && (
                   <>
                     {" — "}
                     see{" "}
                     <Link
-                      href={`/olympiads/${latest.slug}`}
+                      href={`/olympiads/${latestWithResults.slug}`}
                       className="font-medium text-foreground hover:underline"
                     >
-                      {latest.name}
+                      {latestWithResults.name}
                     </Link>{" "}
                     for a recent example
                   </>

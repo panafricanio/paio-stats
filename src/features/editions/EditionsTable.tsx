@@ -91,8 +91,12 @@ export default function EditionsTable({ rows }: { rows: EditionRow[] }) {
                 )}
               </TableCell>
               <TableCell className="text-muted-foreground">{e.city}</TableCell>
-              <TableCell className="text-center tnum">{e.contestants}</TableCell>
-              <TableCell className="text-center tnum">{e.countries}</TableCell>
+              <TableCell className="text-center tnum">
+                {e.contestants > 0 ? e.contestants : <span className="text-muted-foreground">TBA</span>}
+              </TableCell>
+              <TableCell className="text-center tnum">
+                {e.countries > 0 ? e.countries : <span className="text-muted-foreground">—</span>}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
