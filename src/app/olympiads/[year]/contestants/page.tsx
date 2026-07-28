@@ -5,7 +5,10 @@ export async function generateStaticParams() {
   return (await statsService.getEditionSlugs()).map((year) => ({ year }));
 }
 
-/** Contestants tab removed — Results is the single people + scores view. */
+/**
+ * Edition “Contestants” list tab removed (Results covers the scoreboard).
+ * Individual contestant profiles remain at `/contestants/[slug]`.
+ */
 export default async function EditionContestantsRedirect({
   params,
 }: {
