@@ -263,6 +263,23 @@ export const results: RawContestant[] = [
   },
   {
     rank: 16,
+    firstName: "Haithem",
+    lastName: "Djefel",
+    country: "Algeria",
+    venue: "onsite",
+    scores: {
+      vials: 100,
+      detour: 100,
+      lanterns: 0,
+      walks: 61,
+      imigongo: 100,
+      elevator: 83,
+      alchemy: 100,
+      islands: 15.44,
+    },
+  },
+  {
+    rank: 17,
     firstName: "Júlia",
     lastName: "Baran",
     country: "Hungary (Guest)",
@@ -279,7 +296,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 17,
+    rank: 18,
     firstName: "Yassir",
     lastName: "Salama",
     country: "Morocco",
@@ -296,7 +313,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 18,
+    rank: 19,
     firstName: "Muhammad",
     lastName: "Aneeq",
     country: "Pakistan (Guest)",
@@ -313,7 +330,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 19,
+    rank: 20,
     firstName: "Kasym",
     lastName: "Kochekov",
     country: "Turkmenistan (Guest)",
@@ -330,7 +347,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 20,
+    rank: 21,
     firstName: "Bendegúz",
     lastName: "Vámosi",
     country: "Hungary (Guest)",
@@ -347,7 +364,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 21,
+    rank: 22,
     firstName: "Baraka",
     lastName: "Mulwa",
     country: "Kenya",
@@ -364,7 +381,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 22,
+    rank: 23,
     firstName: "Hana",
     lastName: "Moustafa",
     country: "Egypt",
@@ -381,7 +398,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 23,
+    rank: 24,
     firstName: "Albara",
     lastName: "Abdulhafith",
     country: "Libya",
@@ -398,7 +415,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 24,
+    rank: 25,
     firstName: "Fares",
     lastName: "Khelif",
     country: "Algeria",
@@ -415,7 +432,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 25,
+    rank: 26,
     firstName: "Dorra",
     lastName: "Haffar",
     country: "Tunisia",
@@ -432,7 +449,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 26,
+    rank: 27,
     firstName: "Happy",
     lastName: "David",
     country: "Rwanda",
@@ -449,7 +466,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 27,
+    rank: 28,
     firstName: "Emma",
     lastName: "Tarján",
     country: "Hungary (Guest)",
@@ -466,7 +483,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 28,
+    rank: 29,
     firstName: "Shasenem",
     lastName: "Muhammetmyradova",
     country: "Turkmenistan (Guest)",
@@ -483,7 +500,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 29,
+    rank: 30,
     firstName: "Mohamed",
     lastName: "Ayadi",
     country: "Tunisia",
@@ -500,7 +517,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 30,
+    rank: 31,
     firstName: "Ali",
     lastName: "Majdoub",
     country: "Tunisia",
@@ -517,7 +534,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 31,
+    rank: 32,
     firstName: "Habiba",
     lastName: "Abdelhady",
     country: "Egypt",
@@ -534,7 +551,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 32,
+    rank: 33,
     firstName: "Bassant",
     lastName: "Tamer",
     country: "Egypt",
@@ -551,7 +568,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 33,
+    rank: 34,
     firstName: "Mahriban",
     lastName: "Bayramova",
     country: "Turkmenistan (Guest)",
@@ -568,7 +585,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 34,
+    rank: 35,
     firstName: "Meriam",
     lastName: "Louzi",
     country: "Tunisia",
@@ -585,7 +602,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 35,
+    rank: 36,
     firstName: "Jed Oloo",
     lastName: "Odundo",
     country: "Kenya",
@@ -602,7 +619,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 36,
+    rank: 37,
     firstName: "Khelil",
     lastName: "Ahmed",
     country: "Tunisia",
@@ -619,7 +636,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 37,
+    rank: 38,
     firstName: "Jayden",
     lastName: "Mukisa",
     country: "Uganda",
@@ -636,7 +653,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 38,
+    rank: 39,
     firstName: "Fatma",
     lastName: "Jlali",
     country: "Tunisia",
@@ -653,7 +670,24 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 39,
+    rank: 40,
+    firstName: "Asmaa",
+    lastName: "Belmostefa",
+    country: "Algeria",
+    venue: "onsite",
+    scores: {
+      vials: 100,
+      detour: 0,
+      lanterns: 20,
+      walks: 0,
+      imigongo: 100,
+      elevator: 6,
+      alchemy: 10,
+      islands: 0,
+    },
+  },
+  {
+    rank: 41,
     firstName: "Yasmine",
     lastName: "Ennahi",
     country: "Morocco",
@@ -670,7 +704,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 40,
+    rank: 42,
     firstName: "Moti",
     lastName: "Niguse",
     country: "Ethiopia",
@@ -687,7 +721,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 41,
+    rank: 43,
     firstName: "Ikram",
     lastName: "Hamid",
     country: "Algeria",
@@ -704,7 +738,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 41,
+    rank: 43,
     firstName: "Kesha",
     lastName: "Wanjare",
     country: "Kenya",
@@ -721,7 +755,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 43,
+    rank: 45,
     firstName: "Alex",
     lastName: "Sanhá",
     country: "Guinea-Bissau",
@@ -738,7 +772,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 43,
+    rank: 45,
     firstName: "Doha Riad",
     lastName: "Solh",
     country: "Morocco",
@@ -755,7 +789,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 45,
+    rank: 47,
     firstName: "Douglas Munga",
     lastName: "Nderitu",
     country: "Kenya",
@@ -772,7 +806,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 46,
+    rank: 48,
     firstName: "Nobel",
     lastName: "Desalegn",
     country: "Ethiopia",
@@ -789,7 +823,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 47,
+    rank: 49,
     firstName: "Ines",
     lastName: "Messadia",
     country: "Algeria",
@@ -806,7 +840,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 48,
+    rank: 50,
     firstName: "Lightness",
     lastName: "Ngiliule",
     country: "Tanzania",
@@ -823,7 +857,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 48,
+    rank: 50,
     firstName: "Lihn Nguyen-Kovács",
     lastName: "My",
     country: "Hungary (Guest)",
@@ -840,7 +874,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 50,
+    rank: 52,
     firstName: "Hasset",
     lastName: "Samson",
     country: "Ethiopia",
@@ -857,7 +891,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 50,
+    rank: 52,
     firstName: "Maryam",
     lastName: "Amr",
     country: "",
@@ -875,7 +909,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 52,
+    rank: 54,
     firstName: "Brian",
     lastName: "Muhizi",
     country: "Rwanda",
@@ -892,7 +926,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 53,
+    rank: 55,
     firstName: "Heran",
     lastName: "Alemayehu",
     country: "Ethiopia",
@@ -909,7 +943,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 54,
+    rank: 56,
     firstName: "Mikiyas",
     lastName: "Shegaw",
     country: "Ethiopia",
@@ -926,7 +960,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 55,
+    rank: 57,
     firstName: "Boris",
     lastName: "Ikaze",
     country: "Rwanda",
@@ -943,7 +977,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 56,
+    rank: 58,
     firstName: "Sweetbert",
     lastName: "Nene",
     country: "Tanzania",
@@ -960,7 +994,24 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 57,
+    rank: 59,
+    firstName: "Tumi",
+    lastName: "Nyagiro",
+    country: "Kenya",
+    venue: "onsite",
+    scores: {
+      vials: 37,
+      detour: 0,
+      lanterns: 0,
+      walks: 0,
+      imigongo: 10,
+      elevator: 6,
+      alchemy: 0,
+      islands: 0,
+    },
+  },
+  {
+    rank: 60,
     firstName: "Charity",
     lastName: "Buyinza",
     country: "Uganda",
@@ -977,7 +1028,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 58,
+    rank: 61,
     firstName: "Helen",
     lastName: "Gelagay",
     country: "Ethiopia",
@@ -994,7 +1045,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 59,
+    rank: 62,
     firstName: "Pillar",
     lastName: "Nimurungi",
     country: "Uganda",
@@ -1011,7 +1062,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 60,
+    rank: 63,
     firstName: "Mahri",
     lastName: "Seyidova",
     country: "Turkmenistan (Guest)",
@@ -1028,7 +1079,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 60,
+    rank: 63,
     firstName: "Raphael",
     lastName: "Bitarabeho",
     country: "Uganda",
@@ -1045,7 +1096,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 62,
+    rank: 65,
     firstName: "Tchoffo Houdji Elisa",
     lastName: "Sarah",
     country: "Cameroon",
@@ -1062,7 +1113,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 63,
+    rank: 66,
     firstName: "Clare",
     lastName: "Muraya",
     country: "Kenya",
@@ -1079,7 +1130,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 63,
+    rank: 66,
     firstName: "Elizabeth",
     lastName: "Musimenta",
     country: "Uganda",
@@ -1096,7 +1147,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 65,
+    rank: 68,
     firstName: "Amandine",
     lastName: "Kaneza",
     country: "Rwanda",
@@ -1113,7 +1164,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 66,
+    rank: 69,
     firstName: "Alvin",
     lastName: "Binse",
     country: "Botswana",
@@ -1130,7 +1181,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 66,
+    rank: 69,
     firstName: "Mary Pulane",
     lastName: "Madibela",
     country: "Botswana",
@@ -1147,7 +1198,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 66,
+    rank: 69,
     firstName: "Nnabugo",
     lastName: "Ofordile",
     country: "Nigeria",
@@ -1164,7 +1215,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 69,
+    rank: 72,
     firstName: "Ishimwe",
     lastName: "Elouanie",
     country: "Rwanda",
@@ -1181,7 +1232,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Adon",
     lastName: "Benoy",
     country: "Botswana",
@@ -1198,7 +1249,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Agbo",
     lastName: "Adoga",
     country: "Nigeria",
@@ -1215,7 +1266,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Alexandra",
     lastName: "Dideye",
     country: "Ghana",
@@ -1232,7 +1283,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Ariana",
     lastName: "Rizwan",
     country: "Pakistan (Guest)",
@@ -1249,7 +1300,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Bareera",
     lastName: "Sehar",
     country: "Pakistan (Guest)",
@@ -1266,7 +1317,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Bless Fustin Ache",
     lastName: "Che",
     country: "Cameroon",
@@ -1283,7 +1334,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Busisiwe",
     lastName: "Pepileng",
     country: "Lesotho",
@@ -1300,7 +1351,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Chloe Christina Nsia",
     lastName: "Atangana",
     country: "Cameroon",
@@ -1317,7 +1368,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Daniel",
     lastName: "Muyinza",
     country: "Uganda",
@@ -1334,7 +1385,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Errol",
     lastName: "Affotey-Walters",
     country: "Ghana",
@@ -1351,7 +1402,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Esther Etornam Eleonore",
     lastName: "Ahlijah",
     country: "Ghana",
@@ -1368,7 +1419,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Hallel",
     lastName: "Okpere-udo",
     country: "Nigeria",
@@ -1385,7 +1436,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Jonathan Lael Kenne",
     lastName: "Tchinda",
     country: "Cameroon",
@@ -1402,7 +1453,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Josephine",
     lastName: "Shayo",
     country: "Tanzania",
@@ -1419,7 +1470,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Joyce",
     lastName: "Sulumo",
     country: "Tanzania",
@@ -1436,7 +1487,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Karis Yesutor",
     lastName: "Senya",
     country: "Ghana",
@@ -1453,7 +1504,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Keza Leila",
     lastName: "Leila",
     country: "Rwanda",
@@ -1470,7 +1521,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Khotso",
     lastName: "Modikoe",
     country: "Lesotho",
@@ -1487,7 +1538,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Layth",
     lastName: "Alzahrani",
     country: "Saudi Arabia (Guest)",
@@ -1504,7 +1555,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Leboko-la-morena",
     lastName: "Moilwa",
     country: "Botswana",
@@ -1521,7 +1572,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Lereko",
     lastName: "Malefane",
     country: "Lesotho",
@@ -1538,7 +1589,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Makayla Nyamekye",
     lastName: "Oduro",
     country: "Ghana",
@@ -1555,7 +1606,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Mamadou Youssouf Bandia",
     lastName: "Keita",
     country: "Mali",
@@ -1572,7 +1623,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Mariam",
     lastName: "Samake",
     country: "Mali",
@@ -1589,7 +1640,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Mohamed",
     lastName: "Alzahrani",
     country: "Saudi Arabia (Guest)",
@@ -1606,7 +1657,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Moretlo",
     lastName: "Rapitso",
     country: "Lesotho",
@@ -1623,7 +1674,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Moriba Soungalo",
     lastName: "Traore",
     country: "Mali",
@@ -1640,7 +1691,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Nathan Legrant Ngontcha",
     lastName: "Guimapi",
     country: "Cameroon",
@@ -1657,7 +1708,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Patrick Oscar Manuel",
     lastName: "Mmireku",
     country: "Ghana",
@@ -1674,7 +1725,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Prince",
     lastName: "Sanga",
     country: "Tanzania",
@@ -1691,7 +1742,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Rosizette Tambu",
     lastName: "Akeh",
     country: "Cameroon",
@@ -1708,7 +1759,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Shumaila Nabtahil",
     lastName: "Fatima",
     country: "Pakistan (Guest)",
@@ -1725,7 +1776,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Triphene Kundela",
     lastName: "Bunkembo",
     country: "Mali",
@@ -1742,7 +1793,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Victoria B,",
     lastName: "Kone",
     country: "Mali",
@@ -1759,7 +1810,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Wallece",
     lastName: "Nzella",
     country: "Tanzania",
@@ -1776,7 +1827,7 @@ export const results: RawContestant[] = [
     },
   },
   {
-    rank: 70,
+    rank: 73,
     firstName: "Youssouf Sekou",
     lastName: "Maïga",
     country: "Mali",
