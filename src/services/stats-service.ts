@@ -314,7 +314,7 @@ export class StatsService {
     );
   }
 
-  /** Country medal metrics for a single edition (official + guest teams). */
+  /** Country medal standings for a single edition (official + guest teams). */
   async listEditionCountryRows(slug: string): Promise<CountryRow[]> {
     const [edition, byName] = await Promise.all([
       this.getEdition(slug),
