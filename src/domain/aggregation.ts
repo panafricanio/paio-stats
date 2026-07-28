@@ -1,6 +1,6 @@
 // Pure, framework-free aggregations. Every "stats" number the site shows is
 // derived here from domain entities — no data-source or React concerns.
-import type { Edition } from "./edition";
+import type { Edition, Official } from "./edition";
 import type { Country, CountryAggregate } from "./country";
 import type { TaskStat } from "./task";
 import type { MedalTally, MedalType } from "./medal";
@@ -57,11 +57,37 @@ export interface Delegation {
   bronze: number;
   hm: number;
   contestants: Contestant[];
+  teamLeader: Official | null;
+  deputyLeader: Official | null;
+}
+
+/** Strip optional "(Guest)" suffix so role country labels match contestant country names. */
+function cleanCountryRole(role: string): string {
+  return role.replace(/\s*\(Guest\)\s*$/i, "").trim();
+}
+
+/**
+ * Find a leader/deputy whose Administration role names this country.
+ * Matching is exact on the cleaned country name (never substring).
+ */
+export function findOfficialForCountry(
+  edition: Edition,
+  countryName: string,
+  groupTitle: string,
+): Official | null {
+  const group = edition.administration.find((g) => g.title === groupTitle);
+  if (!group) return null;
+  return (
+    group.members.find((m) =>
+      m.roles.some((r) => cleanCountryRole(r) === countryName),
+    ) ?? null
+  );
 }
 
 /**
  * Country delegations at one edition — every team present (official + guest),
- * each with its contestants and medal count. Unofficial entries are excluded.
+ * each with its contestants, medal count, and team/deputy leaders when known.
+ * Unofficial entries are excluded.
  */
 export function editionDelegations(
   edition: Edition,
@@ -85,6 +111,8 @@ export function editionDelegations(
         bronze: 0,
         hm: 0,
         contestants: [],
+        teamLeader: findOfficialForCountry(edition, country.name, "Team Leaders"),
+        deputyLeader: findOfficialForCountry(edition, country.name, "Deputy Leaders"),
       };
       map.set(country.code, d);
     }
