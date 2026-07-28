@@ -26,9 +26,6 @@ export default function EditionAdministration({
 
   return (
     <div className="space-y-10">
-      <p className="text-sm text-muted-foreground">
-        The people who organised {editionName} — {total} across {groups.length} groups.
-      </p>
       {groups.map((group) => (
         <section key={group.title}>
           <h2 className="mb-4 font-display text-2xl">{group.title}</h2>

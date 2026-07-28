@@ -1,7 +1,7 @@
 // Shared static-data shapes for every PAIO edition. Per-year folders supply
 // concrete configs + results; the domain mapper never sees year-specific fields.
 import type { MedalBands } from "@/domain/medal";
-import type { AdministrationGroup } from "@/domain/edition";
+import type { AdministrationGroup, Official } from "@/domain/edition";
 
 /** Raw contestant row as stored in an edition’s results file. */
 export interface RawContestant {
@@ -45,4 +45,8 @@ export interface EditionConfig {
   tasks: TaskConfig[];
   results: RawContestant[];
   administration?: AdministrationGroup[];
+  /** National team leaders — not part of the Administration tab. */
+  teamLeaders?: Official[];
+  /** National deputy leaders — not part of the Administration tab. */
+  deputyLeaders?: Official[];
 }

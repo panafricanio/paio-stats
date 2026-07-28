@@ -69,18 +69,15 @@ function cleanCountryRole(role: string): string {
 }
 
 /**
- * Find a leader/deputy whose Administration role names this country.
+ * Find a team/deputy leader whose role names this country.
  * Matching is exact on the cleaned country name (never substring).
  */
 export function findOfficialForCountry(
-  edition: Edition,
+  officials: Official[],
   countryName: string,
-  groupTitle: string,
 ): Official | null {
-  const group = edition.administration.find((g) => g.title === groupTitle);
-  if (!group) return null;
   return (
-    group.members.find((m) =>
+    officials.find((m) =>
       m.roles.some((r) => cleanCountryRole(r) === countryName),
     ) ?? null
   );
@@ -114,8 +111,8 @@ export function editionDelegations(
         hm: 0,
         totalMarks: 0,
         contestants: [],
-        teamLeader: findOfficialForCountry(edition, country.name, "Team Leaders"),
-        deputyLeader: findOfficialForCountry(edition, country.name, "Deputy Leaders"),
+        teamLeader: findOfficialForCountry(edition.teamLeaders, country.name),
+        deputyLeader: findOfficialForCountry(edition.deputyLeaders, country.name),
       };
       map.set(country.code, d);
     }

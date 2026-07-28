@@ -1,6 +1,5 @@
-// PAIO 2025 organising side, gathered from the official PAIO 2025 website
-// (panafricanio/paio_new: data/committeeMembers.ts) plus confirmed
-// team/deputy leaders. Photos are snapshotted locally under /public/images.
+// PAIO 2025 organising committees for the Administration tab.
+// Team/Deputy leaders are edition delegation data (see team-leaders.ts / deputy-leaders.ts).
 import type { AdministrationGroup } from "@/domain/edition";
 
 export const administration: AdministrationGroup[] = [
@@ -84,35 +83,6 @@ export const administration: AdministrationGroup[] = [
         name: "Maya Chouikrat",
         roles: ["Algerian Olympiad Program"],
         image: "/images/administration/maya.jpg",
-      },
-    ],
-  },
-  {
-    title: "Team Leaders",
-    members: [
-      { name: "Raouf Ould Ali", roles: ["Algeria"], image: "/images/administration/raouf.png" },
-      { name: "Dr. Houssein Ahmed Assoweh", roles: ["Djibouti"], image: "/images/DrHoussein.jpg" },
-      { name: "Youssef Khalil", roles: ["Egypt"], image: "/images/administration/youssef-khalil.png" },
-      { name: "Elias Konadu", roles: ["Ghana"] },
-      { name: "Prof James Katende", roles: ["Kenya"], image: "/images/katende.jpeg" },
-      { name: "Sébastian Diarra", roles: ["Mali"] },
-      { name: "Dr. Anas Abou El Kalam", roles: ["Morocco"], image: "/images/administration/anas.png" },
-      { name: "Jennie Oluchi", roles: ["Nigeria"], image: "/images/administration/jennie-oluchi.png" },
-      { name: "Etienne Kagaba", roles: ["Rwanda"], image: "/images/kagaba.webp" },
-      { name: "Noah Jacobsen", roles: ["South Africa"], image: "/images/administration/noah.jpeg" },
-      { name: "Mohamed Fares Nebili", roles: ["Tunisia"], image: "/images/administration/fares-nebili.png" },
-      { name: "Valentine Sherekete", roles: ["Zimbabwe"], image: "/images/sherekete.jpeg" },
-      { name: "Ahmad Usman", roles: ["Pakistan (Guest)"], image: "/images/administration/ahmad-usman.png" },
-    ],
-  },
-  {
-    title: "Deputy Leaders",
-    members: [
-      { name: "Mohammed Hachem Drici", roles: ["Algeria"] },
-      {
-        name: "Niyokwizera Jean D'Amour",
-        roles: ["Rwanda"],
-        image: "/images/brojeid.webp",
       },
     ],
   },

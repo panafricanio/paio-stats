@@ -109,5 +109,7 @@ export function mapEdition(config: EditionConfig): Edition {
       mapContestant(r, config.tasks, config.bands, days, defaultVenue),
     ),
     administration: config.administration ?? [],
+    teamLeaders: config.teamLeaders ?? [],
+    deputyLeaders: config.deputyLeaders ?? [],
   };
 }
