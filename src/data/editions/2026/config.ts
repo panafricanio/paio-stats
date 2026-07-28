@@ -12,7 +12,12 @@ const tasks: TaskConfig[] = [
   { slug: "islands", name: "Islands", short: "Isl", day: 2, maxScore: 100 },
 ];
 
-/** PAIO 2026 — Kigali hybrid (on-site + online). */
+/**
+ * PAIO 2026 — Kigali hybrid (on-site + online).
+ * Medal bands are the shared rank-band model, derived from the published score
+ * cut-offs (Gold ≥412, Silver ≥136, Bronze ≥84, HM ≥6) so awards stay consistent
+ * with medalForRank used by every edition.
+ */
 export const paio2026: EditionConfig = {
   year: 2026,
   slug: "2026",
@@ -23,20 +28,12 @@ export const paio2026: EditionConfig = {
   format: "Hybrid competition",
   dates: "July 23–30, 2026",
   website: "https://2026.panafricanio.com/",
-  // Rank bands unused when scoreThresholds are set.
   bands: {
-    gold: [0, 0],
-    silver: [0, 0],
-    bronze: [0, 0],
-    hm: [0, 0],
+    gold: [1, 26],
+    silver: [27, 48],
+    bronze: [50, 55],
+    hm: [56, 69],
   },
-  scoreThresholds: {
-    gold: 412,
-    silver: 136,
-    bronze: 84,
-    hm: 6,
-  },
-  assignCompetitionRanks: true,
   tasks,
   results,
 };

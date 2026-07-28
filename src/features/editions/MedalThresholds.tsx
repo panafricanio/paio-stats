@@ -41,8 +41,7 @@ export default function MedalThresholds({
         ))}
       </div>
       <p className="mt-3 text-sm text-muted-foreground">
-        The lowest total score that earned each medal. Awards follow each edition&apos;s published
-        cut-offs (rank bands or score thresholds).
+        The lowest total score that earned each medal. Awards follow each edition&apos;s rank cut-offs.
       </p>
     </section>
   );
