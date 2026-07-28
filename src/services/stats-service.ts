@@ -81,7 +81,7 @@ export interface EditionDetail {
 /** One row of the countries ranking table. */
 export interface CountryRow {
   country: Country;
-  guest: boolean; // guest teams are shown but ranked below official teams
+  guest: boolean; // guest teams appear in a separate table from official teams
   hosted: number[]; // years this country hosted
   participants: number;
   gold: number;
