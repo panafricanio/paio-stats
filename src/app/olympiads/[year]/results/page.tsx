@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { statsService } from "@/services";
-import EditionScoreboard from "@/features/editions/EditionScoreboard";
+import EditionResultsView from "@/features/editions/EditionResultsView";
 
 export async function generateStaticParams() {
   return (await statsService.getEditionSlugs()).map((year) => ({ year }));
@@ -33,15 +33,11 @@ export default async function EditionResultsPage({
     day: t.day,
   }));
 
-  if (detail.rows.length === 0) {
-    return (
-      <p className="text-sm text-muted-foreground">
-        Results for this edition have not been published yet.
-      </p>
-    );
-  }
-
   return (
-    <EditionScoreboard rows={detail.rows} tasks={scoreboardTasks} days={detail.edition.days} />
+    <EditionResultsView
+      rows={detail.rows}
+      tasks={scoreboardTasks}
+      days={detail.edition.days}
+    />
   );
 }

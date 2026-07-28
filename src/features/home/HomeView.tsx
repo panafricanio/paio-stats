@@ -169,17 +169,19 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
 
             <GuideSection title="Contestant status">
               <p>
-                Contestants appear in one of three statuses, which affects how their results are counted:
+                Edition results are listed in separate scoreboards by how (and whether) contestants
+                competed officially:
               </p>
               <ul className="mt-3 space-y-2">
                 <li>
-                  <span className="font-medium text-foreground">Official:</span> full team members.
-                  Their medals count towards both the contestant and their country.
+                  <span className="font-medium text-foreground">Online / On-site:</span> official team
+                  members, grouped by participation mode for that edition. Their medals count toward
+                  both the contestant and their country.
                 </li>
                 <li>
                   <span className="font-medium text-foreground">Guest:</span> invited teams competing
-                  outside the official standings. Their medals are recognised for the contestant but do
-                  not count towards country rankings.
+                  outside the official country standings. Medals are recognised for the contestant but
+                  do not count toward country rankings.
                 </li>
                 <li>
                   <span className="font-medium text-foreground">Unofficial:</span> additional participants

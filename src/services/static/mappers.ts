@@ -3,7 +3,7 @@
 import type { EditionConfig, TaskConfig, RawContestant } from "@/data/editions";
 import type { Edition } from "@/domain/edition";
 import type { Task } from "@/domain/task";
-import type { Contestant, ContestantStatus } from "@/domain/contestant";
+import type { Contestant, ContestantStatus, ContestVenue } from "@/domain/contestant";
 import type { MedalBands } from "@/domain/medal";
 import { medalForRank } from "@/domain/medal";
 import { slugify } from "@/lib/utils";
@@ -25,6 +25,11 @@ function deriveCountryName(raw: RawContestant): string {
   return raw.country.replace(/\s*\(Guest\)\s*$/i, "").trim();
 }
 
+/** Default venue from the edition format string (overridable per contestant). */
+export function defaultVenueFromFormat(format: string): ContestVenue {
+  return /online/i.test(format) ? "online" : "onsite";
+}
+
 function mapTask(config: TaskConfig): Task {
   return {
     slug: config.slug,
@@ -41,6 +46,7 @@ function mapContestant(
   tasks: TaskConfig[],
   bands: MedalBands,
   days: number[],
+  defaultVenue: ContestVenue,
 ): Contestant {
   const status = deriveStatus(raw);
 
@@ -65,6 +71,7 @@ function mapContestant(
     rank: raw.rank,
     countryName: deriveCountryName(raw),
     status,
+    venue: raw.venue ?? defaultVenue,
     scores,
     dayTotals,
     total,
@@ -76,6 +83,7 @@ function mapContestant(
 export function mapEdition(config: EditionConfig): Edition {
   // Derive the contest days from the task configuration — no fixed day count.
   const days = [...new Set(config.tasks.map((t) => t.day))].sort((a, b) => a - b);
+  const defaultVenue = defaultVenueFromFormat(config.format);
 
   return {
     year: config.year,
@@ -90,7 +98,9 @@ export function mapEdition(config: EditionConfig): Edition {
     bands: config.bands,
     days,
     tasks: config.tasks.map(mapTask),
-    contestants: config.results.map((r) => mapContestant(r, config.tasks, config.bands, days)),
+    contestants: config.results.map((r) =>
+      mapContestant(r, config.tasks, config.bands, days, defaultVenue),
+    ),
     administration: config.administration ?? [],
   };
 }
