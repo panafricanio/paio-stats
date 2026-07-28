@@ -47,17 +47,12 @@ function valueOf(r: ScoreRow, key: string): number {
   return r.scores[key] ?? 0;
 }
 
-function venueLabel(venue: ScoreRow["venue"]): string {
-  return venue === "online" ? "Online" : "On-site";
-}
-
 export default function EditionScoreboard({
   rows,
   tasks,
   days,
   showCountryFilter = true,
   showStatusBadges = true,
-  showVenueColumn = false,
   caption,
 }: {
   rows: ScoreRow[];
@@ -66,8 +61,6 @@ export default function EditionScoreboard({
   showCountryFilter?: boolean;
   /** When false, omit Guest/Unofficial chips (section heading already conveys status). */
   showStatusBadges?: boolean;
-  /** PAMO-style extra column (like PAMOG) for Online / On-site. */
-  showVenueColumn?: boolean;
   caption?: string;
 }) {
   const multiDay = days.length > 1;
@@ -214,17 +207,6 @@ export default function EditionScoreboard({
       ),
     },
   );
-
-  // Venue sits after Award, mirroring PAMO’s trailing PAMOG column.
-  if (showVenueColumn) {
-    columns.push({
-      id: "venue",
-      header: "Venue",
-      align: "center",
-      cellClassName: "whitespace-nowrap text-muted-foreground",
-      cell: (r) => venueLabel(r.venue),
-    });
-  }
 
   return (
     <div className="space-y-4">

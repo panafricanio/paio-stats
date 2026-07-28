@@ -169,14 +169,13 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
 
             <GuideSection title="Contestant status">
               <p>
-                Edition and country results use separate scoreboard tables by status. Online vs on-site
-                is shown as a Venue column in each table:
+                When an edition has both modes, On-site and Online results appear as separate boards on
+                the same page (On-site first). Within each board, contestants are grouped by status:
               </p>
               <ul className="mt-3 space-y-2">
                 <li>
                   <span className="font-medium text-foreground">Official Contestants:</span> team
-                  members whose medals count toward both the contestant and their country. The Venue
-                  column marks Online or On-site participation.
+                  members whose medals count toward both the contestant and their country.
                 </li>
                 <li>
                   <span className="font-medium text-foreground">Guest:</span> invited teams competing
