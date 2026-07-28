@@ -21,13 +21,19 @@ function deriveStatus(raw: RawContestant): ContestantStatus {
  * Unofficial/blank entries carry no country.
  */
 function deriveCountryName(raw: RawContestant): string {
-  if (raw.country === "Unofficial") return "";
+  if (raw.isUnofficial || raw.country === "Unofficial") return "";
   return raw.country.replace(/\s*\(Guest\)\s*$/i, "").trim();
 }
 
 /** Default venue from the edition format string (overridable per contestant). */
 export function defaultVenueFromFormat(format: string): ContestVenue {
+  if (/hybrid/i.test(format)) return "onsite"; // hybrid editions must set venue per row
   return /online/i.test(format) ? "online" : "onsite";
+}
+
+/** Keep sheet decimals stable (e.g. 799.88) without float noise. */
+function scoreValue(n: number): number {
+  return Math.round(n * 100) / 100;
 }
 
 function mapTask(config: TaskConfig): Task {
@@ -52,19 +58,19 @@ function mapContestant(
 
   // Per-task scores are the single source of truth; every total is derived.
   const scores: Record<string, number> = {};
-  for (const t of tasks) scores[t.slug] = Number(raw.scores[t.slug]) || 0;
+  for (const t of tasks) scores[t.slug] = scoreValue(Number(raw.scores[t.slug]) || 0);
 
   const dayTotals = days.map((day) => ({
     day,
-    total: tasks
-      .filter((t) => t.day === day)
-      .reduce((sum, t) => sum + (scores[t.slug] ?? 0), 0),
+    total: scoreValue(
+      tasks.filter((t) => t.day === day).reduce((sum, t) => sum + (scores[t.slug] ?? 0), 0),
+    ),
   }));
 
-  const total = Object.values(scores).reduce((sum, v) => sum + v, 0);
+  const total = scoreValue(Object.values(scores).reduce((sum, v) => sum + v, 0));
 
   return {
-    slug: slugify(`${raw.firstName} ${raw.lastName}`),
+    slug: slugify(`${raw.firstName} ${raw.lastName}`.trim() || "contestant"),
     firstName: raw.firstName,
     lastName: raw.lastName,
     fullName: `${raw.firstName} ${raw.lastName}`.trim(),

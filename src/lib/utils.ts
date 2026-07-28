@@ -13,3 +13,11 @@ export function slugify(s: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 }
+
+/**
+ * Display a contest score as published: integers stay bare, fractional values
+ * keep up to two decimal places (sheet precision).
+ */
+export function formatScore(n: number): string {
+  return Number(n.toFixed(2)).toString();
+}

@@ -4,6 +4,7 @@ import DataTable, { type Column } from "@/components/ui/DataTable";
 import StatGrid from "@/components/ui/StatGrid";
 import { Card, CardContent } from "@/components/ui/card";
 import type { TaskDetail } from "@/services";
+import { formatScore } from "@/lib/utils";
 
 type Scorer = TaskDetail["topScorers"][number];
 
@@ -57,7 +58,7 @@ export default function TaskDetailView({ detail }: { detail: TaskDetail }) {
       cellClassName: "text-muted-foreground",
       cell: ({ contestant }) => contestant.countryName.replace(" (Guest)", "") || "—",
     },
-    { id: "score", header: "Score", align: "center", numeric: true, cellClassName: "font-semibold", cell: (s) => s.score },
+    { id: "score", header: "Score", align: "center", numeric: true, cellClassName: "font-semibold", cell: (s) => formatScore(s.score) },
   ];
 
   return (

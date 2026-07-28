@@ -137,10 +137,10 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
                 concentrating{" "}
                 <span className="font-medium text-gold">Gold</span>,{" "}
                 <span className="font-medium text-silver">Silver</span>, and{" "}
-                <span className="font-medium text-bronze">Bronze</span> among roughly the top
-                half of the field, with{" "}
-                <span className="font-medium text-hm">Honourable Mentions</span> below that).
-                Exact bands vary by year
+                <span className="font-medium text-bronze">Bronze</span> among roughly the top half of
+                the field, with{" "}
+                <span className="font-medium text-hm">Honourable Mentions</span> below that). Exact
+                bands vary by year
                 {latestWithResults && (
                   <>
                     {" — "}

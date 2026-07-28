@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { MEDAL_LABELS, type MedalType } from "@/domain/medal";
 import type { MedalThreshold } from "@/domain";
+import { formatScore } from "@/lib/utils";
 
 const accent: Record<MedalType, string> = {
   GOLD: "text-gold",
@@ -29,8 +30,10 @@ export default function MedalThresholds({
                 {MEDAL_LABELS[t.medal]}
               </div>
               <div className="mt-1 font-display text-2xl font-bold tnum">
-                ≥ {t.cutoff}
-                <span className="ml-1 text-sm font-normal text-muted-foreground">/ {maxScore}</span>
+                ≥ {formatScore(t.cutoff)}
+                <span className="ml-1 text-sm font-normal text-muted-foreground">
+                  / {formatScore(maxScore)}
+                </span>
               </div>
               <div className="mt-1 text-xs text-muted-foreground">{t.count} awarded</div>
             </CardContent>

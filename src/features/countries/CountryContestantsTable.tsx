@@ -2,6 +2,7 @@ import Link from "next/link";
 import DataTable, { type Column } from "@/components/ui/DataTable";
 import MedalBadge from "@/components/ui/MedalBadge";
 import type { Contestant } from "@/domain/contestant";
+import { formatScore } from "@/lib/utils";
 
 export default function CountryContestantsTable({
   contestants,
@@ -39,7 +40,7 @@ export default function CountryContestantsTable({
       align: "center",
       numeric: true,
       cellClassName: "font-bold",
-      cell: (c) => c.total,
+      cell: (c) => formatScore(c.total),
     },
     {
       id: "medal",
