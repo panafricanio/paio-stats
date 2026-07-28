@@ -12,6 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TABLE_SCROLL_MAX_HEIGHT,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import type { HallOfFameRow } from "@/services";
@@ -58,8 +59,8 @@ export default function HallOfFameTable({
     sort.key === key ? (sort.dir === "asc" ? "ascending" : "descending") : "none";
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border">
-      <Table minWidth="720px">
+    <div className="rounded-lg border border-border">
+      <Table minWidth="720px" maxHeight={TABLE_SCROLL_MAX_HEIGHT}>
         <TableCaption className="sr-only">
           All-time PAIO contestant ranking through {latestYear}. Canonical rank is determined by
           gold medals, then silver medals, then bronze medals.
@@ -70,7 +71,7 @@ export default function HallOfFameTable({
               rowSpan={2}
               scope="col"
               aria-sort={ariaSort("rank")}
-              className="w-20 py-0 text-center text-primary-foreground"
+              className="w-20 bg-primary py-0 text-center text-primary-foreground"
             >
               <SortableTableButton
                 label="Rank"
@@ -80,14 +81,14 @@ export default function HallOfFameTable({
                 onClick={() => toggleSort("rank")}
               />
             </TableHead>
-            <TableHead rowSpan={2} scope="col" className="text-primary-foreground">
+            <TableHead rowSpan={2} scope="col" className="bg-primary text-primary-foreground">
               Contestant
             </TableHead>
             <TableHead
               rowSpan={2}
               scope="col"
               aria-sort={ariaSort("participations")}
-              className="w-40 py-0 text-center text-primary-foreground"
+              className="w-40 bg-primary py-0 text-center text-primary-foreground"
             >
               <SortableTableButton
                 label="Participations"
@@ -101,7 +102,7 @@ export default function HallOfFameTable({
             <TableHead
               colSpan={4}
               scope="colgroup"
-              className="border-b border-primary-foreground/20 text-center text-primary-foreground"
+              className="border-b border-primary-foreground/20 bg-primary text-center text-primary-foreground"
             >
               Medals
             </TableHead>
@@ -113,7 +114,7 @@ export default function HallOfFameTable({
             <TableHead
               scope="col"
               aria-sort={ariaSort("total")}
-              className="w-24 py-0 text-center text-primary-foreground"
+              className="w-24 bg-primary py-0 text-center text-primary-foreground"
             >
               <SortableTableButton
                 label="Total"
@@ -189,7 +190,7 @@ function MedalHead({
   markerClassName: string;
 }) {
   return (
-    <TableHead scope="col" className="w-16 text-center text-primary-foreground" title={label}>
+    <TableHead scope="col" className="w-16 bg-primary text-center text-primary-foreground" title={label}>
       <span className="inline-flex items-center gap-1.5" aria-hidden="true">
         <span className={cn("h-2 w-2 rounded-full ring-1 ring-primary-foreground/20", markerClassName)} />
         {short}

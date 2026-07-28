@@ -12,6 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TABLE_SCROLL_MAX_HEIGHT,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import type { CountryRow } from "@/services";
@@ -73,8 +74,8 @@ export default function CountriesTable({
     sort?.key === key ? (sort.dir === "asc" ? "ascending" : "descending") : "none";
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border">
-      <Table minWidth="640px">
+    <div className="rounded-lg border border-border">
+      <Table minWidth="640px" maxHeight={TABLE_SCROLL_MAX_HEIGHT}>
         <TableCaption className="sr-only">{caption}</TableCaption>
         <TableHeader>
           {/* Explicit th backgrounds: tr bg is unreliable with rowspan. */}

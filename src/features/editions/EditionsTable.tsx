@@ -12,6 +12,7 @@ import {
   TableRow,
   TableHead,
   TableCell,
+  TABLE_SCROLL_MAX_HEIGHT,
 } from "@/components/ui/table";
 import type { EditionRow } from "@/services";
 
@@ -38,18 +39,18 @@ export default function EditionsTable({ rows }: { rows: EditionRow[] }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border">
-      <Table minWidth="720px">
+    <div className="rounded-lg border border-border">
+      <Table minWidth="720px" maxHeight={TABLE_SCROLL_MAX_HEIGHT}>
         <TableCaption className="sr-only">
           PAIO editions with dates, hosts, contestant totals, and participating country totals.
         </TableCaption>
         <TableHeader>
           <TableRow className="bg-primary text-primary-foreground hover:bg-primary">
-            <TableHead className="w-16 text-center text-primary-foreground">No.</TableHead>
+            <TableHead className="w-16 bg-primary text-center text-primary-foreground">No.</TableHead>
             <SortableHead label="Year" active={sort.key === "year"} dir={sort.dir} onClick={() => toggleSort("year")} />
-            <TableHead className="text-primary-foreground">Dates</TableHead>
-            <TableHead className="text-primary-foreground">Host</TableHead>
-            <TableHead className="text-primary-foreground">City</TableHead>
+            <TableHead className="bg-primary text-primary-foreground">Dates</TableHead>
+            <TableHead className="bg-primary text-primary-foreground">Host</TableHead>
+            <TableHead className="bg-primary text-primary-foreground">City</TableHead>
             <SortableHead
               label="Contestants"
               align="center"
@@ -122,7 +123,7 @@ function SortableHead({
     <TableHead
       scope="col"
       aria-sort={active ? (dir === "asc" ? "ascending" : "descending") : "none"}
-      className={cn("py-0 text-primary-foreground", align === "center" && "text-center")}
+      className={cn("bg-primary py-0 text-primary-foreground", align === "center" && "text-center")}
     >
       <SortableTableButton
         label={label}
