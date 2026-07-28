@@ -38,6 +38,7 @@ export default async function CountryResultsPage({
         <section key={edition.slug} className="space-y-6">
           <h2 className="font-display text-2xl tracking-tight">{edition.name}</h2>
           <EditionResultsView
+            idPrefix={`${edition.slug}-`}
             rows={rows}
             days={edition.days}
             tasks={edition.tasks.map((t) => ({
