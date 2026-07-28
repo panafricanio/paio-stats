@@ -31,6 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       routes.push(
         { url: `${root}/results`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
         { url: `${root}/delegations`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+        { url: `${root}/countries`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
       );
     }
     if (edition.tasks.length > 0) {

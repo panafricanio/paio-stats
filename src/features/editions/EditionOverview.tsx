@@ -137,6 +137,14 @@ export default function EditionOverview({ detail }: { detail: EditionDetail }) {
               View full results <ArrowRight className="h-4 w-4" />
             </Link>
           )}
+          {hasResults && (
+            <Link
+              href={`/olympiads/${edition.slug}/countries`}
+              className="inline-flex min-h-11 items-center gap-1 rounded-md border border-border px-4 py-2 text-sm font-medium outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Countries
+            </Link>
+          )}
           {hasTasks && (
             <Link
               href={`/olympiads/${edition.slug}/tasks`}
