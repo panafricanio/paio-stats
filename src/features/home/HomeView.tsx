@@ -135,11 +135,11 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
               <p>
                 Medals are awarded by final rank using cut-offs set for each edition (typically
                 concentrating{" "}
-                <span className="font-medium text-gold-foreground">Gold</span>,{" "}
-                <span className="font-medium text-silver-foreground">Silver</span>, and{" "}
-                <span className="font-medium text-bronze-foreground">Bronze</span> among roughly the top
+                <span className="font-medium text-gold">Gold</span>,{" "}
+                <span className="font-medium text-silver">Silver</span>, and{" "}
+                <span className="font-medium text-bronze">Bronze</span> among roughly the top
                 half of the field, with{" "}
-                <span className="font-medium text-hm-foreground">Honourable Mentions</span> below that).
+                <span className="font-medium text-hm">Honourable Mentions</span> below that).
                 Exact bands vary by year
                 {latestWithResults && (
                   <>

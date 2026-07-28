@@ -116,10 +116,11 @@ export default function EditionOverview({ detail }: { detail: EditionDetail }) {
           </div>
           <StatGrid
             stats={[
-              { value: summary.official.gold, label: "Gold", accent: "text-gold-foreground" },
-              { value: summary.official.silver, label: "Silver", accent: "text-silver-foreground" },
-              { value: summary.official.bronze, label: "Bronze", accent: "text-bronze-foreground" },
-              { value: summary.official.hm, label: "Honorable mentions", accent: "text-hm-foreground" },
+              // Accent tokens read on page backgrounds; *-foreground is for medal surfaces.
+              { value: summary.official.gold, label: "Gold", accent: "text-gold" },
+              { value: summary.official.silver, label: "Silver", accent: "text-silver" },
+              { value: summary.official.bronze, label: "Bronze", accent: "text-bronze" },
+              { value: summary.official.hm, label: "Honorable mentions", accent: "text-hm" },
             ]}
           />
           <MedalThresholds thresholds={thresholds} maxScore={maxScore} />

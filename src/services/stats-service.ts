@@ -367,6 +367,12 @@ export class StatsService {
       delegations.push(del);
     }
 
+    // People: editions competed in or hosted (so host-only years still contribute staff).
+    const peopleEditions = editions.filter(
+      (e) =>
+        e.host === country.name || e.contestants.some((c) => c.countryName === country.name),
+    );
+
     return {
       country,
       firstYear: participated.length ? participated[0].year : null,
@@ -376,7 +382,7 @@ export class StatsService {
       hosted: editions.filter((e) => e.host === country.name).map((e) => e.year).sort((a, b) => a - b),
       results: results.slice().sort((a, b) => b.edition.year - a.edition.year),
       delegations: delegations.slice().sort((a, b) => b.edition.year - a.edition.year),
-      people: this.peopleForCountry(participated, country),
+      people: this.peopleForCountry(peopleEditions, country),
     };
   }
 
@@ -395,20 +401,29 @@ export class StatsService {
       const isHost = edition.host === country.name;
       for (const group of edition.administration) {
         for (const member of group.members) {
-          const isLeader =
-            (group.title === "Team Leaders" || group.title === "Deputy Leaders") &&
+          const isTeamLeader =
+            group.title === "Team Leaders" &&
+            member.roles.some((r) => cleanRole(r) === country.name);
+          const isDeputyLeader =
+            group.title === "Deputy Leaders" &&
             member.roles.some((r) => cleanRole(r) === country.name);
           const isHostStaff = isHost && group.title === "Host Committee";
-          if (!isLeader && !isHostStaff) continue;
+          if (!isTeamLeader && !isDeputyLeader && !isHostStaff) continue;
+
+          const displayRoles = isTeamLeader
+            ? ["Team Leader"]
+            : isDeputyLeader
+              ? ["Deputy Leader"]
+              : [...member.roles];
 
           const existing = byName.get(member.name);
           if (existing) {
-            for (const r of member.roles) if (!existing.roles.includes(r)) existing.roles.push(r);
+            for (const r of displayRoles) if (!existing.roles.includes(r)) existing.roles.push(r);
             if (!existing.image && member.image) existing.image = member.image;
           } else {
             byName.set(member.name, {
               name: member.name,
-              roles: [...member.roles],
+              roles: displayRoles,
               image: member.image,
             });
           }
