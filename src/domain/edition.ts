@@ -6,6 +6,11 @@ import type { Contestant } from "./contestant";
 /** A person on an edition's organising side (Administration tab). */
 export interface Official {
   name: string;
+  /**
+   * Role(s) in the PAIO organisation for this edition (IOI-style), e.g.
+   * "Chairman", "IC member", "ISC member" — not employer or biography.
+   * For national team/deputy leaders, roles carry the country name used for matching.
+   */
   roles: string[];
   image?: string;
 }

@@ -49,8 +49,8 @@ export default function DelegationLeaders({
 }) {
   return (
     <div className={cn("grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4", className)}>
-      <LeaderSlot role="Team leader" person={teamLeader} />
-      <LeaderSlot role="Deputy leader" person={deputyLeader} />
+      <LeaderSlot role="Team Leader" person={teamLeader} />
+      <LeaderSlot role="Deputy Leader" person={deputyLeader} />
     </div>
   );
 }
