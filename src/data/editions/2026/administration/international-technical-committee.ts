@@ -1,7 +1,7 @@
 import type { Official } from "@/domain/edition";
 
 /** PAIO 2026 International Technical Committee (ITC). */
-export const technicalCommittee: Official[] = [
+export const internationalTechnicalCommittee: Official[] = [
   {
     name: "Jean Paul Elisa NIYOKWIZERWA",
     roles: ["ITC member"],

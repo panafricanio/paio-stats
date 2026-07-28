@@ -1,4 +1,4 @@
-// PAIO 2026 administration — shared catalog; only populated committees appear.
+// PAIO 2025 administration — shared catalog; only populated committees appear.
 import { composeAdministration } from "../../compose-administration";
 import { hostCommittee } from "./host-committee";
 import { hostTechnicalCommittee } from "./host-technical-committee";

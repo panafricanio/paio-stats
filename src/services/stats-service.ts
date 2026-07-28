@@ -22,6 +22,7 @@ import {
   medalThresholds,
   tallyMedals,
 } from "@/domain/aggregation";
+import { ADMINISTRATION_TITLES } from "@/data/editions/compose-administration";
 
 /* ---- View models (the service's contract with the UI) ---- */
 
@@ -441,10 +442,9 @@ export class StatsService {
   }
 
   /**
-   * People tied to a country. Matching is EXACT (never substring, which would
-   * make "Niger" match "Nigeria" or "Mali" match "Somalia"):
+   * People tied to a country. Matching is EXACT (never substring):
    *  - Team / Deputy Leaders whose role names exactly this country, and
-   *  - for the host country, its Host Committee.
+   *  - for the host country, Host Committee (HC) and Host Technical Committee (HTC).
    * Deduped by name, merging roles.
    */
   private peopleForCountry(editions: Edition[], country: Country): Official[] {
@@ -479,7 +479,10 @@ export class StatsService {
 
       if (edition.host !== country.name) continue;
       for (const group of edition.administration) {
-        if (group.title !== "Host Committee") continue;
+        const isHostCommittee =
+          group.title === ADMINISTRATION_TITLES.hc ||
+          group.title === ADMINISTRATION_TITLES.htc;
+        if (!isHostCommittee) continue;
         for (const member of group.members) add(member, [...member.roles]);
       }
     }

@@ -26,7 +26,9 @@ export default function EditionAdministration({
 
   return (
     <div className="space-y-10">
-      {groups.map((group) => (
+      {groups
+        .filter((group) => group.members.length > 0)
+        .map((group) => (
         <section key={group.title}>
           <h2 className="mb-4 font-display text-2xl">{group.title}</h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
