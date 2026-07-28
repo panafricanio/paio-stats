@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import StatGrid from "@/components/ui/StatGrid";
+import MedalTallyStats from "@/components/ui/MedalTallyStats";
 import MedalThresholds from "@/features/editions/MedalThresholds";
 import type { EditionDetail } from "@/services";
 
@@ -114,15 +114,7 @@ export default function EditionOverview({ detail }: { detail: EditionDetail }) {
               <span className="font-semibold text-foreground">{maxScore}</span>
             </p>
           </div>
-          <StatGrid
-            stats={[
-              // Accent tokens read on page backgrounds; *-foreground is for medal surfaces.
-              { value: summary.official.gold, label: "Gold", accent: "text-gold" },
-              { value: summary.official.silver, label: "Silver", accent: "text-silver" },
-              { value: summary.official.bronze, label: "Bronze", accent: "text-bronze" },
-              { value: summary.official.hm, label: "Honorable mentions", accent: "text-hm" },
-            ]}
-          />
+          <MedalTallyStats tally={summary.official} />
           <MedalThresholds thresholds={thresholds} maxScore={maxScore} />
           {summary.guest.gold + summary.guest.silver + summary.guest.bronze > 0 && (
             <p className="text-sm text-muted-foreground">

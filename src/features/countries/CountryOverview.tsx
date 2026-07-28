@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import StatGrid from "@/components/ui/StatGrid";
 import MedalBadge from "@/components/ui/MedalBadge";
+import MedalTallyStats, { tallyFromMedals } from "@/components/ui/MedalTallyStats";
 import type { CountryDetail } from "@/services";
 import type { MedalType } from "@/domain/medal";
 
@@ -13,8 +14,7 @@ const MEDAL_SORT: Record<MedalType, number> = {
 };
 
 export default function CountryOverview({ detail }: { detail: CountryDetail }) {
-  const { country, firstYear, editionsParticipated, contestantsCount, performance, hosted, results } =
-    detail;
+  const { country, firstYear, editionsParticipated, contestantsCount, hosted, results } = detail;
 
   if (editionsParticipated === 0 && hosted.length === 0) {
     return (
@@ -27,11 +27,12 @@ export default function CountryOverview({ detail }: { detail: CountryDetail }) {
   const competedYears = new Set(results.map(({ edition }) => edition.year));
   const hostedWithoutResults = hosted.filter((year) => !competedYears.has(year));
 
+  // Single source of truth: medalists drive the Performance totals (never a separate counter).
   const medalists = results
     .flatMap(({ edition, rows }) => {
       const fieldSize = edition.contestants.filter((c) => c.status !== "unofficial").length;
       return rows
-        .filter((r) => r.medal)
+        .filter((r) => r.medal && r.status !== "unofficial")
         .map((r) => ({
           slug: r.slug,
           fullName: r.fullName,
@@ -49,7 +50,9 @@ export default function CountryOverview({ detail }: { detail: CountryDetail }) {
         a.fullName.localeCompare(b.fullName),
     );
 
-  const totalMedals = performance.gold + performance.silver + performance.bronze;
+  const performance = tallyFromMedals(medalists.map((m) => m.medal));
+  const hasAwards =
+    performance.gold + performance.silver + performance.bronze + performance.hm > 0;
 
   return (
     <div className="space-y-10">
@@ -97,16 +100,10 @@ export default function CountryOverview({ detail }: { detail: CountryDetail }) {
               within the national team.
             </p>
           </div>
-          <StatGrid
-            stats={[
-              { value: performance.gold, label: "Gold", accent: "text-gold" },
-              { value: performance.silver, label: "Silver", accent: "text-silver" },
-              { value: performance.bronze, label: "Bronze", accent: "text-bronze" },
-              { value: performance.hm, label: "Honourable mentions", accent: "text-hm" },
-            ]}
-          />
 
-          {medalists.length > 0 ? (
+          <MedalTallyStats tally={performance} />
+
+          {hasAwards ? (
             <div>
               <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 Medalists
@@ -141,12 +138,9 @@ export default function CountryOverview({ detail }: { detail: CountryDetail }) {
               </ul>
             </div>
           ) : (
-            totalMedals === 0 &&
-            performance.hm === 0 && (
-              <p className="text-sm text-muted-foreground">
-                No medals or honourable mentions recorded for {country.name} yet.
-              </p>
-            )
+            <p className="text-sm text-muted-foreground">
+              No medals or honourable mentions recorded for {country.name} yet.
+            </p>
           )}
         </section>
       )}
