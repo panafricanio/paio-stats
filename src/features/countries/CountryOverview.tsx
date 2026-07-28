@@ -24,61 +24,85 @@ export default function CountryOverview({ detail }: { detail: CountryDetail }) {
     );
   }
 
+  const competedYears = new Set(results.map(({ edition }) => edition.year));
+  const hostedWithoutResults = hosted.filter((year) => !competedYears.has(year));
+
   const medalists = results
-    .flatMap(({ edition, rows }) =>
-      rows
+    .flatMap(({ edition, rows }) => {
+      const fieldSize = edition.contestants.filter((c) => c.status !== "unofficial").length;
+      return rows
         .filter((r) => r.medal)
         .map((r) => ({
           slug: r.slug,
           fullName: r.fullName,
           medal: r.medal!,
           rank: r.rank,
+          fieldSize,
           editionName: edition.name,
           editionSlug: edition.slug,
-        })),
-    )
+        }));
+    })
     .sort(
       (a, b) =>
-        MEDAL_SORT[a.medal] - MEDAL_SORT[b.medal] || a.rank - b.rank || a.fullName.localeCompare(b.fullName),
+        MEDAL_SORT[a.medal] - MEDAL_SORT[b.medal] ||
+        a.rank - b.rank ||
+        a.fullName.localeCompare(b.fullName),
     );
-
-  const bestRank = results
-    .flatMap(({ rows }) => rows.filter((r) => r.status !== "unofficial").map((r) => r.rank))
-    .reduce<number | null>((best, rank) => (best === null || rank < best ? rank : best), null);
 
   const totalMedals = performance.gold + performance.silver + performance.bronze;
 
   return (
     <div className="space-y-10">
       <section>
-        <h2 className="mb-4 font-display text-2xl">Participation</h2>
-        <StatGrid
-          stats={[
-            { value: firstYear ?? "—", label: "First edition" },
-            { value: editionsParticipated, label: "Editions" },
-            { value: contestantsCount, label: "Contestants" },
-            ...(bestRank !== null ? [{ value: bestRank, label: "Best rank" }] : []),
-          ]}
-          cols={bestRank !== null ? 4 : 3}
-        />
+        <h2 className="mb-1 font-display text-2xl">Participation</h2>
+        <p className="mb-4 text-sm text-muted-foreground">
+          Based on published contest results
+          {hosted.length > 0 ? "; hosting is listed separately below" : ""}.
+        </p>
+        {editionsParticipated > 0 ? (
+          <StatGrid
+            cols={3}
+            stats={[
+              { value: firstYear ?? "—", label: "First participation" },
+              { value: editionsParticipated, label: "Years participated" },
+              { value: contestantsCount, label: "Contestants participated" },
+            ]}
+          />
+        ) : (
+          <p className="text-sm text-muted-foreground">
+            No contest results are published for {country.name} yet.
+          </p>
+        )}
         {hosted.length > 0 && (
           <p className="mt-3 text-sm text-muted-foreground">
-            Hosted the PAIO in {hosted.join(", ")}.
+            Host country for {hosted.join(", ")}
+            {hostedWithoutResults.length > 0 && (
+              <>
+                {" "}
+                ({hostedWithoutResults.join(", ")}{" "}
+                {hostedWithoutResults.length === 1 ? "has" : "have"} no published results yet)
+              </>
+            )}
+            .
           </p>
         )}
       </section>
 
       {editionsParticipated > 0 && (
         <section className="space-y-6">
-          <h2 className="mb-4 font-display text-2xl">Performance</h2>
+          <div>
+            <h2 className="mb-1 font-display text-2xl">Performance</h2>
+            <p className="mb-4 text-sm text-muted-foreground">
+              Official medals only. Place is the contestant&apos;s rank in the full edition field, not
+              within the national team.
+            </p>
+          </div>
           <StatGrid
             stats={[
-              // Use accent tokens (text-gold etc.), not *-foreground — those are for
-              // text sitting on bright medal surfaces and vanish on dark backgrounds.
               { value: performance.gold, label: "Gold", accent: "text-gold" },
               { value: performance.silver, label: "Silver", accent: "text-silver" },
               { value: performance.bronze, label: "Bronze", accent: "text-bronze" },
-              { value: performance.hm, label: "Honorable mentions", accent: "text-hm" },
+              { value: performance.hm, label: "Honourable mentions", accent: "text-hm" },
             ]}
           />
 
@@ -105,7 +129,10 @@ export default function CountryOverview({ detail }: { detail: CountryDetail }) {
                           {m.editionName}
                         </Link>
                         <span className="mx-1.5 text-border">·</span>
-                        <span className="tnum">Rank #{m.rank}</span>
+                        <span className="tnum">
+                          #{m.rank}
+                          <span className="text-muted-foreground/80"> / {m.fieldSize}</span>
+                        </span>
                       </p>
                     </div>
                     <MedalBadge medal={m.medal} />

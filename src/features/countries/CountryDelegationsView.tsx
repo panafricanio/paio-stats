@@ -39,7 +39,10 @@ export default function CountryDelegationsView({
             <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
               Team
             </h3>
-            <CountryContestantsTable contestants={d.contestants} />
+            <CountryContestantsTable
+              contestants={d.contestants}
+              fieldSize={d.edition.contestants.filter((c) => c.status !== "unofficial").length}
+            />
           </div>
         </section>
       ))}
