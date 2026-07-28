@@ -58,12 +58,14 @@ export default function EditionDelegations({
                 {d.hm > 0 && <span className="text-hm">{d.hm} HM</span>}
               </div>
 
-              <section className="mt-5 border-t border-border pt-4">
-                <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                  Leaders
-                </h3>
-                <DelegationLeaders teamLeader={d.teamLeader} deputyLeader={d.deputyLeader} />
-              </section>
+              {(d.teamLeader || d.deputyLeader) && (
+                <section className="mt-5 border-t border-border pt-4">
+                  <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                    Leaders
+                  </h3>
+                  <DelegationLeaders teamLeader={d.teamLeader} deputyLeader={d.deputyLeader} />
+                </section>
+              )}
 
               <section className="mt-5 border-t border-border pt-4">
                 <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
