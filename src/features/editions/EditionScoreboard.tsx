@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import type { ScoreRow } from "@/services";
 import type { MedalType } from "@/domain/medal";
+import { formatScore } from "@/lib/utils";
 
 export interface ScoreboardTask {
   slug: string;
@@ -162,7 +163,7 @@ export default function EditionScoreboard({
       sortDirection: ariaSort(t.slug),
       align: "center",
       numeric: true,
-      cell: (r) => r.scores[t.slug] ?? 0,
+      cell: (r) => formatScore(r.scores[t.slug] ?? 0),
     })),
   ];
 
@@ -176,7 +177,7 @@ export default function EditionScoreboard({
         align: "center",
         numeric: true,
         cellClassName: "bg-muted/40 font-semibold",
-        cell: (r) => dayTotalOf(r, d),
+        cell: (r) => formatScore(dayTotalOf(r, d)),
       });
     }
   }
@@ -189,7 +190,7 @@ export default function EditionScoreboard({
       align: "center",
       numeric: true,
       cellClassName: "bg-muted/60 font-bold",
-      cell: (r) => r.total,
+      cell: (r) => formatScore(r.total),
     },
     {
       id: "award",
