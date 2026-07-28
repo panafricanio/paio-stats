@@ -39,13 +39,14 @@ export default async function EditionCountriesPage({
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        {rows.length} national team{rows.length === 1 ? "" : "s"} at {edition.name}, ordered by gold,
-        then silver, then bronze. Guest teams are listed below official teams.
+        {rows.length} national team{rows.length === 1 ? "" : "s"} at {edition.name}, ordered by total
+        marks. Guest teams are listed below official teams.
       </p>
       <CountriesTable
         rows={rows}
         showHosted={false}
-        caption={`${edition.name} country standings by gold, then silver, then bronze.`}
+        showMarks
+        caption={`${edition.name} country standings by total marks.`}
       />
     </div>
   );

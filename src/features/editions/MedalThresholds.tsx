@@ -35,14 +35,10 @@ export default function MedalThresholds({
                   / {formatScore(maxScore)}
                 </span>
               </div>
-              <div className="mt-1 text-xs text-muted-foreground">{t.count} awarded</div>
             </CardContent>
           </Card>
         ))}
       </div>
-      <p className="mt-3 text-sm text-muted-foreground">
-        The lowest total score that earned each medal. Awards follow each edition&apos;s rank cut-offs.
-      </p>
     </section>
   );
 }

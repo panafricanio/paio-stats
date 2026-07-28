@@ -56,6 +56,8 @@ export interface Delegation {
   silver: number;
   bronze: number;
   hm: number;
+  /** Sum of contestant totals (marks) for this delegation. */
+  totalMarks: number;
   contestants: Contestant[];
   teamLeader: Official | null;
   deputyLeader: Official | null;
@@ -86,8 +88,8 @@ export function findOfficialForCountry(
 
 /**
  * Country delegations at one edition — every team present (official + guest),
- * each with its contestants, medal count, and team/deputy leaders when known.
- * Unofficial entries are excluded.
+ * each with its contestants, medal count, total marks, and team/deputy leaders when known.
+ * Unofficial entries are excluded. Ordered by total marks (guests below official).
  */
 export function editionDelegations(
   edition: Edition,
@@ -110,6 +112,7 @@ export function editionDelegations(
         silver: 0,
         bronze: 0,
         hm: 0,
+        totalMarks: 0,
         contestants: [],
         teamLeader: findOfficialForCountry(edition, country.name, "Team Leaders"),
         deputyLeader: findOfficialForCountry(edition, country.name, "Deputy Leaders"),
@@ -117,6 +120,7 @@ export function editionDelegations(
       map.set(country.code, d);
     }
     d.participants++;
+    d.totalMarks += c.total;
     d.contestants.push(c);
     if (c.medal === "GOLD") d.gold++;
     else if (c.medal === "SILVER") d.silver++;
@@ -129,9 +133,7 @@ export function editionDelegations(
   return [...map.values()].sort(
     (a, b) =>
       Number(a.guest) - Number(b.guest) ||
-      b.gold - a.gold ||
-      b.silver - a.silver ||
-      b.bronze - a.bronze ||
+      b.totalMarks - a.totalMarks ||
       a.country.name.localeCompare(b.country.name),
   );
 }

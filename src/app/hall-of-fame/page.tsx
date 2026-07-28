@@ -22,10 +22,9 @@ export default async function HallOfFamePage() {
         title="Hall of Fame"
         subtitle={
           <>
-            All-time PAIO contestant rankings. Gold medals take priority, followed by silver and
-            bronze; tied medal records share the same rank.
+            Ordered by gold, then silver, then bronze. Tied medal records share the same rank.
             {latestYear && (
-              <span className="mt-2 block text-sm">Results are current through PAIO {latestYear}.</span>
+              <span className="mt-2 block text-sm">Through PAIO {latestYear}.</span>
             )}
           </>
         }

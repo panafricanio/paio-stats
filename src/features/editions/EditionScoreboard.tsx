@@ -48,12 +48,15 @@ function valueOf(r: ScoreRow, key: string): number {
   return r.scores[key] ?? 0;
 }
 
+const VENUE_LABEL = { onsite: "On-site", online: "Online" } as const;
+
 export default function EditionScoreboard({
   rows,
   tasks,
   days,
   showCountryFilter = true,
   showStatusBadges = true,
+  showVenue = false,
   caption,
 }: {
   rows: ScoreRow[];
@@ -62,6 +65,8 @@ export default function EditionScoreboard({
   showCountryFilter?: boolean;
   /** When false, omit Guest/Unofficial chips (section heading already conveys status). */
   showStatusBadges?: boolean;
+  /** When true, show On-site / Online for mixed-venue boards. */
+  showVenue?: boolean;
   caption?: string;
 }) {
   const multiDay = days.length > 1;
@@ -73,6 +78,7 @@ export default function EditionScoreboard({
     () => Array.from(new Set(rows.map((r) => r.countryName).filter(Boolean))).sort(),
     [rows],
   );
+  const countryFilterEnabled = showCountryFilter && countries.length > 1;
 
   const rowsForView = useMemo(() => {
     const filtered = rows.filter((r) => country === "all" || r.countryName === country);
@@ -157,6 +163,16 @@ export default function EditionScoreboard({
           <span className="text-muted-foreground/50">—</span>
         ),
     },
+    ...(showVenue
+      ? [
+          {
+            id: "venue",
+            header: "Venue",
+            cellClassName: "whitespace-nowrap text-muted-foreground",
+            cell: (r: ScoreRow) => VENUE_LABEL[r.venue],
+          } satisfies Column<ScoreRow>,
+        ]
+      : []),
     ...visibleTasks.map<Column<ScoreRow>>((t) => ({
       id: t.slug,
       header: sortHeader(t.short, t.slug, "center"),
@@ -210,63 +226,62 @@ export default function EditionScoreboard({
   );
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-end gap-3">
-        {multiDay && (
-          <div
-            className="inline-flex rounded-md border border-border p-0.5"
-            role="group"
-            aria-label="Filter results by day"
-          >
-            <Button
-              size="sm"
-              variant={day === "all" ? "default" : "ghost"}
-              aria-pressed={day === "all"}
-              onClick={() => setDay("all")}
-              className={cn(day !== "all" && "text-muted-foreground")}
+    <div className="space-y-3">
+      {(multiDay || countryFilterEnabled) && (
+        <div className="flex flex-wrap items-center justify-end gap-3">
+          {multiDay && (
+            <div
+              className="inline-flex rounded-md border border-border p-0.5"
+              role="group"
+              aria-label="Filter by day"
             >
-              All days
-            </Button>
-            {days.map((d) => (
               <Button
-                key={d}
                 size="sm"
-                variant={day === String(d) ? "default" : "ghost"}
-                aria-pressed={day === String(d)}
-                onClick={() => setDay(String(d))}
-                className={cn(day !== String(d) && "text-muted-foreground")}
+                variant={day === "all" ? "default" : "ghost"}
+                aria-pressed={day === "all"}
+                onClick={() => setDay("all")}
+                className={cn(day !== "all" && "text-muted-foreground")}
               >
-                Day {d}
+                All
               </Button>
-            ))}
-          </div>
-        )}
-        {showCountryFilter && (
-          <Select value={country} onValueChange={setCountry}>
-            <SelectTrigger className="w-[200px]" aria-label="Filter results by country">
-              <SelectValue placeholder="All countries" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All countries</SelectItem>
-              {countries.map((c) => (
-                <SelectItem key={c} value={c}>
-                  {c}
-                </SelectItem>
+              {days.map((d) => (
+                <Button
+                  key={d}
+                  size="sm"
+                  variant={day === String(d) ? "default" : "ghost"}
+                  aria-pressed={day === String(d)}
+                  onClick={() => setDay(String(d))}
+                  className={cn(day !== String(d) && "text-muted-foreground")}
+                >
+                  Day {d}
+                </Button>
               ))}
-            </SelectContent>
-          </Select>
-        )}
-      </div>
+            </div>
+          )}
+          {countryFilterEnabled && (
+            <Select value={country} onValueChange={setCountry}>
+              <SelectTrigger className="w-[200px]" aria-label="Filter by country">
+                <SelectValue placeholder="All countries" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All countries</SelectItem>
+                {countries.map((c) => (
+                  <SelectItem key={c} value={c}>
+                    {c}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+        </div>
+      )}
 
       <DataTable
         columns={columns}
         rows={rowsForView}
         getRowKey={(r) => `${r.slug}-${r.rank}`}
         minWidth="960px"
-        caption={
-          caption ??
-          "PAIO edition scoreboard. Sort by rank, task score, day total, or overall total."
-        }
+        caption={caption ?? "Scoreboard"}
         rowClassName={(r) =>
           r.status === "unofficial"
             ? "opacity-70"
@@ -276,9 +291,11 @@ export default function EditionScoreboard({
         }
       />
 
-      <p className="text-right text-xs text-muted-foreground" aria-live="polite">
-        {rowsForView.length} contestant{rowsForView.length === 1 ? "" : "s"} shown
-      </p>
+      {(country !== "all" || day !== "all") && (
+        <p className="text-right text-xs text-muted-foreground" aria-live="polite">
+          {rowsForView.length} shown
+        </p>
+      )}
     </div>
   );
 }

@@ -3,12 +3,11 @@ import type { ScoreRow } from "@/services";
 import { cn } from "@/lib/utils";
 
 /**
- * Results layout (committee priority):
- * - On-site and Online are separate boards on the same page (never mixed in one table).
- * - On-site comes first when both exist.
- * - Official / Guests / Unofficial nest under each venue.
+ * Results layout:
+ * - Official contestants: On-site and Online stay separate (On-site first).
+ * - Guests and Unofficial: one table each for the whole edition.
  * - Ranks are shown as published in the data (no recalculation).
- * - Single-venue editions skip the venue chrome and only show status boards.
+ * - Single-venue editions skip the venue chrome and show Official, then Guests, then Unofficial.
  */
 
 const VENUES = [
@@ -16,43 +15,37 @@ const VENUES = [
     id: "onsite",
     title: "On-site",
     navLabel: "On-site",
-    description: "Contestants who competed in person.",
     venue: "onsite" as const,
   },
   {
     id: "online",
     title: "Online",
     navLabel: "Online",
-    description: "Contestants who competed online.",
     venue: "online" as const,
   },
 ] as const;
 
-const STATUSES = [
-  {
-    id: "official",
-    title: "Official Contestants",
-    navLabel: "Official",
-    description: "Official team members. Medals count toward country rankings.",
-    filter: (r: ScoreRow) => r.status === "official",
-  },
+const MERGED_STATUSES = [
   {
     id: "guests",
     title: "Guests",
     navLabel: "Guests",
-    description: "Invited teams recognised individually; medals do not count toward country rankings.",
     filter: (r: ScoreRow) => r.status === "guest",
   },
   {
     id: "unofficial",
-    title: "Unofficial Contestants",
+    title: "Unofficial",
     navLabel: "Unofficial",
-    description: "Additional participants shown for completeness; not ranked for medals.",
     filter: (r: ScoreRow) => r.status === "unofficial",
   },
 ] as const;
 
 type JumpItem = { id: string; anchor: string; navLabel: string; count: number };
+
+function spansBothVenues(rows: ScoreRow[]): boolean {
+  const venues = new Set(rows.map((r) => r.venue));
+  return venues.has("onsite") && venues.has("online");
+}
 
 function JumpNav({ items }: { items: JumpItem[] }) {
   if (items.length < 2) return null;
@@ -91,48 +84,42 @@ function JumpNav({ items }: { items: JumpItem[] }) {
 
 function StatusBoard({
   title,
-  description,
   anchor,
   headingLevel,
   rows,
   tasks,
   days,
+  showVenue = false,
 }: {
   title: string;
-  description: string;
   anchor: string;
   headingLevel: "h2" | "h3";
   rows: ScoreRow[];
   tasks: ScoreboardTask[];
   days: number[];
+  showVenue?: boolean;
 }) {
   const Heading = headingLevel;
 
   return (
-    <section id={anchor} className="scroll-mt-36 space-y-4">
-      <div>
-        <Heading
-          className={
-            headingLevel === "h2"
-              ? "font-display text-2xl tracking-tight"
-              : "font-display text-xl tracking-tight"
-          }
-        >
-          {title}
-        </Heading>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {description}{" "}
-          <span className="tnum">
-            ({rows.length} contestant{rows.length === 1 ? "" : "s"})
-          </span>
-        </p>
-      </div>
+    <section id={anchor} className="scroll-mt-36 space-y-3">
+      <Heading
+        className={
+          headingLevel === "h2"
+            ? "font-display text-2xl tracking-tight"
+            : "font-display text-xl tracking-tight"
+        }
+      >
+        {title}{" "}
+        <span className="tnum text-muted-foreground">({rows.length})</span>
+      </Heading>
       <EditionScoreboard
         rows={rows}
         tasks={tasks}
         days={days}
         showStatusBadges={false}
-        caption={`${title} scoreboard for this PAIO edition.`}
+        showVenue={showVenue}
+        caption={title}
       />
     </section>
   );
@@ -151,92 +138,110 @@ export default function EditionResultsView({
   idPrefix?: string;
 }) {
   const venueChapters = VENUES.map((venue) => {
-    const venueRows = rows.filter((r) => r.venue === venue.venue);
-    const statuses = STATUSES.map((status) => {
-      const statusRows = venueRows.filter(status.filter).sort((a, b) => a.rank - b.rank);
-      return {
-        ...status,
-        anchor: `${idPrefix}${venue.id}-${status.id}`,
-        rows: statusRows,
-      };
-    }).filter((status) => status.rows.length > 0);
+    const officialRows = rows
+      .filter((r) => r.venue === venue.venue && r.status === "official")
+      .sort((a, b) => a.rank - b.rank);
 
     return {
       ...venue,
       anchor: `${idPrefix}${venue.id}`,
-      count: venueRows.length,
-      statuses,
+      rows: officialRows,
     };
-  }).filter((chapter) => chapter.statuses.length > 0);
+  }).filter((chapter) => chapter.rows.length > 0);
 
-  if (venueChapters.length === 0) {
-    return (
-      <p className="text-sm text-muted-foreground">
-        Results for this edition have not been published yet.
-      </p>
-    );
+  const mergedBoards = MERGED_STATUSES.map((status) => {
+    const statusRows = rows.filter(status.filter).sort((a, b) => a.rank - b.rank);
+    return {
+      ...status,
+      anchor: `${idPrefix}${status.id}`,
+      rows: statusRows,
+      showVenue: spansBothVenues(statusRows),
+    };
+  }).filter((board) => board.rows.length > 0);
+
+  if (venueChapters.length === 0 && mergedBoards.length === 0) {
+    return <p className="text-sm text-muted-foreground">No results published yet.</p>;
   }
 
   const multiVenue = venueChapters.length > 1;
 
   const jumpItems: JumpItem[] = multiVenue
-    ? venueChapters.map((chapter) => ({
-        id: chapter.id,
-        anchor: chapter.anchor,
-        navLabel: chapter.navLabel,
-        count: chapter.count,
-      }))
-    : venueChapters[0].statuses.map((status) => ({
-        id: status.id,
-        anchor: status.anchor,
-        navLabel: status.navLabel,
-        count: status.rows.length,
-      }));
+    ? [
+        ...venueChapters.map((chapter) => ({
+          id: chapter.id,
+          anchor: chapter.anchor,
+          navLabel: chapter.navLabel,
+          count: chapter.rows.length,
+        })),
+        ...mergedBoards.map((board) => ({
+          id: board.id,
+          anchor: board.anchor,
+          navLabel: board.navLabel,
+          count: board.rows.length,
+        })),
+      ]
+    : [
+        ...(venueChapters[0]
+          ? [
+              {
+                id: "official",
+                anchor: `${idPrefix}official`,
+                navLabel: "Official",
+                count: venueChapters[0].rows.length,
+              },
+            ]
+          : []),
+        ...mergedBoards.map((board) => ({
+          id: board.id,
+          anchor: board.anchor,
+          navLabel: board.navLabel,
+          count: board.rows.length,
+        })),
+      ];
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
       <JumpNav items={jumpItems} />
 
       {multiVenue
         ? venueChapters.map((chapter) => (
-            <section key={chapter.id} id={chapter.anchor} className="scroll-mt-36 space-y-8">
-              <div className="border-b border-border pb-4">
-                <h2 className="font-display text-3xl tracking-tight">{chapter.title}</h2>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {chapter.description}{" "}
-                  <span className="tnum">
-                    ({chapter.count} contestant{chapter.count === 1 ? "" : "s"})
-                  </span>
-                </p>
-              </div>
-              <div className="space-y-10">
-                {chapter.statuses.map((status) => (
-                  <StatusBoard
-                    key={status.id}
-                    title={status.title}
-                    description={status.description}
-                    anchor={status.anchor}
-                    headingLevel="h3"
-                    rows={status.rows}
-                    tasks={tasks}
-                    days={days}
-                  />
-                ))}
-              </div>
+            <section key={chapter.id} id={chapter.anchor} className="scroll-mt-36 space-y-3">
+              <h2 className="font-display text-2xl tracking-tight">
+                {chapter.title}{" "}
+                <span className="tnum text-muted-foreground">({chapter.rows.length})</span>
+              </h2>
+              <EditionScoreboard
+                rows={chapter.rows}
+                tasks={tasks}
+                days={days}
+                showStatusBadges={false}
+                caption={chapter.title}
+              />
             </section>
           ))
-        : venueChapters[0].statuses.map((status) => (
+        : venueChapters[0] && (
             <StatusBoard
-              key={status.id}
-              title={status.title}
-              description={status.description}
-              anchor={status.anchor}
+              title="Official"
+              anchor={`${idPrefix}official`}
               headingLevel="h2"
-              rows={status.rows}
+              rows={venueChapters[0].rows}
               tasks={tasks}
               days={days}
             />
-          ))}
+          )}
+
+      {mergedBoards.map((board) => (
+        <StatusBoard
+          key={board.id}
+          title={board.title}
+          anchor={board.anchor}
+          headingLevel="h2"
+          rows={board.rows}
+          tasks={tasks}
+          days={days}
+          showVenue={board.showVenue}
+        />
+      ))}
     </div>
   );
 }

@@ -15,7 +15,7 @@ export default async function OlympiadsPage() {
     <div>
       <PageHeader
         title="Editions"
-        subtitle="Every edition of the Pan-African Informatics Olympiad. Select a year for its full scoreboard, medals and per-task scores."
+        subtitle="Every PAIO edition with its scoreboard, medals, and task scores."
       />
       <div className="container py-10">
         <EditionsTable rows={rows} />
