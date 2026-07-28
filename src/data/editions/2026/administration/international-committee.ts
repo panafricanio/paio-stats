@@ -4,25 +4,25 @@ import type { Official } from "@/domain/edition";
 export const internationalCommittee: Official[] = [
   {
     name: "Hirwa Arnold",
-    roles: ["Chairman", "Rwanda Olympiad Foundation"],
+    roles: ["Chairman"],
     image: "/images/hirwa.jpeg",
   },
   {
     name: "Obed Nsanzimfura",
-    roles: ["Rwanda Olympiad Foundation"],
+    roles: ["IC member"],
     image: "/images/obed.webp",
   },
   {
     name: "Wendy Essuman",
-    roles: ["African Olympiad Academy"],
+    roles: ["IC member"],
   },
   {
     name: "Abinew Ali Ayele",
-    roles: ["University of Hamburg"],
+    roles: ["IC member"],
     image: "/images/administration/abinew-ali-ayele.jpg",
   },
   {
     name: "Martin Mungai",
-    roles: ["CEMASTEA, Kenya"],
+    roles: ["IC member"],
   },
 ];
