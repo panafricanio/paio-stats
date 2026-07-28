@@ -441,10 +441,8 @@ export class StatsService {
   }
 
   /**
-   * People tied to a country. Matching is EXACT (never substring, which would
-   * make "Niger" match "Nigeria" or "Mali" match "Somalia"):
-   *  - Team / Deputy Leaders whose role names exactly this country, and
-   *  - for the host country, its Host Committee.
+   * People tied to a country. Matching is EXACT (never substring):
+   * Team / Deputy Leaders whose role names exactly this country.
    * Deduped by name, merging roles.
    */
   private peopleForCountry(editions: Edition[], country: Country): Official[] {
@@ -475,12 +473,6 @@ export class StatsService {
         if (member.roles.some((r) => cleanRole(r) === country.name)) {
           add(member, ["Deputy Leader"]);
         }
-      }
-
-      if (edition.host !== country.name) continue;
-      for (const group of edition.administration) {
-        if (group.title !== "Host Committee") continue;
-        for (const member of group.members) add(member, [...member.roles]);
       }
     }
     return [...byName.values()];
