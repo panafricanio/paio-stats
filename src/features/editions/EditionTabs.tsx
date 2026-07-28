@@ -22,7 +22,7 @@ export default function EditionTabs({
       ? [
           { label: "Results", href: `${base}/results` },
           { label: "Delegations", href: `${base}/delegations` },
-          { label: "Country metrics", href: `${base}/countries` },
+          { label: "Countries", href: `${base}/countries` },
         ]
       : []),
     ...(hasTasks ? [{ label: "Tasks", href: `${base}/tasks` }] : []),

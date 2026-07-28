@@ -46,7 +46,7 @@ export default function CountriesTable({
   caption = "PAIO country ranking by gold, then silver, then bronze.",
 }: {
   rows: CountryRow[];
-  /** Hide the Hosted column on per-edition country metrics. */
+  /** Hide the Hosted column on per-edition country standings. */
   showHosted?: boolean;
   caption?: string;
 }) {

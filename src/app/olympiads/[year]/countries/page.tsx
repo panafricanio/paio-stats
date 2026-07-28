@@ -14,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { year } = await params;
   const edition = await statsService.getEdition(year);
-  return { title: edition ? `${edition.name} · Country metrics` : "Country metrics" };
+  return { title: edition ? `${edition.name} · Countries` : "Countries" };
 }
 
 export default async function EditionCountriesPage({
@@ -31,7 +31,7 @@ export default async function EditionCountriesPage({
   if (rows.length === 0) {
     return (
       <p className="text-sm text-muted-foreground">
-        Country metrics for this edition have not been published yet.
+        Country standings for this edition have not been published yet.
       </p>
     );
   }
@@ -45,7 +45,7 @@ export default async function EditionCountriesPage({
       <CountriesTable
         rows={rows}
         showHosted={false}
-        caption={`${edition.name} country metrics by gold, then silver, then bronze.`}
+        caption={`${edition.name} country standings by gold, then silver, then bronze.`}
       />
     </div>
   );

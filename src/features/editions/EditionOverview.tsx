@@ -142,7 +142,7 @@ export default function EditionOverview({ detail }: { detail: EditionDetail }) {
               href={`/olympiads/${edition.slug}/countries`}
               className="inline-flex min-h-11 items-center gap-1 rounded-md border border-border px-4 py-2 text-sm font-medium outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
             >
-              Country metrics
+              Countries
             </Link>
           )}
           {hasTasks && (
