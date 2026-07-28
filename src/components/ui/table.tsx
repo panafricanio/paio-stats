@@ -3,9 +3,23 @@ import { cn } from "@/lib/utils";
 
 const Table = React.forwardRef<
   HTMLTableElement,
-  React.HTMLAttributes<HTMLTableElement> & { minWidth?: string }
->(({ className, minWidth, ...props }, ref) => (
-  <div className="relative w-full overflow-x-auto">
+  React.HTMLAttributes<HTMLTableElement> & {
+    minWidth?: string;
+    /** Caps table body height; header stays sticky while scrolling. */
+    maxHeight?: string;
+  }
+>(({ className, minWidth, maxHeight, ...props }, ref) => (
+  <div
+    className={cn(
+      "relative w-full overflow-auto overscroll-contain",
+      // Focusable scroll region for keyboard users when the table is tall.
+      maxHeight && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+    )}
+    style={maxHeight ? { maxHeight } : undefined}
+    tabIndex={maxHeight ? 0 : undefined}
+    role={maxHeight ? "region" : undefined}
+    aria-label={maxHeight ? "Scrollable table" : undefined}
+  >
     <table
       ref={ref}
       className={cn("w-full caption-bottom text-sm", className)}
@@ -19,7 +33,17 @@ Table.displayName = "Table";
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => <thead ref={ref} className={cn(className)} {...props} />);
+>(({ className, ...props }, ref) => (
+  <thead
+    ref={ref}
+    className={cn(
+      // Stick under the scrollport so long scoreboards keep column labels visible.
+      "sticky top-0 z-20",
+      className,
+    )}
+    {...props}
+  />
+));
 TableHeader.displayName = "TableHeader";
 
 const TableBody = React.forwardRef<
@@ -67,3 +91,6 @@ const TableCaption = React.forwardRef<
 TableCaption.displayName = "TableCaption";
 
 export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption };
+
+/** Default viewport cap for long listing / scoreboard tables. */
+export const TABLE_SCROLL_MAX_HEIGHT = "min(70vh, 40rem)";

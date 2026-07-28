@@ -8,6 +8,7 @@ import {
   TableHead,
   TableCell,
   TableCaption,
+  TABLE_SCROLL_MAX_HEIGHT,
 } from "@/components/ui/table";
 
 export interface Column<T> {
@@ -30,6 +31,8 @@ const alignClass = {
 /**
  * One generic, config-driven table (built on the shadcn/ui Table primitives)
  * used by every static listing on the site. Server-safe — no hooks.
+ *
+ * Long tables scroll vertically inside a capped viewport; the header stays sticky.
  */
 export default function DataTable<T>({
   columns,
@@ -37,6 +40,7 @@ export default function DataTable<T>({
   getRowKey,
   rowClassName,
   minWidth,
+  maxHeight = TABLE_SCROLL_MAX_HEIGHT,
   caption,
   emptyMessage = "No data.",
   className,
@@ -46,23 +50,25 @@ export default function DataTable<T>({
   getRowKey: (row: T, index: number) => string;
   rowClassName?: (row: T) => string | undefined;
   minWidth?: string;
+  /** Vertical scroll viewport. Pass `false` to disable (short tables). */
+  maxHeight?: string | false;
   caption: ReactNode;
   emptyMessage?: string;
   className?: string;
 }) {
   return (
-    <div className={cn("overflow-hidden rounded-lg border border-border", className)}>
-      <Table minWidth={minWidth}>
+    <div className={cn("rounded-lg border border-border", className)}>
+      <Table minWidth={minWidth} maxHeight={maxHeight === false ? undefined : maxHeight}>
         <TableCaption className="sr-only">{caption}</TableCaption>
         <TableHeader>
-          <TableRow className="bg-primary text-primary-foreground hover:bg-primary">
+          <TableRow className="border-b border-border bg-primary text-primary-foreground hover:bg-primary">
             {columns.map((col) => (
               <TableHead
                 key={col.id}
                 scope="col"
                 aria-sort={col.sortDirection}
                 className={cn(
-                  "text-primary-foreground",
+                  "bg-primary text-primary-foreground",
                   col.sortDirection && "py-0",
                   alignClass[col.align ?? "left"],
                   col.headerClassName,
