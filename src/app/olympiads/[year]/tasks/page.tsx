@@ -26,6 +26,14 @@ export default async function EditionTasksPage({
   const detail = await statsService.getEditionDetail(year);
   if (!detail) notFound();
 
+  if (detail.edition.tasks.length === 0) {
+    return (
+      <p className="text-sm text-muted-foreground">
+        Tasks for this edition have not been published yet.
+      </p>
+    );
+  }
+
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">

@@ -25,11 +25,12 @@ export interface ScoreboardTask {
   day: number;
 }
 
+// Medal surfaces stay bright in dark mode — force dark text so scores stay readable.
 const medalRowClass: Record<MedalType, string> = {
-  GOLD: "bg-gold-surface hover:bg-gold-surface/80",
-  SILVER: "bg-silver-surface hover:bg-silver-surface/80",
-  BRONZE: "bg-bronze-surface hover:bg-bronze-surface/80",
-  HM: "bg-hm-surface hover:bg-hm-surface/80",
+  GOLD: "bg-gold-surface text-black hover:bg-gold-surface/80 dark:text-black [&_*]:text-black",
+  SILVER: "bg-silver-surface text-black hover:bg-silver-surface/80 dark:text-black [&_*]:text-black",
+  BRONZE: "bg-bronze-surface text-black hover:bg-bronze-surface/80 dark:text-black [&_*]:text-black",
+  HM: "bg-hm-surface text-black hover:bg-hm-surface/80 dark:text-black [&_*]:text-black",
 };
 
 // Sort keys: "rank" | "total" | "day-<n>" | <task slug>

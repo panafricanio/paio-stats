@@ -4,16 +4,27 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-export default function EditionTabs({ slug }: { slug: string }) {
+export default function EditionTabs({
+  slug,
+  hasResults = true,
+  hasTasks = true,
+}: {
+  slug: string;
+  hasResults?: boolean;
+  hasTasks?: boolean;
+}) {
   const pathname = usePathname();
   const base = `/olympiads/${slug}`;
 
   const tabs = [
     { label: "Overview", href: base },
-    { label: "Results", href: `${base}/results` },
-    { label: "Delegations", href: `${base}/delegations` },
-    { label: "Contestants", href: `${base}/contestants` },
-    { label: "Tasks", href: `${base}/tasks` },
+    ...(hasResults
+      ? [
+          { label: "Results", href: `${base}/results` },
+          { label: "Delegations", href: `${base}/delegations` },
+        ]
+      : []),
+    ...(hasTasks ? [{ label: "Tasks", href: `${base}/tasks` }] : []),
     { label: "Administration", href: `${base}/administration` },
   ];
 

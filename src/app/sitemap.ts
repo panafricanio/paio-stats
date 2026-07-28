@@ -14,23 +14,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/hall-of-fame`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
   ];
 
-  const [editionSlugs, countries, contestantSlugs, taskParams] = await Promise.all([
-    statsService.getEditionSlugs(),
+  const [editions, countries, contestantSlugs, taskParams] = await Promise.all([
+    statsService.listEditions(),
     statsService.listCountries(),
     statsService.getAllContestantSlugs(),
     statsService.getTaskParams(),
   ]);
 
-  const editionRoutes: MetadataRoute.Sitemap = editionSlugs.flatMap((year) => {
-    const root = `${base}/olympiads/${year}`;
-    return [
-      { url: root, lastModified: now, changeFrequency: "monthly" as const, priority: 0.8 },
-      { url: `${root}/results`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.7 },
-      { url: `${root}/contestants`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.6 },
-      { url: `${root}/delegations`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.6 },
-      { url: `${root}/tasks`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.6 },
-      { url: `${root}/administration`, lastModified: now, changeFrequency: "yearly" as const, priority: 0.4 },
+  const editionRoutes: MetadataRoute.Sitemap = editions.flatMap((edition) => {
+    const root = `${base}/olympiads/${edition.slug}`;
+    const routes: MetadataRoute.Sitemap = [
+      { url: root, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+      { url: `${root}/administration`, lastModified: now, changeFrequency: "yearly", priority: 0.4 },
     ];
+    if (edition.contestants.length > 0) {
+      routes.push(
+        { url: `${root}/results`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+        { url: `${root}/delegations`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+      );
+    }
+    if (edition.tasks.length > 0) {
+      routes.push({
+        url: `${root}/tasks`,
+        lastModified: now,
+        changeFrequency: "monthly",
+        priority: 0.6,
+      });
+    }
+    return routes;
   });
 
   const countryRoutes: MetadataRoute.Sitemap = countries.flatMap((c) => {

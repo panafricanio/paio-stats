@@ -33,6 +33,14 @@ export default async function EditionResultsPage({
     day: t.day,
   }));
 
+  if (detail.rows.length === 0) {
+    return (
+      <p className="text-sm text-muted-foreground">
+        Results for this edition have not been published yet.
+      </p>
+    );
+  }
+
   return (
     <EditionScoreboard rows={detail.rows} tasks={scoreboardTasks} days={detail.edition.days} />
   );
