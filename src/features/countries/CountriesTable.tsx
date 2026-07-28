@@ -40,7 +40,16 @@ function valueOf(r: CountryRow, key: SortKey): number {
   }
 }
 
-export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
+export default function CountriesTable({
+  rows,
+  showHosted = true,
+  caption = "PAIO country ranking by gold, then silver, then bronze.",
+}: {
+  rows: CountryRow[];
+  /** Hide the Hosted column on per-edition country metrics. */
+  showHosted?: boolean;
+  caption?: string;
+}) {
   const [sort, setSort] = useState<{ key: SortKey; dir: SortDir } | null>(null);
 
   const sorted = useMemo(() => {
@@ -66,9 +75,7 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
   return (
     <div className="overflow-hidden rounded-lg border border-border">
       <Table minWidth="640px">
-        <TableCaption className="sr-only">
-          PAIO country ranking by gold, then silver, then bronze.
-        </TableCaption>
+        <TableCaption className="sr-only">{caption}</TableCaption>
         <TableHeader>
           {/* Explicit th backgrounds: tr bg is unreliable with rowspan. */}
           <TableRow className="border-border bg-primary text-primary-foreground hover:bg-primary">
@@ -85,13 +92,15 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
                 onClick={() => toggleSort("country")}
               />
             </TableHead>
-            <TableHead
-              rowSpan={2}
-              scope="col"
-              className="bg-primary text-primary-foreground"
-            >
-              Hosted
-            </TableHead>
+            {showHosted && (
+              <TableHead
+                rowSpan={2}
+                scope="col"
+                className="bg-primary text-primary-foreground"
+              >
+                Hosted
+              </TableHead>
+            )}
             <TableHead
               rowSpan={2}
               scope="col"
@@ -185,9 +194,11 @@ export default function CountriesTable({ rows }: { rows: CountryRow[] }) {
                   )}
                 </span>
               </TableCell>
-              <TableCell className="text-muted-foreground">
-                {r.hosted.length ? r.hosted.join(", ") : "—"}
-              </TableCell>
+              {showHosted && (
+                <TableCell className="text-muted-foreground">
+                  {r.hosted.length ? r.hosted.join(", ") : "—"}
+                </TableCell>
+              )}
               <TableCell className="text-center tnum">{r.participants}</TableCell>
               <MedalCell
                 count={r.gold}

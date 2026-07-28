@@ -314,6 +314,55 @@ export class StatsService {
     );
   }
 
+  /** Country medal metrics for a single edition (official + guest teams). */
+  async listEditionCountryRows(slug: string): Promise<CountryRow[]> {
+    const [edition, byName] = await Promise.all([
+      this.getEdition(slug),
+      this.countriesByName(),
+    ]);
+    if (!edition) return [];
+
+    const map = new Map<string, CountryRow>();
+    for (const c of edition.contestants) {
+      if (c.status === "unofficial") continue;
+      const country = byName.get(c.countryName);
+      if (!country) continue;
+      let row = map.get(country.code);
+      if (!row) {
+        row = {
+          country,
+          guest: c.status === "guest",
+          hosted: edition.host === country.name ? [edition.year] : [],
+          participants: 0,
+          gold: 0,
+          silver: 0,
+          bronze: 0,
+          hm: 0,
+          totalMedals: 0,
+        };
+        map.set(country.code, row);
+      }
+      row.participants++;
+      if (c.medal === "GOLD") row.gold++;
+      else if (c.medal === "SILVER") row.silver++;
+      else if (c.medal === "BRONZE") row.bronze++;
+      else if (c.medal === "HM") row.hm++;
+    }
+
+    for (const row of map.values()) {
+      row.totalMedals = row.gold + row.silver + row.bronze;
+    }
+
+    return [...map.values()].sort(
+      (a, b) =>
+        Number(a.guest) - Number(b.guest) ||
+        b.gold - a.gold ||
+        b.silver - a.silver ||
+        b.bronze - a.bronze ||
+        a.country.name.localeCompare(b.country.name),
+    );
+  }
+
   async getCountryDetail(code: string): Promise<CountryDetail | null> {
     const [countries, editions, byName] = await Promise.all([
       this.source.getCountries(),
