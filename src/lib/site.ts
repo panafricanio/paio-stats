@@ -15,3 +15,6 @@ export function getSiteUrl(): URL {
 export const SITE_NAME = "PAIO Stats";
 export const SITE_DESCRIPTION =
   "Statistics for the Pan-African Informatics Olympiad: editions, countries, tasks, contestants, and all-time medal records.";
+
+/** Official PAIO organisation website (not this stats archive). */
+export const PAIO_OFFICIAL_URL = "https://www.panafricanio.com/";

@@ -384,7 +384,7 @@ export class StatsService {
    * People tied to a country. Matching is EXACT (never substring, which would
    * make "Niger" match "Nigeria" or "Mali" match "Somalia"):
    *  - Team / Deputy Leaders whose role names exactly this country, and
-   *  - for the host country, its Host Committee and Coaches.
+   *  - for the host country, its Host Committee.
    * Deduped by name, merging roles.
    */
   private peopleForCountry(editions: Edition[], country: Country): Official[] {
@@ -398,8 +398,7 @@ export class StatsService {
           const isLeader =
             (group.title === "Team Leaders" || group.title === "Deputy Leaders") &&
             member.roles.some((r) => cleanRole(r) === country.name);
-          const isHostStaff =
-            isHost && (group.title === "Host Committee" || group.title === "Coaches");
+          const isHostStaff = isHost && group.title === "Host Committee";
           if (!isLeader && !isHostStaff) continue;
 
           const existing = byName.get(member.name);
