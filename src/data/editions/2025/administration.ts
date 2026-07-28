@@ -1,7 +1,6 @@
 // PAIO 2025 organising side, gathered from the official PAIO 2025 website
-// (panafricanio/paio_new: data/committeeMembers.ts + data/coaches.ts).
-// Photos are snapshotted locally under /public/images to avoid depending on
-// expiring external URLs. Members without a reliable photo fall back to initials.
+// (panafricanio/paio_new: data/committeeMembers.ts) plus confirmed
+// team/deputy leaders. Photos are snapshotted locally under /public/images.
 import type { AdministrationGroup } from "@/domain/edition";
 
 export const administration: AdministrationGroup[] = [
@@ -60,12 +59,12 @@ export const administration: AdministrationGroup[] = [
       },
       {
         name: "Norbert Ndayisenga",
-        roles: ["Software Engineer, Rwanda Computing Olympiad Coach"],
+        roles: ["Rwanda Computing Olympiad"],
         image: "/images/norbert.webp",
       },
       {
         name: "Jean Paul Elisa NIYOKWIZERWA",
-        roles: ["Software Engineer, Rwanda Computing Olympiad Coach"],
+        roles: ["Rwanda Computing Olympiad"],
         image: "/images/administration/jean-paul.jpg",
       },
     ],
@@ -107,32 +106,14 @@ export const administration: AdministrationGroup[] = [
     ],
   },
   {
-    // Confirmed deputies only; remaining countries show "—" until names are available.
     title: "Deputy Leaders",
     members: [
+      { name: "Mohammed Hachem Drici", roles: ["Algeria"] },
       {
         name: "Niyokwizera Jean D'Amour",
         roles: ["Rwanda"],
         image: "/images/brojeid.webp",
       },
-    ],
-  },
-  {
-    title: "Coaches",
-    members: [
-      { name: "Hirwa Arnold", roles: ["Coach"], image: "/images/hirwa.jpeg" },
-      { name: "Kagaba Etienne", roles: ["Coach"], image: "/images/kagaba.webp" },
-      { name: "Niyokwizera Jean D'Amour", roles: ["Coach"], image: "/images/brojeid.webp" },
-      { name: "Joel Lee", roles: ["Coach"], image: "/images/joel.webp" },
-      { name: "Obed Nsanzimfura", roles: ["Coach"], image: "/images/obed.webp" },
-      { name: "Norbert Ndayisenga", roles: ["Coach"], image: "/images/norbert.webp" },
-      { name: "Afsa Umutoniwase", roles: ["Coach"], image: "/images/Afsa.webp" },
-      {
-        name: "Jean Paul Elisa NIYOKWIZERWA",
-        roles: ["Coach"],
-        image: "/images/administration/jean-paul.jpg",
-      },
-      { name: "Kelly Irakoze Ntawigenga", roles: ["Coach"], image: "/images/kelly.webp" },
     ],
   },
 ];

@@ -7,8 +7,11 @@ import type { Delegation } from "@/domain";
 
 export default function EditionDelegations({
   delegations,
+  fieldSize,
 }: {
   delegations: Delegation[];
+  /** Ranked olympiad field size for place context (#rank / N). */
+  fieldSize: number;
 }) {
   if (delegations.length === 0) {
     return <p className="text-muted-foreground">No delegations recorded for this edition.</p>;
@@ -18,7 +21,7 @@ export default function EditionDelegations({
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
         {delegations.length} delegation{delegations.length === 1 ? "" : "s"} took part, ordered by
-        gold, then silver, then bronze.
+        gold, then silver, then bronze. Places are olympiad ranks in a field of {fieldSize}.
       </p>
       <div className="grid gap-4 md:grid-cols-2">
         {delegations.map((d) => (
@@ -45,10 +48,10 @@ export default function EditionDelegations({
                 <span>
                   {d.participants} contestant{d.participants === 1 ? "" : "s"}
                 </span>
-                {d.gold > 0 && <span className="text-gold-foreground">{d.gold} gold</span>}
-                {d.silver > 0 && <span className="text-silver-foreground">{d.silver} silver</span>}
-                {d.bronze > 0 && <span className="text-bronze-foreground">{d.bronze} bronze</span>}
-                {d.hm > 0 && <span className="text-hm-foreground">{d.hm} HM</span>}
+                {d.gold > 0 && <span className="text-gold">{d.gold} gold</span>}
+                {d.silver > 0 && <span className="text-silver">{d.silver} silver</span>}
+                {d.bronze > 0 && <span className="text-bronze">{d.bronze} bronze</span>}
+                {d.hm > 0 && <span className="text-hm">{d.hm} HM</span>}
               </div>
 
               <section className="mt-5 border-t border-border pt-4">
@@ -69,7 +72,10 @@ export default function EditionDelegations({
                         href={`/contestants/${c.slug}`}
                         className="min-w-0 truncate font-medium hover:underline"
                       >
-                        <span className="mr-2 tnum font-normal text-muted-foreground">#{c.rank}</span>
+                        <span className="mr-2 tnum font-normal text-muted-foreground">
+                          #{c.rank}
+                          <span className="text-muted-foreground/80">/{fieldSize}</span>
+                        </span>
                         {c.fullName}
                       </Link>
                       {c.medal && <MedalBadge medal={c.medal} />}

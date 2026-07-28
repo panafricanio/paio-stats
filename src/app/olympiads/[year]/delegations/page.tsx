@@ -25,5 +25,10 @@ export default async function EditionDelegationsPage({
   const { year } = await params;
   const detail = await statsService.getEditionDetail(year);
   if (!detail) notFound();
-  return <EditionDelegations delegations={detail.delegations} />;
+  return (
+    <EditionDelegations
+      delegations={detail.delegations}
+      fieldSize={detail.edition.contestants.filter((c) => c.status !== "unofficial").length}
+    />
+  );
 }

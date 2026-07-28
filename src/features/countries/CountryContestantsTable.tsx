@@ -3,9 +3,27 @@ import DataTable, { type Column } from "@/components/ui/DataTable";
 import MedalBadge from "@/components/ui/MedalBadge";
 import type { Contestant } from "@/domain/contestant";
 
-export default function CountryContestantsTable({ contestants }: { contestants: Contestant[] }) {
+export default function CountryContestantsTable({
+  contestants,
+  fieldSize,
+}: {
+  contestants: Contestant[];
+  /** Ranked field size for the edition (for “#rank / N”). */
+  fieldSize: number;
+}) {
   const columns: Column<Contestant>[] = [
-    { id: "rank", header: "Rank", numeric: true, cellClassName: "font-medium", cell: (c) => c.rank },
+    {
+      id: "rank",
+      header: "Place",
+      numeric: true,
+      cellClassName: "font-medium",
+      cell: (c) => (
+        <span className="tnum">
+          #{c.rank}
+          <span className="font-normal text-muted-foreground"> / {fieldSize}</span>
+        </span>
+      ),
+    },
     {
       id: "name",
       header: "Contestant",
@@ -15,12 +33,20 @@ export default function CountryContestantsTable({ contestants }: { contestants: 
         </Link>
       ),
     },
-    { id: "total", header: "Total", align: "center", numeric: true, cellClassName: "font-bold", cell: (c) => c.total },
+    {
+      id: "total",
+      header: "Total",
+      align: "center",
+      numeric: true,
+      cellClassName: "font-bold",
+      cell: (c) => c.total,
+    },
     {
       id: "medal",
       header: "Medal",
       align: "center",
-      cell: (c) => (c.medal ? <MedalBadge medal={c.medal} /> : <span className="text-muted-foreground">—</span>),
+      cell: (c) =>
+        c.medal ? <MedalBadge medal={c.medal} /> : <span className="text-muted-foreground">—</span>,
     },
   ];
 
@@ -29,7 +55,7 @@ export default function CountryContestantsTable({ contestants }: { contestants: 
       columns={columns}
       rows={contestants}
       getRowKey={(c) => `${c.slug}-${c.rank}`}
-      caption="Contestants representing this country, with final ranks, scores, and awards."
+      caption="Contestants representing this country. Place is olympiad rank in the full field."
     />
   );
 }

@@ -10,7 +10,7 @@ export interface Official {
   image?: string;
 }
 
-/** A titled group of officials (e.g. "Team Leaders", "Coaches"). */
+/** A titled group of officials (e.g. "Team Leaders", "Deputy Leaders"). */
 export interface AdministrationGroup {
   title: string;
   members: Official[];

@@ -15,7 +15,7 @@ export default function CountryPeople({
         <Users className="mb-3 h-8 w-8 text-muted-foreground" />
         <h2 className="font-display text-xl">No people recorded</h2>
         <p className="mt-2 max-w-md text-sm text-muted-foreground">
-          Team leaders, deputy leaders, and coaches for {countryName} have not been added yet.
+          Team leaders and deputy leaders for {countryName} have not been added yet.
         </p>
       </div>
     );
