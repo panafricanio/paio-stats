@@ -169,9 +169,8 @@ export default function HomeView({ editions }: { editions: Edition[] }) {
 
             <GuideSection title="Contestant status">
               <p>
-                Edition and country results use separate scoreboard tables by status (like PAMO&apos;s
-                Official / Unofficial boards). Online vs on-site is shown as a Venue column in each
-                table:
+                Edition and country results use separate scoreboard tables by status. Online vs on-site
+                is shown as a Venue column in each table:
               </p>
               <ul className="mt-3 space-y-2">
                 <li>

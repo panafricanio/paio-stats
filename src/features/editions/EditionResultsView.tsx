@@ -51,12 +51,6 @@ export default function EditionResultsView({
 
   return (
     <div className="space-y-12">
-      <p className="text-sm text-muted-foreground">
-        Results follow the PAMO country-board layout: official contestants, then guests and
-        unofficials when present. Places are ranks in the full edition field; Online vs On-site
-        appears in the Venue column.
-      </p>
-
       {sections.map((section) => (
         <section key={section.id} className="space-y-4">
           <div>
