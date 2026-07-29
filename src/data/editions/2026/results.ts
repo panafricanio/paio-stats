@@ -1209,8 +1209,9 @@ export const results: RawContestant[
     rank: 68,
     firstName: "Nnabugo",
     lastName: "Ofordile",
-    country: "Nigeria",
+    country: "",
     image: "/images/editions/2026/nigeria-nnabugo-student.jpg",
+    isUnofficial: true,
     venue: "online",
     scores: {
       vials: 0,
