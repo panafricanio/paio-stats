@@ -33,9 +33,9 @@ export const paio2026: EditionConfig = {
   website: "https://2026.panafricanio.com/",
   bands: {
     gold: [1, 27],
-    silver: [28, 50],
-    bronze: [52, 57],
-    hm: [58, 72],
+    silver: [28, 49],
+    bronze: [51, 56],
+    hm: [57, 71],
   },
   tasks,
   results,
