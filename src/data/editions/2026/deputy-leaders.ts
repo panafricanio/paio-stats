@@ -18,6 +18,6 @@ export const deputyLeaders: Official[] = [
   { name: "Grace Umutoniwase", roles: ["Rwanda"] },
   { name: "Alvin Victor", roles: ["Tanzania"] },
   { name: "Mohamed Habib Abid", roles: ["Tunisia"] },
-  { name: "Kemal", roles: ["Turkmenistan"], image: "/images/editions/2026/turkmenistan-kemal-deputy-leader.jpg" },
+  { name: "Kemal Kochekov", roles: ["Turkmenistan"], image: "/images/editions/2026/turkmenistan-kemal-deputy-leader.jpg" },
   { name: "Aaron Lule Kakembo", roles: ["Uganda"] },
 ];

@@ -13,11 +13,12 @@ export const teamLeaders: Official[] = [
   { name: "Panga Azazia Kamate", roles: ["Mali"] },
   { name: "Mohammed Benomar El Mdeghri", roles: ["Morocco"] },
   { name: "Jennie Oluchi", roles: ["Nigeria"], image: "/images/editions/2026/nigeria-oluchi-team-leader.jpg" },
+  { name: "Ahmad Usman", roles: ["Pakistan"], image: "/images/administration/ahmad-usman.png" },
   { name: "Frank Ishimwe", roles: ["Rwanda"] },
   { name: "Mohamed", roles: ["Saudi Arabia"], image: "/images/editions/2026/saudi-arabia-mohamed-team-leader.jpg" },
   { name: "Agrey Kimaro", roles: ["Tanzania"] },
   { name: "Mohamed Fares Nebili", roles: ["Tunisia"] },
-  { name: "Kerim", roles: ["Turkmenistan"], image: "/images/editions/2026/turkmenistan-kerim-team-leader.jpg" },
+  { name: "Kerim Kochekov", roles: ["Turkmenistan"], image: "/images/editions/2026/turkmenistan-kerim-team-leader.jpg" },
   { name: "Favour Busingye", roles: ["Uganda"] },
   { name: "Valentine Sherekete", roles: ["Zimbabwe"], image: "/images/editions/2026/zimbabwe-valentine-team-leader.jpg" },
 ];
