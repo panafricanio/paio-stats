@@ -7,7 +7,7 @@ export const teamLeaders: Official[] = [
   { name: "Youssef Khalil", roles: ["Egypt"], image: "/images/editions/2026/egypt-khalil-team-leader.jpg" },
   { name: "Nardos Wehabe", roles: ["Ethiopia"] },
   { name: "António José Gomes", roles: ["Guinea-Bissau"] },
-  { name: "Ágnes", roles: ["Hungary"], image: "/images/editions/2026/hungary-agnes-team-leader.jpg" },
+  { name: "Ágnes Erdosne Németh", roles: ["Hungary"], image: "/images/editions/2026/hungary-agnes-team-leader.jpg" },
   { name: "Dalton Omondi Opondo", roles: ["Kenya"] },
   { name: "Teboho Moqasa", roles: ["Lesotho"] },
   { name: "Panga Azazia Kamate", roles: ["Mali"] },
