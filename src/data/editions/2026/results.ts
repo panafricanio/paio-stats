@@ -3,7 +3,7 @@
 // baked from the published scoreboard so the shared RawContestant model stays unchanged.
 import type { RawContestant } from "../types";
 
-export const results: RawContestant[
+export const results: RawContestant[] = [
   {
     rank: 1,
     firstName: "Zakaria",
