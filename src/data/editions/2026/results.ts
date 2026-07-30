@@ -658,6 +658,24 @@ export const results: RawContestant[
   },
   {
     rank: 38,
+    firstName: "Hallel",
+    lastName: "Okpere-udo",
+    country: "Nigeria",
+    image: "/images/editions/2026/nigeria-halel-student.jpg",
+    venue: "online",
+    scores: {
+      vials: 100,
+      detour: 0,
+      lanterns: 0,
+      walks: 0,
+      imigongo: 100,
+      elevator: 6,
+      alchemy: 61,
+      islands: 0,
+    },
+  },
+  {
+    rank: 39,
     firstName: "Jayden",
     lastName: "Mukisa",
     country: "Uganda",
@@ -674,7 +692,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 39,
+    rank: 40,
     firstName: "Fatma",
     lastName: "Jlali",
     country: "Tunisia",
@@ -691,7 +709,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 40,
+    rank: 41,
     firstName: "Asmaa",
     lastName: "Belmostefa",
     country: "Algeria",
@@ -708,7 +726,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 41,
+    rank: 42,
     firstName: "Yasmine",
     lastName: "Ennahi",
     country: "Morocco",
@@ -725,7 +743,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 42,
+    rank: 43,
     firstName: "Moti",
     lastName: "Niguse",
     country: "Ethiopia",
@@ -742,7 +760,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 43,
+    rank: 44,
     firstName: "Ikram",
     lastName: "Hamid",
     country: "Algeria",
@@ -759,7 +777,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 43,
+    rank: 44,
     firstName: "Kesha",
     lastName: "Wanjare",
     country: "Kenya",
@@ -776,7 +794,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 45,
+    rank: 46,
     firstName: "Doha Riad",
     lastName: "Solh",
     country: "Morocco",
@@ -793,7 +811,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 46,
+    rank: 47,
     firstName: "Douglas Munga",
     lastName: "Nderitu",
     country: "Kenya",
@@ -810,7 +828,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 47,
+    rank: 48,
     firstName: "Nobel",
     lastName: "Desalegn",
     country: "Ethiopia",
@@ -827,7 +845,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 48,
+    rank: 49,
     firstName: "Ines",
     lastName: "Messadia",
     country: "Algeria",
@@ -844,7 +862,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 49,
+    rank: 50,
     firstName: "Lihn Nguyen-Kovács",
     lastName: "My",
     country: "Hungary (Guest)",
@@ -862,7 +880,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 49,
+    rank: 50,
     firstName: "Lightness",
     lastName: "Ngiliule",
     country: "Tanzania",
@@ -879,7 +897,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 51,
+    rank: 52,
     firstName: "Maryam",
     lastName: "Amr",
     country: "",
@@ -898,7 +916,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 51,
+    rank: 52,
     firstName: "Hasset",
     lastName: "Samson",
     country: "Ethiopia",
@@ -915,7 +933,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 53,
+    rank: 54,
     firstName: "Brian",
     lastName: "Muhizi",
     country: "Rwanda",
@@ -932,7 +950,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 54,
+    rank: 55,
     firstName: "Heran",
     lastName: "Alemayehu",
     country: "Ethiopia",
@@ -949,7 +967,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 55,
+    rank: 56,
     firstName: "Mikiyas",
     lastName: "Shegaw",
     country: "Ethiopia",
@@ -966,7 +984,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 56,
+    rank: 57,
     firstName: "Boris",
     lastName: "Ikaze",
     country: "Rwanda",
@@ -983,7 +1001,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 57,
+    rank: 58,
     firstName: "Sweetbert",
     lastName: "Nene",
     country: "Tanzania",
@@ -1000,7 +1018,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 58,
+    rank: 59,
     firstName: "Tumi",
     lastName: "Nyagiro",
     country: "Kenya",
@@ -1017,7 +1035,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 59,
+    rank: 60,
     firstName: "Charity",
     lastName: "Buyinza",
     country: "",
@@ -1035,7 +1053,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 60,
+    rank: 61,
     firstName: "Helen",
     lastName: "Gelagay",
     country: "Ethiopia",
@@ -1052,7 +1070,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 61,
+    rank: 62,
     firstName: "Pillar",
     lastName: "Nimurungi",
     country: "Uganda",
@@ -1069,7 +1087,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 62,
+    rank: 63,
     firstName: "Raphael",
     lastName: "Bitarabeho",
     country: "Uganda",
@@ -1086,7 +1104,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 62,
+    rank: 63,
     firstName: "Mahri",
     lastName: "Seyidova",
     country: "Turkmenistan (Guest)",
@@ -1104,7 +1122,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 64,
+    rank: 65,
     firstName: "Tchoffo Houdji Elisa",
     lastName: "Sarah",
     country: "Cameroon",
@@ -1121,7 +1139,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 65,
+    rank: 66,
     firstName: "Clare",
     lastName: "Muraya",
     country: "Kenya",
@@ -1138,7 +1156,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 65,
+    rank: 66,
     firstName: "Elizabeth",
     lastName: "Musimenta",
     country: "Uganda",
@@ -1155,7 +1173,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 67,
+    rank: 68,
     firstName: "Amandine",
     lastName: "Kaneza",
     country: "Rwanda",
@@ -1172,7 +1190,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 68,
+    rank: 69,
     firstName: "Alvin",
     lastName: "Binse",
     country: "Botswana",
@@ -1189,7 +1207,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 68,
+    rank: 69,
     firstName: "Mary Pulane",
     lastName: "Madibela",
     country: "Botswana",
@@ -1206,11 +1224,12 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 68,
+    rank: 69,
     firstName: "Nnabugo",
     lastName: "Ofordile",
-    country: "Nigeria",
+    country: "",
     image: "/images/editions/2026/nigeria-nnabugo-student.jpg",
+    isUnofficial: true,
     venue: "online",
     scores: {
       vials: 0,
@@ -1224,7 +1243,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 71,
+    rank: 72,
     firstName: "Ishimwe",
     lastName: "Elouanie",
     country: "Rwanda",
@@ -1241,25 +1260,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
-    firstName: "Agbo",
-    lastName: "Adoga",
-    country: "Nigeria",
-    image: "/images/editions/2026/nigeria-agbo-student.jpg",
-    venue: "online",
-    scores: {
-      vials: 0,
-      detour: 0,
-      lanterns: 0,
-      walks: 0,
-      imigongo: 0,
-      elevator: 0,
-      alchemy: 0,
-      islands: 0,
-    },
-  },
-  {
-    rank: 72,
+    rank: 73,
     firstName: "Errol",
     lastName: "Affotey-Walters",
     country: "",
@@ -1277,7 +1278,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Esther Etornam Eleonore",
     lastName: "Ahlijah",
     country: "Ghana",
@@ -1294,7 +1295,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Rosizette Tambu",
     lastName: "Akeh",
     country: "Cameroon",
@@ -1311,7 +1312,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Layth",
     lastName: "Alzahrani",
     country: "",
@@ -1330,7 +1331,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Mohamed",
     lastName: "Alzahrani",
     country: "",
@@ -1349,7 +1350,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Chloe Christina Nsia",
     lastName: "Atangana",
     country: "Cameroon",
@@ -1366,7 +1367,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Adon",
     lastName: "Benoy",
     country: "Botswana",
@@ -1383,7 +1384,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Triphene Kundela",
     lastName: "Bunkembo",
     country: "Mali",
@@ -1400,7 +1401,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Bless Fustin Ache",
     lastName: "Che",
     country: "Cameroon",
@@ -1417,7 +1418,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Alexandra",
     lastName: "Dideye",
     country: "",
@@ -1435,7 +1436,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Shumaila Nabtahil",
     lastName: "Fatima",
     country: "Pakistan (Guest)",
@@ -1452,7 +1453,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Nathan Legrant Ngontcha",
     lastName: "Guimapi",
     country: "Cameroon",
@@ -1469,7 +1470,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Mamadou Youssouf Bandia",
     lastName: "Keita",
     country: "",
@@ -1487,7 +1488,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Victoria B,",
     lastName: "Kone",
     country: "Mali",
@@ -1504,7 +1505,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Keza Leila",
     lastName: "Leila",
     country: "Rwanda",
@@ -1521,7 +1522,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Lereko",
     lastName: "Malefane",
     country: "Lesotho",
@@ -1538,7 +1539,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Youssouf Sekou",
     lastName: "Maïga",
     country: "Mali",
@@ -1555,7 +1556,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Patrick Oscar Manuel",
     lastName: "Mmireku",
     country: "",
@@ -1573,7 +1574,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Khotso",
     lastName: "Modikoe",
     country: "Lesotho",
@@ -1590,7 +1591,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Leboko-la-morena",
     lastName: "Moilwa",
     country: "Botswana",
@@ -1607,7 +1608,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Daniel",
     lastName: "Muyinza",
     country: "Uganda",
@@ -1624,7 +1625,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Wallece",
     lastName: "Nzella",
     country: "Tanzania",
@@ -1641,7 +1642,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Makayla Nyamekye",
     lastName: "Oduro",
     country: "Ghana",
@@ -1658,26 +1659,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
-    firstName: "Hallel",
-    lastName: "Okpere-udo",
-    country: "",
-    image: "/images/editions/2026/nigeria-halel-student.jpg",
-    isUnofficial: true,
-    venue: "online",
-    scores: {
-      vials: 0,
-      detour: 0,
-      lanterns: 0,
-      walks: 0,
-      imigongo: 0,
-      elevator: 0,
-      alchemy: 0,
-      islands: 0,
-    },
-  },
-  {
-    rank: 72,
+    rank: 73,
     firstName: "Busisiwe",
     lastName: "Pepileng",
     country: "Lesotho",
@@ -1694,7 +1676,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Moretlo",
     lastName: "Rapitso",
     country: "Lesotho",
@@ -1711,7 +1693,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Ariana",
     lastName: "Rizwan",
     country: "Pakistan (Guest)",
@@ -1728,7 +1710,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Mariam",
     lastName: "Samake",
     country: "Mali",
@@ -1745,7 +1727,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Prince",
     lastName: "Sanga",
     country: "",
@@ -1763,7 +1745,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Alex",
     lastName: "Sanhá",
     country: "Guinea-Bissau",
@@ -1780,7 +1762,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Bareera",
     lastName: "Sehar",
     country: "Pakistan (Guest)",
@@ -1797,7 +1779,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Karis Yesutor",
     lastName: "Senya",
     country: "Ghana",
@@ -1814,7 +1796,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Josephine",
     lastName: "Shayo",
     country: "Tanzania",
@@ -1831,7 +1813,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Joyce",
     lastName: "Sulumo",
     country: "Tanzania",
@@ -1848,7 +1830,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Jonathan Lael Kenne",
     lastName: "Tchinda",
     country: "Cameroon",
@@ -1865,7 +1847,7 @@ export const results: RawContestant[
     },
   },
   {
-    rank: 72,
+    rank: 73,
     firstName: "Moriba Soungalo",
     lastName: "Traore",
     country: "Mali",
